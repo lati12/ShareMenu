@@ -1,4 +1,6 @@
-import { Component } from '@angular/core';
+import { Component} from '@angular/core';
+import {MenuItem, MessageService} from 'primeng/api';
+
 
 @Component({
   selector: 'app-root',
@@ -6,5 +8,53 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
-  title = 'ShareMenu';
+
+  items: MenuItem[] = [];
+
+  constructor(private messageService: MessageService) {}
+
+  ngOnInit() {
+    this.items = [{
+
+      label: 'Navigate',
+      items: [{
+        label: 'Template',
+        routerLink: '/template'
+      },
+        {
+          label: 'Entity Header',
+          routerLink: '/entityheader'
+        },
+        {
+          label: 'Entity Lines',
+          routerLink: '/entityline'
+        },
+        {
+          label: 'Social Network Providers',
+          routerLink: '/socialprovider'
+        },
+        {
+          label: 'Users',
+          routerLink: '/users'
+        },
+        {
+          label: 'ItemCategory',
+          routerLink: '/itemcategory'
+        },
+        {
+          label: 'Item',
+          routerLink: '/item'
+        }
+      ]
+    }];
+  }
+
+  update() {
+    this.messageService.add({severity:'success', summary:'Success', detail:'Data Updated'});
+  }
+
+  delete() {
+    this.messageService.add({severity:'warn', summary:'Delete', detail:'Data Deleted'});
+  }
+
 }

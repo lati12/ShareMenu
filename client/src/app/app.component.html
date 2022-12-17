@@ -1,1 +1,16 @@
-Hello
+<div class="flex">
+  <div class="flex-initial flex align-items-center justify-content-center">
+    <h4>Share Restaurant</h4>
+  </div>
+  <div class="flex-initial flex align-items-center justify-content-center">
+    <img class="logo-small" height="80" width="80" style="margin: 0 0 8px 8px" draggable="false" src="assets/logo.png">
+  </div>
+</div>
+<p-splitter [panelSizes]="[10,90]">
+  <ng-template pTemplate="">
+    <p-menu [model]="items"></p-menu>
+  </ng-template>
+  <ng-template pTemplate="">
+    <router-outlet></router-outlet>
+  </ng-template>
+</p-splitter>
