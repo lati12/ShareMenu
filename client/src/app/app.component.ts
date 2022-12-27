@@ -17,7 +17,12 @@ export class AppComponent {
     this.items = [{
 
       label: 'Navigate',
-      items: [{
+      items: [
+      {
+        label: 'Upload file',
+        routerLink: '/upload'
+      },
+      {
         label: 'Template',
         routerLink: '/template'
       },

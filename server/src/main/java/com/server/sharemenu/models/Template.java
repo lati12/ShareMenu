@@ -12,7 +12,7 @@ public class Template {
     @Column(length = 255)
     private String name;
 
-    @Column(length = 255)
+    @Column
     private byte[] file;
 
     public Long getId() {

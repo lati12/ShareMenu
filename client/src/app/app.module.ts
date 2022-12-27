@@ -30,33 +30,12 @@ import {ConfirmDialogModule} from "primeng/confirmdialog";
 import {InputTextareaModule} from "primeng/inputtextarea";
 import {DividerModule} from "primeng/divider";
 import {DropdownModule} from 'primeng/dropdown';
-import {EntityheaderComponent} from "./components/entityheader/entityheader.component";
-import {EntitylineComponent} from "./components/entityline/entityline.component";
-import {SocialproviderComponent} from "./components/socialprovider/socialprovider.component";
-import {ItemComponent} from "./components/item/item.component";
-import {ItemCategoryComponent} from "./components/item-category/item-category.component";
-import {SharemenuComponent} from "./components/sharemenu/sharemenu.component";
-import {Templateservice} from "./services/templateservice";
-import {Usersservice} from "./services/usersservice";
-import {Socialprovidersurvice} from "./services/socialprovidersurvice";
-import {Itemservice} from "./services/itemservice";
-import {Itemcategoryservice} from "./services/itemcategoryservice";
-import {EntitylineService} from "./services/entitylineService";
-import {Entityheaderservice} from "./services/entityheaderservice";
-import {TemplateComponent} from "./components/template/template.component";
-import {UsersComponent} from "./components/users/users.component";
+import { UploadFileComponent } from './upload-file/upload-file.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    TemplateComponent,
-    UsersComponent,
-    EntityheaderComponent,
-    EntitylineComponent,
-    SocialproviderComponent,
-    ItemComponent,
-    ItemCategoryComponent,
-    SharemenuComponent,
+    UploadFileComponent,
   ],
   imports: [
     BrowserModule,
@@ -86,8 +65,7 @@ import {UsersComponent} from "./components/users/users.component";
     DropdownModule
 
   ],
-  providers: [MessageService,ConfirmationService,Templateservice,Usersservice,Socialprovidersurvice,
-    Entityheaderservice,EntitylineService,Itemcategoryservice,Itemservice],
+  providers: [MessageService,ConfirmationService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
