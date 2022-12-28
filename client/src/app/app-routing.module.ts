@@ -8,6 +8,7 @@ import {SharemenuComponent} from "./components/sharemenu/sharemenu.component";
 import {ItemComponent} from "./components/item/item.component";
 import {ItemCategoryComponent} from "./components/item-category/item-category.component";
 import {EntityheaderComponent} from "./components/entityheader/entityheader.component";
+import {UploadFileComponent} from "./upload-file/upload-file.component";
 
 const routes: Routes = [
   {path: 'entityheader', component:EntityheaderComponent},
