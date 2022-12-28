@@ -31,11 +31,37 @@ import {InputTextareaModule} from "primeng/inputtextarea";
 import {DividerModule} from "primeng/divider";
 import {DropdownModule} from 'primeng/dropdown';
 import { UploadFileComponent } from './upload-file/upload-file.component';
+import { EntitylineComponent } from './components/entityline/entityline.component';
+import { EntityheaderComponent } from './components/entityheader/entityheader.component';
+import {EntitylineService} from "./services/entityline.service";
+import {EntityheaderService} from "./services/entityheader.service";
+import {ItemService} from "./services/item.service";
+import {ItemCategoryService} from "./services/item-category.service";
+import {SharemenuService} from "./services/sharemenu.service";
+import {SocialproviderService} from "./services/socialprovider.service";
+import {TemplateService} from "./services/template.service";
+import {UsersService} from "./services/users.service";
+import {ItemComponent} from "./components/item/item.component";
+import {ItemCategoryComponent} from "./components/item-category/item-category.component";
+import {SharemenuComponent} from "./components/sharemenu/sharemenu.component";
+import {SocialproviderComponent} from "./components/socialprovider/socialprovider.component";
+import {TemplateComponent} from "./components/template/template.component";
+import {UsersComponent} from "./components/users/users.component";
+import { EntityDocumentsComponent } from './components/entity-documents/entity-documents.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     UploadFileComponent,
+    EntitylineComponent,
+    EntityheaderComponent,
+    ItemComponent,
+    ItemCategoryComponent,
+    SharemenuComponent,
+    SocialproviderComponent,
+    TemplateComponent,
+    UsersComponent,
+    EntityDocumentsComponent
   ],
   imports: [
     BrowserModule,
@@ -65,7 +91,8 @@ import { UploadFileComponent } from './upload-file/upload-file.component';
     DropdownModule
 
   ],
-  providers: [MessageService,ConfirmationService],
+  providers: [MessageService,ConfirmationService, EntitylineService, EntityheaderService, ItemService,
+              ItemCategoryService,SharemenuService,SocialproviderService,TemplateService,UsersService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
