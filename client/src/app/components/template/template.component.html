@@ -11,6 +11,7 @@
         <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
       </th>
       <th pSortableColumn="name">Name</th>
+      <th pSortableColumn="file">File</th>
       <th></th>
     </tr>
   </ng-template>
@@ -20,6 +21,7 @@
         <p-tableCheckbox [value]="template"></p-tableCheckbox>
       </td>
       <td>{{template.name}}</td>
+      <td>{{template.file}}</td>
       <td>
         <button pButton pRipple icon="pi pi-pencil" class="p-button-rounded p-button-success p-mr-2" (click)="editTemplate(template)"></button>
         <button pButton pRipple icon="pi pi-trash" class="p-button-rounded p-button-warning" (click)="deleteTemplate(template)"></button>
@@ -34,7 +36,16 @@
       <input type="text" pInputText id="name" [(ngModel)]="template.name" required autofocus />
       <small class="p-invalid" *ngIf="submitted && !template.name">Name is required.</small>
     </div>
+    <div class="p-field">
+      <label>Upload File</label>
+      <p-fileUpload mode = "basic" name="file" url="http://localhost:4713/sharemenu/api/upload-file/upload"
+                  accept="image/*" [auto] = "true">
+      <ng-template pTemplate="toolbar">
+      </ng-template>
+    </p-fileUpload>
+    </div>
   </ng-template>
+
 
   <ng-template pTemplate="footer">
     <button pButton pRipple label="Cancel" icon="pi pi-times" class="p-button-text" (click)="hideDialog()"></button>

@@ -9,6 +9,7 @@ import {ItemComponent} from "./components/item/item.component";
 import {ItemCategoryComponent} from "./components/item-category/item-category.component";
 import {EntityheaderComponent} from "./components/entityheader/entityheader.component";
 import {UploadFileComponent} from "./upload-file/upload-file.component";
+import {EntityDocumentsComponent} from "./components/entity-documents/entity-documents.component";
 
 const routes: Routes = [
   {path: 'entityheader', component:EntityheaderComponent},
@@ -18,7 +19,8 @@ const routes: Routes = [
   {path: 'users', component: UsersComponent},
   {path: 'sharemenu', component: SharemenuComponent},
   {path: 'item', component: ItemComponent},
-  {path: 'itemcategory', component: ItemCategoryComponent}];
+  {path: 'itemcategory', component: ItemCategoryComponent},
+  {path: 'entitydocument', component: EntityDocumentsComponent}];
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],

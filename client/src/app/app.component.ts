@@ -44,6 +44,10 @@ export class AppComponent {
         {
           label: 'Item',
           routerLink: '/item'
+        },
+        {
+          label: 'Entity Document',
+          routerLink : '/entitydocument'
         }
       ]
     }];
