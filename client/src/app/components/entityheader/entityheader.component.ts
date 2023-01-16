@@ -81,4 +81,12 @@ export class EntityheaderComponent {
       this.entityHeader = new Entityheader();
     });
   }
+
+  onRowSelect($event: any) {
+
+  }
+
+  onRowUnselect($event: any) {
+
+  }
 }

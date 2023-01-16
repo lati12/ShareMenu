@@ -58,13 +58,13 @@
          currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" [showCurrentPageReport]="true">
   <ng-template pTemplate="header">
     <tr>
-      <button pButton pRipple label="Add Line" icon="pi pi-plus" class="p-button-success p-mr-2" style="margin: 4px" (click)="openNew()"></button>
+      <button pButton pRipple label="Add" icon="pi pi-plus" class="p-button-success p-mr-2 " style="padding: 12px 28px" (click)="openNew()"></button>
     </tr>
     <tr>
       <th style="width: 3rem">
         <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
       </th>
-      <th pSortableColumn="name">Item Name</th>
+      <th pSortableColumn="itemName">Item Name</th>
       <th pSortableColumn="price">Price</th>
       <th pSortableColumn="quantity">Quantity</th>
       <th></th>
@@ -75,7 +75,7 @@
       <td>
         <p-tableCheckbox [value]="entityline"></p-tableCheckbox>
       </td>
-      <td>{{entityline.item}}</td>
+      <td>{{entityline.item.name}}</td>
       <td>{{entityline.price}}</td>
       <td>{{entityline.quantity}}</td>
       <td>

@@ -36,10 +36,10 @@
       <input type="text" pInputText id="name" [(ngModel)]="template.name" required autofocus />
       <small class="p-invalid" *ngIf="submitted && !template.name">Name is required.</small>
     </div>
-    <div class="p-field">
-      <label>Upload File</label>
-      <p-fileUpload mode = "basic" name="file" url="http://localhost:4713/sharemenu/api/upload-file/upload"
-                  accept="image/*" [auto] = "true">
+    <div class="p-field" style="margin: 6px">
+      <label >Upload File</label>
+      <p-fileUpload  mode = "basic" name="file" url="http://localhost:4713/sharemenu/api/upload-file/upload"
+                  accept="image/*"  [maxFileSize]="1000000" [auto]="true" chooseLabel="Browse" >
       <ng-template pTemplate="toolbar">
       </ng-template>
     </p-fileUpload>

@@ -6,6 +6,8 @@ import { AppComponent } from './app.component';
 import { ToolbarModule } from 'primeng/toolbar';
 import { ButtonModule } from 'primeng/button';
 import { SplitButtonModule } from 'primeng/splitbutton';
+import {DynamicDialogModule} from 'primeng/dynamicdialog';
+
 
 import { MessageModule } from 'primeng/message';
 import { TabMenuModule } from 'primeng/tabmenu';
@@ -61,7 +63,8 @@ import { EntityDocumentsComponent } from './components/entity-documents/entity-d
     SocialproviderComponent,
     TemplateComponent,
     UsersComponent,
-    EntityDocumentsComponent
+    EntityDocumentsComponent,
+
   ],
   imports: [
     BrowserModule,
@@ -88,7 +91,8 @@ import { EntityDocumentsComponent } from './components/entity-documents/entity-d
     ConfirmDialogModule,
     InputTextareaModule,
     DividerModule,
-    DropdownModule
+    DropdownModule,
+    DynamicDialogModule
 
   ],
   providers: [MessageService,ConfirmationService, EntitylineService, EntityheaderService, ItemService,

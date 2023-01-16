@@ -111,5 +111,8 @@
       }
     }
   },
-  "defaultProject": "ShareMenu"
+  "defaultProject": "ShareMenu",
+  "cli": {
+    "analytics": false
+  }
 }

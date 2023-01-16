@@ -3,6 +3,7 @@ import {Entityline} from "../../models/entityline";
 import {Entityheader} from "../../models/entityheader";
 import {ConfirmationService, MessageService} from "primeng/api";
 import {EntitylineService} from "../../services/entityline.service";
+import {Item} from "../../models/item";
 
 @Component({
   selector: 'app-entity-documents',
@@ -15,6 +16,7 @@ export class EntityDocumentsComponent implements OnInit {
   submitted: boolean = false;
   entitylines: Entityline[] = [];
   selectedEntityLines: Entityline[] = [];
+
 
   constructor( private entityLineService : EntitylineService ,private messageService: MessageService, private confirmationService: ConfirmationService) { }
 

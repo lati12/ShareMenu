@@ -16,7 +16,6 @@ export class AppComponent {
   ngOnInit() {
     this.items = [{
 
-      label: 'Navigate',
       items: [{
         label: 'Template',
         routerLink: '/template'
