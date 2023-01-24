@@ -1,11 +1,15 @@
 import { Component, OnInit } from '@angular/core';
-import {Entityheader} from "../../models/entityheader";
-import {Template} from "../../models/template";
-import {Users} from "../../models/users";
+import {Template} from "../../common/template";
+import {Users} from "../../common/users";
 import {EntityheaderService} from "../../services/entityheader.service";
 import {TemplateService} from "../../services/template.service";
 import {UsersService} from "../../services/users.service";
 import {ConfirmationService, MessageService} from "primeng/api";
+import {Entityline} from "../../common/entityline";
+import {EntitylineService} from "../../services/entityline.service";
+import {ItemService} from "../../services/item.service";
+import {Item} from "../../common/item";
+import {EntityHeader} from "../../common/entityheader";
 
 @Component({
   selector: 'app-entityheader',
@@ -14,24 +18,34 @@ import {ConfirmationService, MessageService} from "primeng/api";
 })
 export class EntityheaderComponent {
   entityHeaderDialog : boolean = false;
+  entityLineDialog : boolean = false;
+  entityLineDetailsDialog: boolean = false;
 
-  public entityHeaders : Entityheader[] = [];
+  entityHeader : EntityHeader = new  EntityHeader();
+  entityline: Entityline= new Entityline();
 
-  public entityHeader : Entityheader = new  Entityheader();
-
-  selectedEntityHeaders: Entityheader[]  = [];
-
+  entityHeaders : EntityHeader[] = [];
+  entitylines: Entityline[] = [];
   templates : Template [] = [];
+  items : Item [] = [];
+  users: Users[] = [];
+  submittedEntityHeader : boolean = false;
+  submittedEntityLine : boolean = false;
+  submittedEntityLineDetails : boolean = false;
 
-  users: Users [] = [];
-
-  submitted : boolean = false;
-  constructor(private entityHeaderService : EntityheaderService,private templateService : TemplateService,private usersService : UsersService,  private messageService: MessageService, private confirmationService: ConfirmationService) { }
+  constructor(private entityHeaderService : EntityheaderService,
+              private entityLineService: EntitylineService,
+              private itemService : ItemService,
+              private templateService : TemplateService,
+              private usersService : UsersService,
+              private messageService: MessageService,
+              private confirmationService: ConfirmationService) { }
 
   ngOnInit(){
     this.entityHeaderService.getAll().subscribe(data => {
       this.entityHeaders = data;
     });
+
     this.templateService.getAll().subscribe(data => {
       this.templates = data
     });
@@ -39,54 +53,118 @@ export class EntityheaderComponent {
       this.users = data;
     });
 
+    this.itemService.getAll().subscribe(data => {
+      this.items = data;
+    })
   }
 
-  openNew(){
-    this.entityHeader= new Entityheader();
-    this.submitted = false;
+  openNewEntityHeader(){
+    this.entityHeader= new EntityHeader();
+    this.submittedEntityHeader = false;
     this.entityHeaderDialog = true;
   }
-  editEntityHeader(entityHeader : Entityheader) {
-    this.entityHeader = {...entityHeader};
-    this.entityHeaderDialog = true;
+
+  openNewEntityLine(){
+    this.submittedEntityLine = false;
+    this.entityLineDialog = true;
   }
-  deleteEntityHeader(entityHeader : Entityheader){
+
+  openNewEntityLineDetails(){
+    this.submittedEntityLineDetails = false;
+    this.entityLineDetailsDialog = true;
+  }
+
+  hideEntityHeaderDialog(){
+    this.submittedEntityHeader = false;
+    this.entityHeaderDialog = false;
+  }
+
+  hideEntityLineDialog() {
+    this.submittedEntityLine = false;
+    this.entityLineDialog = false;
+    this.entityHeader = new EntityHeader();
+  }
+
+  hideEntityLineDetailsDialog(){
+    this.submittedEntityLineDetails = false;
+    this.entityLineDetailsDialog = false;
+  }
+
+  saveEntityHeader(){
+    this.submittedEntityHeader = true;
+    debugger
+    this.entityHeaderService.save(this.entityHeader).then(() =>{
+      this.entityHeaderService.getAll().subscribe(data => {
+        this.entityHeaders = data;
+        this.messageService.add({severity:'success', summary: 'Successful', detail: 'Product Updated', life: 3000});
+        this.entityHeaderDialog = false;
+        this.entityHeader = new EntityHeader();
+      });
+    });
+  }
+
+  saveEntityLineDetails() {
+    this.submittedEntityLineDetails = true;
+    this.entityline.entityHeader = this.entityHeader;
+    this.entityLineService.save(this.entityline).then(() => {
+      this.entityLineService.getAll(this.entityHeader.id).subscribe(data => {
+        this.entitylines = data;
+        this.entityLineDetailsDialog = false;
+        this.entityline = new Entityline();
+      });
+    });
+  }
+
+  deleteEntityHeader(entityHeader: EntityHeader){
     this.confirmationService.confirm({
       message: 'Are you sure you want to delete ' + entityHeader.name + '?',
       header: 'Confirm',
       icon: 'pi pi-exclamation-triangle',
       accept: () => {
-        this.entityHeaders = this.entityHeaders.filter(val => val.id !== entityHeader.id);
-        this.entityHeaderService.delete(entityHeader).then(() =>{
-          this.entityHeader = new Entityheader();
-        })
-        this.messageService.add({severity:'success', summary: 'Successful', detail: 'Product Deleted', life: 3000});
+        this.entityHeaderService.delete(entityHeader).then(() => {
+          this.entityHeaderService.getAll().subscribe(data => {
+            this.entityHeaders = data;
+            this.entityHeader = new EntityHeader();
+            this.messageService.add({severity:'success', summary: 'Successful', detail: 'Header Deleted', life: 3000});
+          });
+        });
       }
     });
   }
-  hideDialog(){
-    this.submitted = false;
-    this.entityHeaderDialog = false;
-  }
-  saveEntityHeader(){
-    this.submitted = true;
-    debugger
-    this.entityHeaderService.save(this.entityHeader).then(() =>{
-      this.messageService.add({severity:'success', summary: 'Successful', detail: 'Product Updated', life: 3000});
-      if(!this.entityHeader.id){
-        this.entityHeaders.push(this.entityHeader);
-        this.entityHeaders = [...this.entityHeaders];
+
+  deleteEntityLineDetails(entityLine: Entityline){
+    this.confirmationService.confirm({
+      message: 'Are you sure you want to delete ' + entityLine.item.name + '?',
+      header: 'Confirm',
+      icon: 'pi pi-exclamation-triangle',
+      accept: () => {
+        this.entityLineService.delete(entityLine).then(() => {
+          this.entityLineService.getAll(entityLine.entityHeader.id).subscribe(data => {
+            this.entitylines = data;
+            this.entityHeader = new EntityHeader();
+            this.messageService.add({severity:'success', summary: 'Successful', detail: 'Line Deleted', life: 3000});
+          })
+        });
       }
-      this.entityHeaderDialog = false;
-      this.entityHeader = new Entityheader();
     });
   }
 
-  onRowSelect($event: any) {
-
+  editEntityHeader(entityHeader: EntityHeader) {
+    this.entityHeader = entityHeader;
+    this.entityHeaderDialog = true;
   }
 
-  onRowUnselect($event: any) {
+  editEntityLineDetails(entityline: Entityline) {
+    this.entityline = entityline;
+    this.entityLineDetailsDialog = true;
+  }
+
+  onRowSelectEntityHeader(event: any) {
+    this.entityLineService.getAll(event.data.id).subscribe(data => {
+      this.entityHeader = event.data;
+      this.entitylines = data;
+      this.openNewEntityLine();
+    })
 
   }
 }

@@ -1,71 +1,66 @@
 <p-toast></p-toast>
-<p-table #dt [value]="users" [rows]="10" [paginator]="true" [globalFilterFields]="['name','country.name','representative.name','status']"
-         [(selection)]="selectedUsers" [rowHover]="true" dataKey="id"
-         currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" [showCurrentPageReport]="true">
-  <ng-template pTemplate="header">
-    <tr>
-      <button pButton pRipple label="New" icon="pi pi-plus" class="p-button-success p-mr-2" style="margin: 4px" (click)="openNew()"></button>
-    </tr>
-    <tr>
-      <th style="width: 3rem">
-        <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
-      </th>
-      <th pSortableColumn="name">Name</th>
-      <th pSortableColumn="lastname">Last Name</th>
-      <th pSortableColumn="password">Password</th>
-      <th pSortableColumn="email">Email</th>
-      <th pSortableColumn="companyName">Company Name</th>
+<div class="card card-width-table">
+  <p-table #dt [value]="users" [rows]="10" [paginator]="true"
+           [rowHover]="true" dataKey="id"
+           currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" [showCurrentPageReport]="true">
+    <ng-template pTemplate="header">
+      <tr>
+        <button pButton pRipple label="New" icon="pi pi-plus" class="p-button-success p-mr-2" style="margin: 4px" (click)="openNew()"></button>
+      </tr>
+      <tr>
+        <th pSortableColumn="name">Name</th>
+        <th pSortableColumn="lastname">Last Name</th>
+        <th pSortableColumn="password">Password</th>
+        <th pSortableColumn="email">Email</th>
+        <th pSortableColumn="companyName">Company Name</th>
 
-      <th></th>
-    </tr>
-  </ng-template>
-  <ng-template pTemplate="body" let-user>
-    <tr>
-      <td>
-        <p-tableCheckbox [value]="user"></p-tableCheckbox>
-      </td>
-      <td>{{user.name}}</td>
-      <td>{{user.lastname}}</td>
-      <td>{{user.password}}</td>
-      <td>{{user.email}}</td>
-      <td>{{user.companyName}}</td>
+        <th></th>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-user>
+      <tr>
+        <td>{{user.name}}</td>
+        <td>{{user.lastname}}</td>
+        <td>{{user.password}}</td>
+        <td>{{user.email}}</td>
+        <td>{{user.companyName}}</td>
 
-      <td>
-        <button pButton pRipple icon="pi pi-pencil" class="p-button-rounded p-button-success p-mr-2" (click)="editUsers(user)"></button>
-        <button pButton pRipple icon="pi pi-trash" class="p-button-rounded p-button-warning" (click)="deleteUsers(user)"></button>
-      </td>
-    </tr>
-  </ng-template>
-</p-table>
-
+        <td>
+          <button pButton pRipple icon="pi pi-pencil" class="p-button-rounded p-button-success p-mr-2" (click)="editUsers(user)"></button>
+          <button pButton pRipple icon="pi pi-trash" class="p-button-rounded p-button-warning" (click)="deleteUsers(user)"></button>
+        </td>
+      </tr>
+    </ng-template>
+  </p-table>
+</div>
 <p-dialog [(visible)]="usersDialog" [style]="{width: '450px'}" header="Users Details" [modal]="true" styleClass="p-fluid">
   <ng-template pTemplate="content">
     <div class="p-field">
       <label for="name">Name</label>
-      <input type="text" pInputText id="name" [(ngModel)]="user.name" required autofocus />
+      <input type="text" pInputText id="name" [(ngModel)]="user.name" required autofocus/>
       <small class="p-invalid" *ngIf="submitted && !user.name">Name is required.</small>
     </div>
     <div class="p-field p-col">
       <label for="lastName">Lastname</label>
-      <input type="text" pInputText id="lastName" [(ngModel)]="user.lastname" required autofocus />
+      <input type="text" pInputText id="lastName" [(ngModel)]="user.lastname" required autofocus/>
       <small class="p-invalid" *ngIf="submitted && !user.lastname">Lastname is required.</small>
     </div>
     <div class="p-field">
       <div class="p-formgrid p-grid">
         <label for="password">Password</label>
-        <input type="text" pInputText id="password" [(ngModel)]="user.password" required autofocus />
+        <input type="text" pInputText id="password" [(ngModel)]="user.password" required autofocus/>
         <small class="p-invalid" *ngIf="submitted && !user.password">password is required.</small>
       </div>
       <div class="p-formgrid p-grid">
         <div class="p-field p-col">
           <label for="email">Email</label>
-          <input type="text" pInputText id="email" [(ngModel)]="user.email" required autofocus />
+          <input type="text" pInputText id="email" [(ngModel)]="user.email" required autofocus/>
           <small class="p-invalid" *ngIf="submitted && !user.email">Email is required.</small>
         </div>
         <div class="p-formgrid p-grid">
           <div class="p-field p-col">
             <label for="companyName">Company name</label>
-            <input type="text" pInputText id="companyName" [(ngModel)]="user.companyName" required autofocus />
+            <input type="text" pInputText id="companyName" [(ngModel)]="user.companyName" required autofocus/>
             <small class="p-invalid" *ngIf="submitted && !user.companyName">Company name is required.</small>
           </div>
         </div>

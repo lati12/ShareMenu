@@ -1,21 +1,21 @@
 import { Injectable } from '@angular/core';
 import {HttpClient} from "@angular/common/http";
-import {Entityline} from "../models/entityline";
+import {Entityline} from "../common/entityline";
 
 @Injectable({
   providedIn: 'root'
 })
 export class EntitylineService {
 
-  getAllUrl: string = "http://localhost:4713/sharemenu/api/entityline/get";
-  saveUrl: string = "http://localhost:4713/sharerest/api/entityline/insert";
-  deleteUrl:string = "http://localhost:4713/sharerest/api/entityline/delete?id=";
+  getAllUrl: string = "http://localhost:4713/sharemenu/api/entityline/get?headerId=";
+  saveUrl: string = "http://localhost:4713/sharemenu/api/entityline/insert";
+  deleteUrl:string = "http://localhost:4713/sharemenu/api/entityline/delete?id=";
   status: string[] = ['OUTOFSTOCK', 'INSTOCK', 'LOWSTOCK'];
 
   constructor(private http: HttpClient) {}
 
-  getAll(){
-    return this.http.get<Entityline[]>(this.getAllUrl);
+  getAll(headerId: number){
+    return this.http.get<Entityline[]>(this.getAllUrl + headerId);
   }
 
   async save(entityLine : Entityline){

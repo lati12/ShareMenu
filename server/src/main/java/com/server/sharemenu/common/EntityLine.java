@@ -1,10 +1,10 @@
-package com.server.sharemenu.models;
+package com.server.sharemenu.common;
 
 import javax.persistence.*;
 
 @Entity
 @Table(name = "enitiyline")
-public class EntityLine {
+public class    EntityLine {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;

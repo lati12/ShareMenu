@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import {Users} from "../../models/users";
+import {Users} from "../../common/users";
 import {UsersService} from "../../services/users.service";
 import {ConfirmationService, MessageService} from "primeng/api";
 
@@ -15,8 +15,6 @@ export class UsersComponent implements OnInit {
   public users : Users[] = [];
 
   public user : Users = new Users();
-
-  selectedUsers : Users[] = [];
 
   submitted: boolean = false;
 
@@ -57,13 +55,11 @@ export class UsersComponent implements OnInit {
   saveUsers() {
     this.submitted = true;
     this.usersService.save(this.user).then(() => {
-      this.messageService.add({severity: 'success', summary: 'Successful', detail: 'Product Updated', life: 3000});
-      if (!this.user.id) {
-        this.users.push(this.user);
-        this.users = [...this.users];
-      }
-      this.usersDialog = false;
-      this.user = new Users();
+      this.usersService.getAll().subscribe(data => {
+        this.messageService.add({severity: 'success', summary: 'Successful', detail: 'Product Updated', life: 3000});
+        this.usersDialog = false;
+        this.user = new Users();
+      });
     });
   }
 

@@ -1,6 +1,6 @@
 package com.server.sharemenu.controllers;
 
-import com.server.sharemenu.models.SocialNetworkProvider;
+import com.server.sharemenu.common.SocialNetworkProvider;
 import com.server.sharemenu.repositories.SocialNetworkProviderRepository;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

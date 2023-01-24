@@ -33,7 +33,6 @@ import {InputTextareaModule} from "primeng/inputtextarea";
 import {DividerModule} from "primeng/divider";
 import {DropdownModule} from 'primeng/dropdown';
 import { UploadFileComponent } from './upload-file/upload-file.component';
-import { EntitylineComponent } from './components/entityline/entityline.component';
 import { EntityheaderComponent } from './components/entityheader/entityheader.component';
 import {EntitylineService} from "./services/entityline.service";
 import {EntityheaderService} from "./services/entityheader.service";
@@ -49,13 +48,11 @@ import {SharemenuComponent} from "./components/sharemenu/sharemenu.component";
 import {SocialproviderComponent} from "./components/socialprovider/socialprovider.component";
 import {TemplateComponent} from "./components/template/template.component";
 import {UsersComponent} from "./components/users/users.component";
-import { EntityDocumentsComponent } from './components/entity-documents/entity-documents.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     UploadFileComponent,
-    EntitylineComponent,
     EntityheaderComponent,
     ItemComponent,
     ItemCategoryComponent,
@@ -63,7 +60,6 @@ import { EntityDocumentsComponent } from './components/entity-documents/entity-d
     SocialproviderComponent,
     TemplateComponent,
     UsersComponent,
-    EntityDocumentsComponent,
 
   ],
   imports: [
@@ -96,7 +92,7 @@ import { EntityDocumentsComponent } from './components/entity-documents/entity-d
 
   ],
   providers: [MessageService,ConfirmationService, EntitylineService, EntityheaderService, ItemService,
-              ItemCategoryService,SharemenuService,SocialproviderService,TemplateService,UsersService],
+    ItemCategoryService,SharemenuService,SocialproviderService,TemplateService,UsersService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

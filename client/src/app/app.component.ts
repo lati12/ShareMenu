@@ -15,18 +15,26 @@ export class AppComponent {
 
   ngOnInit() {
     this.items = [{
-
-      items: [{
-        label: 'Template',
-        routerLink: '/template'
-      },
+      items: [
         {
           label: 'Entity Header',
           routerLink: '/entityheader'
         },
         {
-          label: 'Entity Lines',
-          routerLink: '/entityline'
+          label: 'Item',
+          routerLink: '/item'
+        },
+        {
+          label: 'Item Category',
+          routerLink: '/itemcategory'
+        },
+        {
+          label : 'Share Menu',
+          routerLink : '/sharemenu'
+        },
+        {
+          label: 'Template',
+          routerLink: '/template'
         },
         {
           label: 'Social Network Providers',
@@ -36,18 +44,6 @@ export class AppComponent {
           label: 'Users',
           routerLink: '/users'
         },
-        {
-          label: 'ItemCategory',
-          routerLink: '/itemcategory'
-        },
-        {
-          label: 'Item',
-          routerLink: '/item'
-        },
-        {
-          label: 'Entity Document',
-          routerLink : '/entitydocument'
-        }
       ]
     }];
   }

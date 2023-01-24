@@ -1,6 +1,6 @@
 package com.server.sharemenu.controllers;
 
-import com.server.sharemenu.models.Template;
+import com.server.sharemenu.common.Template;
 import com.server.sharemenu.repositories.TemplateRepository;
 import com.server.sharemenu.services.UploadFileService;
 import org.springframework.http.ResponseEntity;

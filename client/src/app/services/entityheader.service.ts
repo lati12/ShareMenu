@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import {HttpClient} from "@angular/common/http";
-import {Entityheader} from "../models/entityheader";
+import {EntityHeader} from "../common/entityheader";
 
 @Injectable({
   providedIn: 'root'
@@ -16,13 +16,13 @@ export class EntityheaderService {
   constructor(private http : HttpClient) {}
 
   getAll(){
-    return this.http.get<Entityheader[]>(this.getAllUrl);
+    return this.http.get<EntityHeader[]>(this.getAllUrl);
   }
 
-  async save(entityheader : Entityheader){
+  async save(entityheader : EntityHeader){
     return await this.http.post(this.saveUrl, entityheader, {responseType: 'text'}).toPromise();
   }
-  delete(entityheader : Entityheader){
+  delete(entityheader : EntityHeader){
     return this.http.delete(this.deleteUrl+ entityheader.id,{responseType : 'text'}).toPromise()
   }
 }

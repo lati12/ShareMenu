@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Template } from 'src/app/models/template';
+import { Template } from 'src/app/common/template';
 import {TemplateService} from "../../services/template.service";
 import {ConfirmationService, MessageService} from "primeng/api";
 
@@ -15,8 +15,6 @@ export class TemplateComponent implements OnInit {
   public templates : Template[] = [];
 
   public template : Template = new Template();
-
-  selectedTemplates : Template[] = [];
 
   submitted: boolean = false;
   constructor(private templateService : TemplateService, private messageService: MessageService, private confirmationService: ConfirmationService) { }
@@ -57,13 +55,11 @@ export class TemplateComponent implements OnInit {
     this.submitted = true;
 
     this.templateService.save(this.template).then(() => {
-      this.messageService.add({severity: 'success', summary: 'Successful', detail: 'Product Updated', life: 3000});
-      if (!this.template.id) {
-        this.templates.push(this.template);
-        this.templates = [...this.templates];
-      }
-      this.templateDialog = false;
-      this.template = new Template();
+      this.templateService.getAll().subscribe(data => {
+        this.messageService.add({severity: 'success', summary: 'Successful', detail: 'Product Updated', life: 3000});
+        this.templateDialog = false;
+        this.template = new Template();
+      });
     });
   }
 

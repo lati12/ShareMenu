@@ -1,11 +1,10 @@
-import {Entityheader} from "./entityheader";
 import {Item} from "./item";
+import {EntityHeader} from "./entityheader";
 
 export class Entityline {
   id:number = 0;
-  name:string = "";
   price: number = 0;
   quantity: number = 0;
-  entityheader : Entityheader = new Entityheader();
+  entityHeader : EntityHeader = new EntityHeader();
   item : Item = new Item()
 }

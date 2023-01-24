@@ -1,7 +1,7 @@
 import {Template} from "./template";
 import {Users} from "./users";
 
-export class Entityheader {
+export class EntityHeader {
   id:number = 0;
   name:string = "";
   address:string = "";

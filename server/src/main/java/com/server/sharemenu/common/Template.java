@@ -1,15 +1,19 @@
-package com.server.sharemenu.models;
+package com.server.sharemenu.common;
 
 import javax.persistence.*;
 
 @Entity
-@Table(name = "itemcategory")
-public class ItemCategory {
+@Table(name = "template")
+public class Template {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
     @Column(length = 255)
-    private String Name;
+    private String name;
+
+    @Column
+    private byte[] file;
 
     public Long getId() {
         return id;
@@ -20,11 +24,18 @@ public class ItemCategory {
     }
 
     public String getName() {
-        return Name;
+        return name;
     }
 
     public void setName(String name) {
-        Name = name;
+        this.name = name;
     }
 
+    public byte[] getFile() {
+        return file;
+    }
+
+    public void setFile(byte[] file) {
+        this.file = file;
+    }
 }

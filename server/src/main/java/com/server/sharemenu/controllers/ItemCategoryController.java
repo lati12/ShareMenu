@@ -1,6 +1,6 @@
 package com.server.sharemenu.controllers;
 
-import com.server.sharemenu.models.ItemCategory;
+import com.server.sharemenu.common.ItemCategory;
 import com.server.sharemenu.repositories.ItemCategoryRepository;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

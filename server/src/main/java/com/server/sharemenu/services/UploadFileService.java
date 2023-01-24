@@ -1,6 +1,6 @@
 package com.server.sharemenu.services;
 
-import com.server.sharemenu.models.Template;
+import com.server.sharemenu.common.Template;
 import com.server.sharemenu.repositories.TemplateRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;

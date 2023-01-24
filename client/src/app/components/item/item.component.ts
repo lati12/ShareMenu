@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import {Item} from "../../models/item";
-import {ItemCategory} from "../../models/item-category";
+import {Item} from "../../common/item";
+import {ItemCategory} from "../../common/item-category";
 import {ItemService} from "../../services/item.service";
 import {ItemCategoryService} from "../../services/item-category.service";
 import {ConfirmationService, MessageService} from "primeng/api";
@@ -21,7 +21,7 @@ export class ItemComponent implements OnInit {
   public itemCategories : ItemCategory[] = [];
 
   submitted: boolean = false;
-  constructor(private itemservice: ItemService,private itemCategoryService: ItemCategoryService, private messageService: MessageService, private confirmationService: ConfirmationService) { }
+    constructor(private itemservice: ItemService,private itemCategoryService: ItemCategoryService, private messageService: MessageService, private confirmationService: ConfirmationService) { }
 
   ngOnInit(): void {
     this.itemservice.getAll().subscribe(data =>{
@@ -63,13 +63,12 @@ export class ItemComponent implements OnInit {
     this.submitted = true;
 
     this.itemservice.save(this.item).then(() => {
-      this.messageService.add({severity: 'success', summary: 'Successful', detail: 'Product Updated', life: 3000});
-      if (!this.item.id) {
-        this.items.push(this.item);
-        this.items = [...this.items];
-      }
-      this.itemDialog = false;
-      this.item = new Item();
+      this.itemservice.getAll().subscribe(data => {
+        this.items = data;
+        this.messageService.add({severity: 'success', summary: 'Successful', detail: 'Product Updated', life: 3000});
+        this.itemDialog = false;
+        this.item = new Item();
+      });
     });
   }
 

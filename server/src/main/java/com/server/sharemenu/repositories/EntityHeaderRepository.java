@@ -1,6 +1,6 @@
 package com.server.sharemenu.repositories;
 
-import com.server.sharemenu.models.EntityHeader;
+import com.server.sharemenu.common.EntityHeader;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import {Socialproviders} from "../../models/socialprovider";
+import {Socialproviders} from "../../common/socialprovider";
 import {SocialproviderService} from "../../services/socialprovider.service";
 import {ConfirmationService, MessageService} from "primeng/api";
 
@@ -15,8 +15,6 @@ export class SocialproviderComponent implements OnInit {
   public socialProviders : Socialproviders[] = [];
 
   public socialProvider : Socialproviders = new Socialproviders();
-
-  selecetedSocialProviders : Socialproviders[] = [];
 
   submitted : boolean = false;
 
@@ -58,13 +56,11 @@ export class SocialproviderComponent implements OnInit {
     this.submitted = true;
 
     this.socialProviderService.save(this.socialProvider).then(() =>{
-      this.messageService.add({severity:'success', summary: 'Successful', detail: 'Product Updated', life: 3000});
-      if (!this.socialProvider.id) {
-        this.socialProviders.push(this.socialProvider);
-        this.socialProviders = [...this.socialProviders];
-      }
-      this.socialProvidersDialog = false;
-      this.socialProvider = new Socialproviders();
+      this.socialProviderService.getAll().subscribe(data => {
+        this.messageService.add({severity:'success', summary: 'Successful', detail: 'Product Updated', life: 3000});
+        this.socialProvidersDialog = false;
+        this.socialProvider = new Socialproviders();
+      })
     });
   }
 

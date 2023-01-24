@@ -1,6 +1,6 @@
 package com.server.sharemenu.controllers;
 
-import com.server.sharemenu.models.ShareMenu;
+import com.server.sharemenu.common.ShareMenu;
 import com.server.sharemenu.repositories.ShareMenuRepository;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

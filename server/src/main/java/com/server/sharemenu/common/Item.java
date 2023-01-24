@@ -1,4 +1,4 @@
-package com.server.sharemenu.models;
+package com.server.sharemenu.common;
 
 import javax.persistence.*;
 

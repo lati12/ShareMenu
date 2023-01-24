@@ -1,6 +1,6 @@
 package com.server.sharemenu.repositories;
 
-import com.server.sharemenu.models.Users;
+import com.server.sharemenu.common.Users;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

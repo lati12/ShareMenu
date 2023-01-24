@@ -1,31 +1,22 @@
 <p-toast></p-toast>
-<div class="card">
-  <h5>Events</h5>
-  <p>onRowSelect and onRowUnselect are available as selection events.</p>
-  <p-table [value]="entityHeaders" selectionMode="single" [(selection)]="selectedEntityHeaders" dataKey="code"
-           (onRowSelect)="onRowSelect($event)" (onRowUnselect)="onRowUnselect($event)">
+<div class="card card-width-table">
+  <button pButton pRipple label="New" icon="pi pi-plus" class="p-button-success p-mr-2" style="margin: 4px" (click)="openNewEntityHeader()"></button>
+  <p-table [value]="entityHeaders" selectionMode="single" (onRowSelect)="onRowSelectEntityHeader($event)" >
     <ng-template pTemplate="header">
       <tr>
-        <th style="width: 3rem">
-          <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
-        </th>
         <th pSortableColumn="name">Name</th>
         <th pSortableColumn="address">Adress</th>
         <th pSortableColumn="phone">Phone</th>
         <th pSortableColumn="templates">Templates</th>
-        <th pSortableColumn="users">Users</th>
+        <th pSortableColumn="templates">User name</th>
         <th pSortableColumn="email">Email</th>
         <th pSortableColumn="city">City</th>
         <th pSortableColumn="country">Country</th>
         <th></th>
       </tr>
-
     </ng-template>
     <ng-template pTemplate="body" let-entityHeader>
-      <tr>
-        <td>
-          <p-tableCheckbox [value]="entityHeader"></p-tableCheckbox>
-        </td>
+      <tr [pSelectableRow]="entityHeader">
         <td>{{entityHeader.name}}</td>
         <td>{{entityHeader.address}}</td>
         <td>{{entityHeader.phone}}</td>
@@ -34,6 +25,10 @@
         <td>{{entityHeader.email}}</td>
         <td>{{entityHeader.city}}</td>
         <td>{{entityHeader.country}}</td>
+        <td>
+          <button pButton pRipple icon="pi pi-pencil" class="p-button-rounded p-button-success p-mr-2" (click)="editEntityHeader(entityHeader)"></button>
+          <button pButton pRipple icon="pi pi-trash" class="p-button-rounded p-button-warning" (click)="deleteEntityHeader(entityHeader)" ></button>
+        </td>
       </tr>
     </ng-template>
   </p-table>
@@ -45,19 +40,17 @@
     <div class="p-field">
       <label for="name">Name</label>
       <input type="text" pInputText id="name" [(ngModel)]="entityHeader.name" required autofocus />
-      <small class="p-invalid" *ngIf="submitted && !entityHeader.name">Name is required.</small>
+      <small class="p-invalid" *ngIf="submittedEntityHeader && !entityHeader.name">Name is required.</small>
     </div>
     <div class="p-field">
       <label for="address">Address</label>
       <input type="text" pInputText id="address" [(ngModel)]="entityHeader.address" required autofocus />
-      <small class="p-invalid" *ngIf="submitted && !entityHeader.address">address is required.</small>
+      <small class="p-invalid" *ngIf="submittedEntityHeader && !entityHeader.address">address is required.</small>
     </div>
-    //test
-
     <div class="p-field">
       <label for="phone">Phone</label>
       <input type="text" pInputText id="phone" [(ngModel)]="entityHeader.phone" required autofocus />
-      <small class="p-invalid" *ngIf="submitted && !entityHeader.phone">Phone is required.</small>
+      <small class="p-invalid" *ngIf="submittedEntityHeader && !entityHeader.phone">Phone is required.</small>
     </div>
     <div>
       <label for="name">Template</label>
@@ -72,23 +65,74 @@
     <div class="p-field">
       <label for="email">Email</label>
       <input type="text" pInputText id="email" [(ngModel)]="entityHeader.email" required autofocus />
-      <small class="p-invalid" *ngIf="submitted && !entityHeader.email">Email is required.</small>
+      <small class="p-invalid" *ngIf="submittedEntityHeader && !entityHeader.email">Email is required.</small>
     </div>
     <div class="p-field">
       <label for="city">City</label>
       <input type="text" pInputText id="city" [(ngModel)]="entityHeader.city" required autofocus />
-      <small class="p-invalid" *ngIf="submitted && !entityHeader.city">City is required.</small>
+      <small class="p-invalid" *ngIf="submittedEntityHeader && !entityHeader.city">City is required.</small>
     </div>
     <div class="p-field">
       <label for="country">Country</label>
       <input type="text" pInputText id="country" [(ngModel)]="entityHeader.country" required autofocus />
-      <small class="p-invalid" *ngIf="submitted && !entityHeader.country">Country is required.</small>
+      <small class="p-invalid" *ngIf="submittedEntityHeader && !entityHeader.country">Country is required.</small>
     </div>
   </ng-template>
 
   <ng-template pTemplate="footer">
-    <button pButton pRipple label="Cancel" icon="pi pi-times" class="p-button-text" (click)="hideDialog()"></button>
+    <button pButton pRipple label="Cancel" icon="pi pi-times" class="p-button-text" (click)="hideEntityHeaderDialog()"></button>
     <button pButton pRipple label="Save" icon="pi pi-check" class="p-button-text" (click)="saveEntityHeader()"></button>
+  </ng-template>
+</p-dialog>
+
+
+<p-dialog [(visible)]="entityLineDialog" [closeOnEscape]="false" [style]="{width: '1280px'}" header="Entity line Details" [modal]="true" styleClass="p-fluid">
+  <ng-template pTemplate="content">
+    <button pButton pRipple label="Add" icon="pi pi-plus" class="p-button-success" style="width: 96px; padding: 12px 28px" (click)="openNewEntityLineDetails()"></button>
+    <p-table #dt [value]="entitylines" [rows]="10" [paginator]="true" [rowHover]="true">
+      <ng-template pTemplate="header">
+        <tr>
+          <th pSortableColumn="itemName">Item name</th>
+          <th pSortableColumn="price">Price</th>
+          <th pSortableColumn="quantity">Quantity</th>
+          <th></th>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="body" let-entityline>
+        <tr>
+          <td>{{entityline.item.name}}</td>
+          <td>{{entityline.price}}</td>
+          <td>{{entityline.quantity}}</td>
+          <td>
+            <button pButton pRipple icon="pi pi-pencil" class="p-button-rounded p-button-success p-mr-2" (click)="editEntityLineDetails(entityline)"></button>
+            <button pButton pRipple icon="pi pi-trash" class="p-button-rounded p-button-warning" (click)="deleteEntityLineDetails(entityline)"></button>
+          </td>
+        </tr>
+      </ng-template>
+
+    </p-table>
+  </ng-template>
+</p-dialog>
+
+<p-dialog [(visible)]="entityLineDetailsDialog" [closeOnEscape]="false" [style]="{width: '450px'}" header="Entity line Details" [modal]="true" styleClass="p-fluid">
+  <ng-template pTemplate="content">
+    <div class="p-field">
+      <label for="name">Item</label>
+      <p-dropdown  [options]="items" [(ngModel)]="entityline.item" placeholder="Select Item" optionLabel="name">
+      </p-dropdown>
+    </div>
+    <div class="p-field">
+      <label for="price">Price</label>
+      <input type="number" pInputText id="price" [(ngModel)]="entityline.price" />
+    </div>
+    <div class="p-field">
+      <label for="quantity">Quantity</label>
+      <input type="number" pInputText id="quantity" [(ngModel)]="entityline.quantity" />
+    </div>
+  </ng-template>
+  <ng-template pTemplate="footer">
+    <button pButton pRipple label="Cancel" icon="pi pi-times" class="p-button-text" (click)="hideEntityLineDetailsDialog()"></button>
+    <button pButton pRipple label="Save" icon="pi pi-check" class="p-button-text" (click)="saveEntityLineDetails()" ></button>
   </ng-template>
 </p-dialog>
 
