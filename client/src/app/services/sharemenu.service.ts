@@ -7,12 +7,13 @@ import {Sharemenu} from "../common/sharemenu";
 })
 export class SharemenuService {
 
-  getAllUrl: string = "http://localhost:4713/sharemenu/api/sharemenu/get";
+  getAllUrl: string = "http://localhost:4713/sharemenu/api/resource/sharemenu/get";
 
+  generateFileUrl: string = "http://localhost:4713/sharemenu/api/resource/sharemenu/generate-file"
 
   constructor (private http : HttpClient) { }
 
-  getAll(){
-    return this.http.get<Sharemenu[]>(this.getAllUrl);
+  async generateFile(shareMenu : Sharemenu){
+    return await this.http.post(this.generateFileUrl, shareMenu, {responseType : 'text'}).toPromise();
   }
 }

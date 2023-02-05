@@ -7,9 +7,9 @@ import {Template} from "../common/template";
 })
 export class TemplateService {
 
-  getAllUrl: string = "http://localhost:4713/sharemenu/api/template/get";
-  saveUrl: string = "http://localhost:4713/sharemenu/api/template/insert";
-  deleteUrl : string = "http://localhost:4713/sharemenu/api/template/delete?id=";
+  getAllUrl: string = "http://localhost:4713/sharemenu/api/resource/template/get";
+  saveUrl: string = "http://localhost:4713/sharemenu/api/resource/template/insert";
+  deleteUrl : string = "http://localhost:4713/sharemenu/api/resource/template/delete?id=";
 
   status: string[] = ['OUTOFSTOCK', 'INSTOCK', 'LOWSTOCK'];
 

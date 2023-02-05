@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import {EntityHeader} from "../../common/entityheader";
 import {Sharemenu} from "../../common/sharemenu";
-import {Socialproviders} from "../../common/socialprovider";
+import {SocialNetworkProvider} from "../../common/socialnetworkprovider";
 import {EntityheaderService} from "../../services/entityheader.service";
-import {SocialproviderService} from "../../services/socialprovider.service";
+import {SocialNetworkProviderService} from "../../services/social-network-provider.service";
 import {ConfirmationService, MessageService} from "primeng/api";
 import {SharemenuService} from "../../services/sharemenu.service";
 
@@ -22,21 +22,28 @@ export class SharemenuComponent implements OnInit {
   shareMenus : Sharemenu [] = [];
   itemDialog: boolean = false;
 
-  socialproviders : Socialproviders [] = [];
-  socialProvider : Socialproviders = new Socialproviders();
+  socialproviders : SocialNetworkProvider [] = [];
+  socialProvider : SocialNetworkProvider = new SocialNetworkProvider();
 
-  constructor(private sharemenuService: SharemenuService,private entityHeaderService:EntityheaderService, private  socialProviderService : SocialproviderService, private messageService: MessageService, private confirmationService: ConfirmationService) { }
+  constructor(private sharemenuService: SharemenuService,private entityHeaderService:EntityheaderService,
+              private  socialProviderService : SocialNetworkProviderService) { }
 
   ngOnInit(): void {
-    this.sharemenuService.getAll().subscribe(data =>{
-      this.shareMenus = data
-    });
     this.entityHeaderService.getAll().subscribe(data =>{
-      this.entityheaders = data
+      this.entityheaders = data;
     });
+
     this.socialProviderService.getAll().subscribe(data =>{
-      this.socialproviders = data
+      this.socialproviders = data;
     });
+  }
+
+  generateFile(){
+    this.sharemenuService.generateFile(this.sharemenu).then(() =>{
+      console.log("done");
+    }).catch(arr => {
+      console.log(arr);
+    })
   }
 
 }

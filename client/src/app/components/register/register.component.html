@@ -1,0 +1,74 @@
+<div class="grid p-ai-center vertical-container">
+  <div class="col">
+    <div class="grid col-offset-4" style="margin-top: 2rem">
+      <div class="col-6 shadow-5 box" style="background-color: white;">
+        <div class="flex flex-row justify-content-between">
+          <div class="title">
+            <h2>Sharemenu</h2>
+          </div>
+          <div style="margin-top: 8px">
+            <button class="p-button-text p-button-sm" pButton (click)="redirectLogin()">Login</button>
+          </div>
+        </div>
+        <p-divider></p-divider>
+        <div class="p-grid" style="margin: 24px 24px">
+          <div class="p-col">
+            <form [formGroup]="registerFormGroup">
+              <div class="p-fluid">
+                <div class="field p-float-label">
+                  <input type="text" pInputText id="firstName" formControlName="firstName">
+                  <label for="firstName">First name</label>
+                  <small class="p-error" *ngIf="firstName.hasError('required') && firstName.dirty">First name is required!</small>
+                </div>
+
+                <div class="field p-float-label">
+                  <input type="text" pInputText id="lastName" formControlName="lastName">
+                  <label for="lastName">Last name</label>
+                  <small class="p-error" *ngIf="lastName.hasError('required') && lastName.dirty">Last name is required!</small>
+                </div>
+
+                <div class="field p-float-label">
+                  <input type="text" pInputText id="companyName" formControlName="companyName">
+                  <label for="lastName">Company name</label>
+                  <small class="p-error" *ngIf="companyName.hasError('required') && companyName.dirty">Company is required!</small>
+                </div>
+
+                <div class="field p-float-label">
+                  <input type="text" pInputText id="email" formControlName="email">
+                  <label for="email">Email</label>
+                  <small class="p-error" *ngIf="email.hasError('email')">Invalid Email</small>
+                  <small class="p-error" *ngIf="email.hasError('required') && email.dirty">Email is required!</small>
+                </div>
+
+                <div class="field p-float-label">
+                  <input type="password" pInputText id="password" formControlName="password">
+                  <label for="password">Password</label>
+                  <small class="p-error" *ngIf="password.hasError('password')">Invalid password</small>
+                  <small class="p-error" *ngIf="password.hasError('required') && password.dirty">Password is required!</small>
+                </div>
+
+                <div class="field p-float-label">
+                  <input type="password" pInputText id="passwordConfirm" formControlName="passwordConfirm">
+                  <label for="passwordConfirm">Confirm Password</label>
+                  <small class="p-error" *ngIf="passwordConfirm.hasError('required') && passwordConfirm.dirty">Confirm Password is required!</small>
+                  <small class="p-error" *ngIf="passwordConfirm.value!=password.value">Passwords must match</small>
+                </div>
+
+                <div class="p-d-flex p-jc-between">
+                  <button type="submit" label="Register" class="p-offset-8" (click)="doRegister()" pButton></button>
+                </div>
+
+                <div *ngIf="hideRegFields">
+                  <h3 class="title">Your account has been created, confirmation email has been sent to: <div>{{email.value}}</div></h3>
+                  <p-progressBar unit="" [showValue]="false" [value]="counter"></p-progressBar>
+                </div>
+
+              </div>
+            </form>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

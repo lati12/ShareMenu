@@ -29,10 +29,7 @@ export class TemplateComponent implements OnInit {
     this.submitted = false;
     this.templateDialog = true;
   }
-  editTemplate(template: Template){
-    this.template = {...template};
-    this.templateDialog = true;
-  }
+
   deleteTemplate(template : Template) {
     this.confirmationService.confirm({
       message: 'Are you sure you want to delete ' + template.name + '?',
@@ -47,20 +44,4 @@ export class TemplateComponent implements OnInit {
       }
     });
   }
-  hideDialog() {
-    this.templateDialog = false;
-    this.submitted = false;
-  }
-  saveTemplate() {
-    this.submitted = true;
-
-    this.templateService.save(this.template).then(() => {
-      this.templateService.getAll().subscribe(data => {
-        this.messageService.add({severity: 'success', summary: 'Successful', detail: 'Product Updated', life: 3000});
-        this.templateDialog = false;
-        this.template = new Template();
-      });
-    });
-  }
-
 }

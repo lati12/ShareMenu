@@ -16,9 +16,7 @@
     <ng-template pTemplate="body" let-template>
       <tr>
         <td>{{template.name}}</td>
-        <td>{{template.file}}</td>
         <td>
-          <button pButton pRipple icon="pi pi-pencil" class="p-button-rounded p-button-success p-mr-2" (click)="editTemplate(template)"></button>
           <button pButton pRipple icon="pi pi-trash" class="p-button-rounded p-button-warning" (click)="deleteTemplate(template)"></button>
         </td>
       </tr>
@@ -27,25 +25,14 @@
 </div>
 <p-dialog [(visible)]="templateDialog" [style]="{width: '450px'}" header="Template Details" [modal]="true" styleClass="p-fluid">
   <ng-template pTemplate="content">
-    <div class="p-field">
-      <label for="name">Name</label>
-      <input type="text" pInputText id="name" [(ngModel)]="template.name" required autofocus/>
-      <small class="p-invalid" *ngIf="submitted && !template.name">Name is required.</small>
-    </div>
     <div class="p-field" style="margin: 6px">
       <label>Upload File</label>
-      <p-fileUpload mode="basic" name="file" url="http://localhost:4713/sharemenu/api/upload-file/upload"
-                    accept="image/*" [maxFileSize]="1000000" [auto]="true" chooseLabel="Browse">
+      <p-fileUpload mode="basic" name="file" url="http://localhost:4713/sharemenu/api/resource/upload-file/upload"
+                    accept="*" [maxFileSize]="1000000" [auto]="true" chooseLabel="Upload file">
         <ng-template pTemplate="toolbar">
         </ng-template>
       </p-fileUpload>
     </div>
-  </ng-template>
-
-
-  <ng-template pTemplate="footer">
-    <button pButton pRipple label="Cancel" icon="pi pi-times" class="p-button-text" (click)="hideDialog()"></button>
-    <button pButton pRipple label="Save" icon="pi pi-check" class="p-button-text" (click)="saveTemplate()"></button>
   </ng-template>
 </p-dialog>
 <p-confirmDialog [style]="{width: '450px'}"></p-confirmDialog>

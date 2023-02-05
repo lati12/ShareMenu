@@ -7,9 +7,9 @@ import {ItemCategory} from "../common/item-category";
 })
 export class ItemCategoryService {
 
-  getAllUrl: string = "http://localhost:4713/sharemenu/api/itemcategory/get";
-  saveUrl: string = "http://localhost:4713/sharemenu/api/itemcategory/insert";
-  deleteUrl:string = "http://localhost:4713/sharemenu/api/itemcategory/delete?id=";
+  getAllUrl: string = "http://localhost:4713/sharemenu/api/resource/itemcategory/get";
+  saveUrl: string = "http://localhost:4713/sharemenu/api/resource/itemcategory/insert";
+  deleteUrl:string = "http://localhost:4713/sharemenu/api/resource/itemcategory/delete?id=";
 
   status: string[] = ['OUTOFSTOCK', 'INSTOCK', 'LOWSTOCK'];
 

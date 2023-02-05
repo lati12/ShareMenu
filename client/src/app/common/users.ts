@@ -4,5 +4,5 @@ export  class Users {
   lastname:string = "";
   password:string = "";
   email:string = "";
-  companyName:string = "";
+  companyname:string = "";
 }

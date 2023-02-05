@@ -11,7 +11,7 @@ public class UsersSocialNetworkProvider {
     @ManyToOne
     @MapsId("usersId")
     @JoinColumn(name = "users_id")
-    Users users;
+    User users;
 
     @ManyToOne
     @MapsId("socialNetworkProviderId")
@@ -19,11 +19,11 @@ public class UsersSocialNetworkProvider {
     SocialNetworkProvider socialNetworkProvider;
 
 
-    public Users getUsers() {
+    public User getUsers() {
         return users;
     }
 
-    public void setUsers(Users users) {
+    public void setUsers(User users) {
         this.users = users;
     }
 

@@ -2,6 +2,8 @@ package com.server.sharemenu.services;
 
 import com.server.sharemenu.common.Template;
 import com.server.sharemenu.repositories.TemplateRepository;
+import org.apache.commons.lang3.text.translate.NumericEntityUnescaper;
+import org.aspectj.apache.bcel.classfile.Module;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
@@ -19,8 +21,14 @@ public class UploadFileService {
 
     public Template uploadFile(MultipartFile file) throws IOException {
         String fileName = StringUtils.cleanPath(file.getOriginalFilename());
-        Template template = new Template();
-        template.setName(fileName);
+
+        Template template = templateRepository.findTemplateByName(fileName);
+
+        if (template == null) {
+            template = new Template();
+            template.setName(fileName);
+        }
+
         template.setFile(file.getBytes());
 
         return templateRepository.save(template);

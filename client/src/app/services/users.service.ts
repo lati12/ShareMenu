@@ -7,9 +7,9 @@ import {Users} from "../common/users";
 })
 export class UsersService {
 
-  getAllUrl: string = "http://localhost:4713/sharemenu/api/users/get";
-  saveUrl: string = "http://localhost:4713/sharemenu/api/users/insert";
-  deleteUrl : string =  "http://localhost:4713/sharemenu/api/users/delete?id="
+  getAllUrl: string = "http://localhost:4713/sharemenu/api/resource/users/get";
+  saveUrl: string = "http://localhost:4713/sharemenu/api/resource/users/insert";
+  deleteUrl : string =  "http://localhost:4713/sharemenu/api/resource/users/delete?id="
 
   status: string[] = ['OUTOFSTOCK', 'INSTOCK', 'LOWSTOCK'];
 

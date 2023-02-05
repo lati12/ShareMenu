@@ -10,7 +10,7 @@ import java.util.Optional;
 
 @CrossOrigin(origins = "*", maxAge = 3600)
 @RestController
-@RequestMapping("/api/userssocialnetworkprovider")
+@RequestMapping("/api/resource/userssocialnetworkprovider")
 public class UsersSocialNetworkProviderController {
     private final UsersSocialNetworkProviderRepository usersSocialNetworkProviderRepository;
 

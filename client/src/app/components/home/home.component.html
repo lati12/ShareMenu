@@ -1,0 +1,43 @@
+<p-toolbar>
+  <div class="p-toolbar-group-left">
+    <label class="title">
+      <h4>Sharemenu</h4>
+    </label>
+    <img class="logo-small" style="margin: 0 0 8px 8px; width: 48px; height: 48px" draggable="false" src="assets/logo.png">
+  </div>
+
+  <div class="p-toolbar-group-right">
+    <label *ngIf="loggedUser && isLoggedIn" style="margin-right: 8px">
+      <strong>{{loggedUser.name}} {{loggedUser.lastname}}</strong>
+    </label>
+    <button (click)="op.toggle($event)" pButton type="button" icon="pi pi-user"
+            class="p-button-rounded p-button-outlined account-btn"></button>
+  </div>
+</p-toolbar>
+
+<p-splitter [panelSizes]="[10,90]">
+  <ng-template pTemplate="">
+    <p-menu [model]="items"></p-menu>
+  </ng-template>
+  <ng-template pTemplate="">
+    <router-outlet></router-outlet>
+  </ng-template>
+</p-splitter>
+
+
+<!--User drop down overlay menu-->
+<p-overlayPanel #op>
+  <ng-template pTemplate>
+    <div class="rowOverlayMenu">
+      <button (click)="router.navigate(['profile']); op.hide()" pButton type="button" label="My profile"
+              class="p-button-secondary p-button-text button-user-dropdown">
+        <em class="pi pi-user-edit primary"></em>
+      </button>
+    </div>
+    <div class="rowOverlayMenu">
+      <button (click)="logout(); op.hide()" pButton type="button" label="Logout"
+              class="p-button-secondary p-button-text button-user-dropdown">
+        <em class="pi pi-sign-out primary"></em></button>
+    </div>
+  </ng-template>
+</p-overlayPanel>

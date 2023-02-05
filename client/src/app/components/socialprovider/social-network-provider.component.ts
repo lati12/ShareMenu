@@ -1,24 +1,24 @@
 import { Component, OnInit } from '@angular/core';
-import {Socialproviders} from "../../common/socialprovider";
-import {SocialproviderService} from "../../services/socialprovider.service";
+import {SocialNetworkProvider} from "../../common/socialnetworkprovider";
+import {SocialNetworkProviderService} from "../../services/social-network-provider.service";
 import {ConfirmationService, MessageService} from "primeng/api";
 
 @Component({
   selector: 'app-socialprovider',
-  templateUrl: './socialprovider.component.html',
-  styleUrls: ['./socialprovider.component.scss']
+  templateUrl: './social-network-provider.component.html',
+  styleUrls: ['./social-network-provider.component.scss']
 })
-export class SocialproviderComponent implements OnInit {
+export class SocialNetworkProviderComponent implements OnInit {
 
   socialProvidersDialog: boolean = false;
 
-  public socialProviders : Socialproviders[] = [];
+  public socialProviders : SocialNetworkProvider[] = [];
 
-  public socialProvider : Socialproviders = new Socialproviders();
+  public socialProvider : SocialNetworkProvider = new SocialNetworkProvider();
 
   submitted : boolean = false;
 
-  constructor(private socialProviderService : SocialproviderService, private messageService: MessageService, private confirmationService: ConfirmationService) { }
+  constructor(private socialProviderService : SocialNetworkProviderService, private messageService: MessageService, private confirmationService: ConfirmationService) { }
 
   ngOnInit() {
     this.socialProviderService.getAll().subscribe(data => {
@@ -26,15 +26,15 @@ export class SocialproviderComponent implements OnInit {
     });
   }
   openNew(){
-    this.socialProvider = new Socialproviders();
+    this.socialProvider = new SocialNetworkProvider();
     this.submitted = false;
     this.socialProvidersDialog = true;
   }
-  editSocialProviders(socialProvider : Socialproviders){
+  editSocialProviders(socialProvider : SocialNetworkProvider){
     this.socialProvider = {...socialProvider};
     this.socialProvidersDialog = true;
   }
-  deleteSocialProviders(socialProvider : Socialproviders) {
+  deleteSocialProviders(socialProvider : SocialNetworkProvider) {
     this.confirmationService.confirm({
       message: 'Are you sure you want to delete ' + socialProvider.name + '?',
       header: 'Confirm',
@@ -42,7 +42,7 @@ export class SocialproviderComponent implements OnInit {
       accept: () => {
         this.socialProviders = this.socialProviders.filter(val => val.id !== socialProvider.id);
         this.socialProviderService.delete(socialProvider).then(() => {
-          this.socialProvider = new Socialproviders();
+          this.socialProvider = new SocialNetworkProvider();
         });
         this.messageService.add({severity:'success', summary: 'Successful', detail: 'Product Deleted', life: 3000});
       }
@@ -59,7 +59,7 @@ export class SocialproviderComponent implements OnInit {
       this.socialProviderService.getAll().subscribe(data => {
         this.messageService.add({severity:'success', summary: 'Successful', detail: 'Product Updated', life: 3000});
         this.socialProvidersDialog = false;
-        this.socialProvider = new Socialproviders();
+        this.socialProvider = new SocialNetworkProvider();
       })
     });
   }

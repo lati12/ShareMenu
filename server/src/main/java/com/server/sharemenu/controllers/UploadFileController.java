@@ -9,7 +9,7 @@ import java.io.IOException;
 
 @CrossOrigin(origins = "*", maxAge = 3600)
 @RestController
-@RequestMapping("/api/upload-file")
+@RequestMapping("/api/resource/upload-file")
 public class UploadFileController {
 
     UploadFileService uploadFileService;

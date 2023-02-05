@@ -7,9 +7,9 @@ import {Item} from "../common/item";
 })
 export class ItemService {
 
-  getAllUrl: string = "http://localhost:4713/sharemenu/api/item/get";
-  saveUrl: string = "http://localhost:4713/sharemenu/api/item/insert";
-  deleteUrl: string = "http://localhost:4713/sharemenu/api/item/delete?id=";
+  getAllUrl: string = "http://localhost:4713/sharemenu/api/resource/item/get";
+  saveUrl: string = "http://localhost:4713/sharemenu/api/resource/item/insert";
+  deleteUrl: string = "http://localhost:4713/sharemenu/api/resource/item/delete?id=";
 
   status: string[] = ['OUTOFSTOCK', 'INSTOCK', 'LOWSTOCK'];
 

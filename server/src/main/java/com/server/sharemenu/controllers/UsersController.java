@@ -1,7 +1,7 @@
 package com.server.sharemenu.controllers;
 
-import com.server.sharemenu.common.Users;
-import com.server.sharemenu.repositories.UsersRepository;
+import com.server.sharemenu.common.User;
+import com.server.sharemenu.repositories.UserRepository;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -10,32 +10,32 @@ import java.util.Optional;
 
 @CrossOrigin(origins = "*", maxAge = 3600)
 @RestController
-@RequestMapping("/api/users")
+@RequestMapping("/api/resource/users")
 public class UsersController {
-    private  final UsersRepository usersRepository;
+    private  final UserRepository usersRepository;
 
-    public UsersController(UsersRepository usersRepository) {
+    public UsersController(UserRepository usersRepository) {
         this.usersRepository = usersRepository;
     }
 
     @PostMapping("insert")
-    public ResponseEntity<?> insertUsers(@RequestBody Users users)
+    public ResponseEntity<?> insertUsers(@RequestBody User users)
     {
-        Users newUsers = usersRepository.save(users);
+        User newUsers = usersRepository.save(users);
 
         return ResponseEntity.ok(newUsers);
     }
     @GetMapping("get")
     public ResponseEntity<?> getUsers()
     {
-        List<Users> users = usersRepository.findAll();
+        List<User> users = usersRepository.findAll();
 
         return ResponseEntity.ok(users);
     }
     @GetMapping("getById")
     public ResponseEntity<?> getUsersById(@RequestParam Long id)
     {
-        Optional<Users> users = usersRepository.findById(id);
+        Optional<User> users = usersRepository.findById(id);
 
         return ResponseEntity.ok(users);
     }

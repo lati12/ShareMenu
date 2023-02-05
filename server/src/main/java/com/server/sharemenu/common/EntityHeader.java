@@ -33,7 +33,7 @@ public class EntityHeader {
 
     @ManyToOne
     @JoinColumn(name = "users_id",nullable = false)
-    private Users users;
+    private User users;
 
     public Long getId() {
         return id;
@@ -91,11 +91,11 @@ public class EntityHeader {
         this.country = country;
     }
 
-    public Users getUsers() {
+    public User getUsers() {
         return users;
     }
 
-    public void setUsers(Users users) {
+    public void setUsers(User users) {
         this.users = users;
     }
 

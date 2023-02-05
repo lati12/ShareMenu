@@ -20,6 +20,18 @@ public class ShareMenu {
     @JoinColumn(name = "socialnetworkprovider_id", nullable = false)
     SocialNetworkProvider socialNetworkProvider;
 
+    @ManyToOne
+    @JoinColumn(name = "users_id",nullable = false)
+    private User users;
+
+    public User getUsers() {
+        return users;
+    }
+
+    public void setUsers(User users) {
+        this.users = users;
+    }
+
     public Long getId() {
         return id;
     }
@@ -36,6 +48,13 @@ public class ShareMenu {
         this.documentStatus = documentStatus;
     }
 
+    public EntityHeader getEntityHeader() {
+        return entityHeader;
+    }
+
+    public void setEntityHeader(EntityHeader entityHeader) {
+        this.entityHeader = entityHeader;
+    }
 
     public SocialNetworkProvider getSocialNetworkProvider() {
         return socialNetworkProvider;

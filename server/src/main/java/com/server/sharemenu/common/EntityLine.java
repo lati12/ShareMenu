@@ -3,8 +3,8 @@ package com.server.sharemenu.common;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "enitiyline")
-public class    EntityLine {
+@Table(name = "entityline")
+public class EntityLine {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;

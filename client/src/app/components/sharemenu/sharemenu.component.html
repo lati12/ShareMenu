@@ -1,20 +1,17 @@
-<div class="card">
-
-  <div class="grid" style="margin-left: 48px">
-    <div class="col-6">
-      <p-dropdown [options]="entityheaders" [(ngModel)]="sharemenu.entityheader" placeholder="Select Entity Header" optionLabel="name">
+ <div class="grid" style="margin-left: 48px">
+    <div class="col">
+      <p-dropdown [options]="entityheaders" [(ngModel)]="sharemenu.entityHeader" placeholder="Select Entity Header" optionLabel="name">
       </p-dropdown>
     </div>
-    <div class="col-6">
-      <p-dropdown [options]="socialproviders" [(ngModel)]="sharemenu.socialprovider" placeholder="Select Social Provider" optionLabel="name"></p-dropdown>
+    <div class="col">
+      <p-dropdown [options]="socialproviders" [(ngModel)]="sharemenu.socialNetworkProvider" placeholder="Select Social Provider" optionLabel="name"></p-dropdown>
     </div>
   </div>
-  <div class="grid" style="margin-left: 48px">
-    <div class="col-6">
-      <button pButton pRipple label="Generate PDF" class="p-button-success" style="width:100%" ></button>
+  <div class="grid">
+    <div class="col">
+      <button pButton pRipple label="Generate file" icon="pi pi-check" class="p-button-text" (click)="generateFile()"></button>
     </div>
-    <div class="col-6">
-      <button pButton pRipple label="Share Menu" style="width:100%" ></button>
+    <div class="col">
+
     </div>
   </div>
-</div>

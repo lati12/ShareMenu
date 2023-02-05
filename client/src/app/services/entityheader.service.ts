@@ -7,9 +7,9 @@ import {EntityHeader} from "../common/entityheader";
 })
 export class EntityheaderService {
 
-  getAllUrl: string = "http://localhost:4713/sharemenu/api/entityheader/get";
-  saveUrl: string = "http://localhost:4713/sharemenu/api/entityheader/insert";
-  deleteUrl:string = "http://localhost:4713/sharemenu/api/entityheader/delete?id=";
+  getAllUrl: string = "http://localhost:4713/sharemenu/api/resource/entityheader/get";
+  saveUrl: string = "http://localhost:4713/sharemenu/api/resource/entityheader/insert";
+  deleteUrl:string = "http://localhost:4713/sharemenu/api/resource/entityheader/delete?id=";
 
   status: string[] = ['OUTOFSTOCK', 'INSTOCK', 'LOWSTOCK'];
 

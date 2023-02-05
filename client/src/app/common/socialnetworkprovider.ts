@@ -1,4 +1,4 @@
-export class Socialproviders {
+export class SocialNetworkProvider {
   id:string = "";
   name:string = "";
   accessToken:string = "";

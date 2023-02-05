@@ -1,9 +1,9 @@
-import {Socialproviders} from "./socialprovider";
+import {SocialNetworkProvider} from "./socialnetworkprovider";
 import {EntityHeader} from "./entityheader";
 
 export class  Sharemenu{
   id:number = 0;
-  socialprovider: Socialproviders = new Socialproviders();
+  socialNetworkProvider: SocialNetworkProvider = new SocialNetworkProvider();
 
-  entityheader : EntityHeader = new EntityHeader();
+  entityHeader : EntityHeader = new EntityHeader();
 }

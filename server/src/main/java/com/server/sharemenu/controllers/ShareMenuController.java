@@ -2,6 +2,8 @@ package com.server.sharemenu.controllers;
 
 import com.server.sharemenu.common.ShareMenu;
 import com.server.sharemenu.repositories.ShareMenuRepository;
+import com.server.sharemenu.services.MenuReportService;
+import net.sf.jasperreports.engine.JRException;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -10,13 +12,17 @@ import java.util.Optional;
 
 @CrossOrigin(origins = "*", maxAge = 3600)
 @RestController
-@RequestMapping("/api/sharemenu")
+@RequestMapping("/api/resource/sharemenu")
 public class ShareMenuController {
     private final ShareMenuRepository shareMenuRepository;
 
-    public ShareMenuController(ShareMenuRepository shareMenuRepository) {
+    private final MenuReportService menuReportService;
+
+    public ShareMenuController(ShareMenuRepository shareMenuRepository, MenuReportService menuReportService) {
         this.shareMenuRepository = shareMenuRepository;
+        this.menuReportService = menuReportService;
     }
+
     @PostMapping("insert")
     public ResponseEntity<?> InsertShareMenu(@RequestBody ShareMenu shareMenu){
         ShareMenu newShareMenu = shareMenuRepository.save(shareMenu);
@@ -40,5 +46,11 @@ public class ShareMenuController {
         shareMenuRepository.deleteById(id);
 
         return ResponseEntity.ok("Record has been deleted");
+    }
+
+    @PostMapping("/generate-file")
+    public ResponseEntity<?> generateFile(@RequestBody ShareMenu shareMenu) throws JRException{
+        menuReportService.processReport(shareMenu);
+        return ResponseEntity.ok("");
     }
 }

@@ -15,7 +15,7 @@ import {MenuModule} from "primeng/menu";
 import {SplitterModule} from "primeng/splitter";
 import {ConfirmationService, MessageService} from "primeng/api";
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
-import {FormsModule} from '@angular/forms';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {TableModule} from 'primeng/table';
 import { HttpClientModule } from '@angular/common/http';
 
@@ -39,15 +39,21 @@ import {EntityheaderService} from "./services/entityheader.service";
 import {ItemService} from "./services/item.service";
 import {ItemCategoryService} from "./services/item-category.service";
 import {SharemenuService} from "./services/sharemenu.service";
-import {SocialproviderService} from "./services/socialprovider.service";
+import {SocialNetworkProviderService} from "./services/social-network-provider.service";
 import {TemplateService} from "./services/template.service";
 import {UsersService} from "./services/users.service";
 import {ItemComponent} from "./components/item/item.component";
 import {ItemCategoryComponent} from "./components/item-category/item-category.component";
 import {SharemenuComponent} from "./components/sharemenu/sharemenu.component";
-import {SocialproviderComponent} from "./components/socialprovider/socialprovider.component";
+import {SocialNetworkProviderComponent} from "./components/socialprovider/social-network-provider.component";
 import {TemplateComponent} from "./components/template/template.component";
 import {UsersComponent} from "./components/users/users.component";
+import { HomeComponent } from './components/home/home.component';
+import { LoginComponent } from './components/login/login.component';
+import { ProfileComponent } from './components/profile/profile.component';
+import { RegisterComponent } from './components/register/register.component';
+import {httpInterceptorProviders} from "./components/_helpers/auth.interceptor";
+import {OverlayPanelModule} from "primeng/overlaypanel";
 
 @NgModule({
   declarations: [
@@ -57,9 +63,13 @@ import {UsersComponent} from "./components/users/users.component";
     ItemComponent,
     ItemCategoryComponent,
     SharemenuComponent,
-    SocialproviderComponent,
+    SocialNetworkProviderComponent,
     TemplateComponent,
     UsersComponent,
+    HomeComponent,
+    LoginComponent,
+    ProfileComponent,
+    RegisterComponent,
 
   ],
   imports: [
@@ -88,11 +98,13 @@ import {UsersComponent} from "./components/users/users.component";
     InputTextareaModule,
     DividerModule,
     DropdownModule,
-    DynamicDialogModule
+    DynamicDialogModule,
+    OverlayPanelModule,
+    ReactiveFormsModule
 
   ],
   providers: [MessageService,ConfirmationService, EntitylineService, EntityheaderService, ItemService,
-    ItemCategoryService,SharemenuService,SocialproviderService,TemplateService,UsersService],
+    ItemCategoryService,SharemenuService,SocialNetworkProviderService,TemplateService,UsersService, httpInterceptorProviders],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

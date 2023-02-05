@@ -10,7 +10,7 @@ import java.util.Optional;
 
 @CrossOrigin
 @RestController
-@RequestMapping("/api/entityline/")
+@RequestMapping("/api/resource/entityline/")
 public class EntityLineController {
 
     private final EntitylineRepository entitylineRepository;

@@ -13,7 +13,7 @@ import java.util.Optional;
 
 @CrossOrigin(origins = "*", maxAge = 3600)
 @RestController
-@RequestMapping("/api/template")
+@RequestMapping("/api/resource/template")
 public class TemplateController {
     private final TemplateRepository templateRepository;
     UploadFileService uploadFileService;

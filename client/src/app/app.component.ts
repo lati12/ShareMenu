@@ -1,5 +1,8 @@
 import { Component} from '@angular/core';
 import {MenuItem, MessageService} from 'primeng/api';
+import {StorageService} from "./services/storage.service";
+import {AuthService} from "./services/auth.service";
+import {Router} from "@angular/router";
 
 
 @Component({
@@ -9,51 +12,24 @@ import {MenuItem, MessageService} from 'primeng/api';
 })
 export class AppComponent {
 
+  private roles: string[] = [];
+  isLoggedIn = false;
+  showAdminBoard = false;
+  username?: string;
   items: MenuItem[] = [];
 
-  constructor(private messageService: MessageService) {}
+  constructor(private storageService: StorageService,  private messageService : MessageService, private router: Router) { }
 
-  ngOnInit() {
-    this.items = [{
-      items: [
-        {
-          label: 'Entity Header',
-          routerLink: '/entityheader'
-        },
-        {
-          label: 'Item',
-          routerLink: '/item'
-        },
-        {
-          label: 'Item Category',
-          routerLink: '/itemcategory'
-        },
-        {
-          label : 'Share Menu',
-          routerLink : '/sharemenu'
-        },
-        {
-          label: 'Template',
-          routerLink: '/template'
-        },
-        {
-          label: 'Social Network Providers',
-          routerLink: '/socialprovider'
-        },
-        {
-          label: 'Users',
-          routerLink: '/users'
-        },
-      ]
-    }];
+  ngOnInit(): void {
+    this.isLoggedIn = this.storageService.isLoggedIn();
+
+    if (this.isLoggedIn) {
+      this.router.navigate(['']).catch(console.error);
+    }
+    else
+      this.router.navigate(['login']).catch(console.error);
   }
 
-  update() {
-    this.messageService.add({severity:'success', summary:'Success', detail:'Data Updated'});
-  }
 
-  delete() {
-    this.messageService.add({severity:'warn', summary:'Delete', detail:'Data Deleted'});
-  }
 
 }
