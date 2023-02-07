@@ -1,13 +1,16 @@
 package com.server.sharemenu.controllers;
 
 import com.server.sharemenu.common.Template;
+import com.server.sharemenu.common.User;
 import com.server.sharemenu.repositories.TemplateRepository;
-import com.server.sharemenu.services.UploadFileService;
+import com.server.sharemenu.repositories.UserRepository;
+import com.server.sharemenu.services.FileService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.security.Principal;
 import java.util.List;
 import java.util.Optional;
 
@@ -16,11 +19,13 @@ import java.util.Optional;
 @RequestMapping("/api/resource/template")
 public class TemplateController {
     private final TemplateRepository templateRepository;
-    UploadFileService uploadFileService;
+    FileService fileService;
+    private final UserRepository userRepository;
 
-    public TemplateController(TemplateRepository templateRepository, UploadFileService uploadFileService) {
+    public TemplateController(TemplateRepository templateRepository, FileService fileService, UserRepository userRepository) {
         this.templateRepository = templateRepository;
-        this.uploadFileService = uploadFileService;
+        this.fileService = fileService;
+        this.userRepository = userRepository;
     }
     @PostMapping("insert")
     public ResponseEntity<?> insertTemplate(@RequestBody Template template)
@@ -52,9 +57,13 @@ public class TemplateController {
         return ResponseEntity.ok("Record was deleted");
     }
     @PostMapping(value = "upload")
-    public ResponseEntity<?> upload(@RequestParam("file") MultipartFile file) throws IOException {
+    public ResponseEntity<?> upload(@RequestParam("file") MultipartFile file, Principal principal) throws IOException {
 
-        uploadFileService.uploadFile(file);
+        Optional<User> user = userRepository.findByEmailAndEmailConfirmedIsTrue(principal.getName());
+        if (user.isPresent()) {
+            fileService.uploadFile(file, user.get());
+        }
+
 
         return ResponseEntity.ok("OK");
     }

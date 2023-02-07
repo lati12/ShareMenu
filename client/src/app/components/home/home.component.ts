@@ -1,10 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import {UserService} from "../../services/user.service";
 import {MenuItem} from "primeng/api";
-import {StorageService} from "../../services/storage.service";
+import {TokenStorageService} from "../../services/auth/token-storage.service";
 import {Users} from "../../common/users";
 import {Router} from "@angular/router";
-import {AuthService} from "../../services/auth.service";
+import {AuthService} from "../../services/auth/auth.service";
 import {Roles} from "../../common/Roles";
 
 @Component({
@@ -29,13 +28,14 @@ export class HomeComponent implements OnInit {
   templateVisable: boolean = false;
 
 
-  constructor(private userService: UserService, private authService: AuthService, private storageService: StorageService, public router: Router) { }
+  constructor(private authService: AuthService, private tokenStorageService: TokenStorageService, public router: Router) { }
 
   ngOnInit(): void {
-    if (this.storageService.isLoggedIn()) {
-      this.isLoggedIn = true;
-      this.roles = this.storageService.getUser().roles;
-      this.loggedUser = this.storageService.getUser();
+    this.isLoggedIn = !!this.tokenStorageService.getToken();
+
+    if (this.isLoggedIn) {
+      this.roles = this.tokenStorageService.getUser().roles;
+      this.loggedUser = this.tokenStorageService.getUser();
 
       this.setVisibleItems()
       let self = this;
@@ -127,17 +127,7 @@ export class HomeComponent implements OnInit {
   }
 
   logout(): void {
-    this.authService.logout().subscribe({
-      next: res => {
-        console.log(res);
-        this.storageService.clean();
-
-        window.location.reload();
-      },
-      error: err => {
-        console.log(err);
-      }
-    });
+    this.tokenStorageService.logout();
+    window.location.reload();
   }
-
 }

@@ -5,27 +5,33 @@ import com.server.sharemenu.repositories.EmailConfirmationRepository;
 import com.server.sharemenu.repositories.RoleRepository;
 import com.server.sharemenu.repositories.UserRepository;
 import com.server.sharemenu.request.LoginRequest;
-import com.server.sharemenu.request.SignupRequest;
+import com.server.sharemenu.request.RegisterRequest;
+import com.server.sharemenu.response.JwtResponse;
 import com.server.sharemenu.response.MessageResponse;
-import com.server.sharemenu.response.UserInfoResponse;
 import com.server.sharemenu.security.jwt.JwtUtils;
-import com.server.sharemenu.security.services.EmailService;
 import com.server.sharemenu.security.services.UserDetailsImpl;
+import com.server.sharemenu.services.EmailService;
+import freemarker.template.TemplateException;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.ResponseCookie;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
+import javax.mail.MessagingException;
 import javax.validation.Valid;
+import java.io.IOException;
+import java.time.LocalDateTime;
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.concurrent.CompletableFuture;
 import java.util.stream.Collectors;
 
 @CrossOrigin(origins = "*", maxAge = 3600)
@@ -38,6 +44,8 @@ public class AuthController {
 
     @Autowired
     private EmailService emailService;
+    @Value("${sharemenu.email.template.confirmation}")
+    private String emailVerificationTemplate;
 
     @Autowired
     UserRepository userRepository;
@@ -55,90 +63,94 @@ public class AuthController {
     JwtUtils jwtUtils;
 
 
-    @PostMapping("/signin")
+    @PostMapping("/login")
     public ResponseEntity<?> authenticateUser(@Valid @RequestBody LoginRequest loginRequest) {
         Authentication authentication = authenticationManager
                 .authenticate(new UsernamePasswordAuthenticationToken(loginRequest.getEmail(), loginRequest.getPassword()));
 
         SecurityContextHolder.getContext().setAuthentication(authentication);
-        UserDetailsImpl userDetails = (UserDetailsImpl) authentication.getPrincipal();
+        String jwt = jwtUtils.generateJwtToken(authentication);
 
-        ResponseCookie jwtCookie = jwtUtils.generationJwtCookie(userDetails);
+        UserDetailsImpl userDetails = (UserDetailsImpl) authentication.getPrincipal();
 
         List<String> roles = userDetails.getAuthorities().stream()
                 .map(item -> item.getAuthority())
                 .collect(Collectors.toList());
 
-        return ResponseEntity.ok().header(HttpHeaders.SET_COOKIE, jwtCookie.toString())
-                .body(new UserInfoResponse(userDetails.getId(),
-                        userDetails.getUsername(),
-                        userDetails.getEmail(),
-                        roles));
+        return ResponseEntity.ok(new JwtResponse(jwt,
+                userDetails.getId(),
+                userDetails.getEmail(),
+                roles));
     }
 
-    @PostMapping("/signup")
-    public ResponseEntity<?> registerUser(@Valid @RequestBody SignupRequest signupRequest){
-        if (userRepository.existsByEmail(signupRequest.getEmail())){
+    @PostMapping("/register")
+    @Transactional
+    public ResponseEntity<?> registerUser(@Valid @RequestBody RegisterRequest registerRequest) throws MessagingException, TemplateException, IOException {
+        if (userRepository.existsByEmail(registerRequest.getEmail())){
             return ResponseEntity.badRequest().body(new MessageResponse("Error: Email is already in use"));
         }
 
-        User user = new User(signupRequest.getEmail(),
-                encoder.encode(signupRequest.getPassword()),
+        User user = new User(registerRequest.getEmail(),
+                encoder.encode(registerRequest.getPassword()),
                 false,
-                signupRequest.getName(),
-                signupRequest.getLastname(),
-                signupRequest.getCompanyname()
-                );
-
-        EmailConfirmation emailConfirmation = new EmailConfirmation();
-        emailConfirmation.setConfirmed(false);
-        emailConfirmation.setUser(user);
+                registerRequest.getName(),
+                registerRequest.getLastName(),
+                registerRequest.getCompanyName()
+        );
 
 
-        Set<String> strRoles = signupRequest.getRole();
+
+        String hash = jwtUtils.generateHash();
+
+        EmailDetails recepient = getRecipient(hash, user.getEmail(), "Confirm email",
+                "Please confirm your email with following email");
+        CompletableFuture<Boolean> cf = emailService.sendMailFuture(recepient,
+                emailVerificationTemplate);
+
+        cf.handle((result, ex) -> {
+            if (result != null && result) {
+                System.out.print("Email has been sent to: " + user.getEmail());
+                EmailConfirmation emailConfirmation = new EmailConfirmation();
+                emailConfirmation.setConfirmed(false);
+                emailConfirmation.setHash(hash);
+                emailConfirmation.setUser(user);
+                emailConfirmationRepository.save(emailConfirmation);
+                return true;
+            } else {
+                System.out.print("Error while sending mail: " + ex.toString());
+                return false;
+
+            }
+
+        });
+
         Set<Role> roles = new HashSet<>();
-
-        if (strRoles == null) {
-            Role userRole = roleRepository.findByName(ERole.ROLE_USER)
-                    .orElseThrow(() -> new RuntimeException("Error: Role is not found."));
-            roles.add(userRole);
-        } else {
-            strRoles.forEach(role -> {
-                switch (role) {
-                    case "admin":
-                        Role adminRole = roleRepository.findByName(ERole.ROLE_ADMIN)
-                                .orElseThrow(() -> new RuntimeException("Error: Role is not found."));
-                        roles.add(adminRole);
-
-                        break;
-                    case "mod":
-                        Role modRole = roleRepository.findByName(ERole.ROLE_MODERATOR)
-                                .orElseThrow(() -> new RuntimeException("Error: Role is not found."));
-                        roles.add(modRole);
-
-                        break;
-                    default:
-                        Role userRole = roleRepository.findByName(ERole.ROLE_USER)
-                                .orElseThrow(() -> new RuntimeException("Error: Role is not found."));
-                        roles.add(userRole);
-                }
-            });
-        }
+        Role userRole = roleRepository.findByName(ERole.ROLE_USER).get();
+        roles.add(userRole);
 
         user.setRoles(roles);
         userRepository.save(user);
-        EmailDetails details = new EmailDetails();
-        details.setRecipient(user.getEmail());
-        details.setSubject("Sharemenu - Email confirmation");
-        details.setMsgBody("Please confirm email on this link -> ");
-        emailService.sendSimpleEmail(details);
-        emailConfirmationRepository.save(emailConfirmation);
         return ResponseEntity.ok(new MessageResponse("User registered successfully!"));
     }
-    @PostMapping("/signout")
-    public ResponseEntity<?> logoutUser(){
-        ResponseCookie cookie = jwtUtils.getCleanJwtCookie();
-        return ResponseEntity.ok().header(HttpHeaders.SET_COOKIE, cookie.toString())
-                .body(new MessageResponse("You've been signed out"));
+
+    private EmailDetails getRecipient(String hash, String email, String subject, String text) {
+        return new EmailDetails(hash, Collections.singletonList(email), subject, text);
+    }
+
+    @PostMapping(value = "/verify")
+    @Transactional
+    public ResponseEntity<?> verify(@RequestParam(value = "hash") String hash) {
+
+        EmailConfirmation emailVerification = emailConfirmationRepository.findByHash(hash);
+
+        if (emailVerification != null) {
+            User user = emailVerification.getUser();
+
+            user.setEmailConfirmed(true);// verify user
+            emailConfirmationRepository.delete(emailVerification);
+            userRepository.save(user);
+            return ResponseEntity.ok("user validated");
+        }
+        return ResponseEntity.ok("Done");
     }
 }

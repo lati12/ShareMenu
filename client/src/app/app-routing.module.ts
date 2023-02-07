@@ -12,12 +12,15 @@ import {LoginComponent} from "./components/login/login.component";
 import {RegisterComponent} from "./components/register/register.component";
 import {ProfileComponent} from "./components/profile/profile.component";
 import {Roles} from "./common/Roles";
-import {AuthGuard} from "./services/auth-guard.service";
+import {AuthGuard} from "./services/auth/auth-guard.service";
+import {ConfirmEmailComponent} from "./components/confirm-email/confirm-email.component";
+import {BrowserModule} from "@angular/platform-browser";
 
 const routes: Routes = [
 
   {path: 'login', component: LoginComponent},
   {path: 'register', component: RegisterComponent},
+  {path: 'confirm-email', component: ConfirmEmailComponent},
   {
     path: '', component: HomeComponent,
     children: [
@@ -99,7 +102,9 @@ const routes: Routes = [
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes)],
+  imports: [
+    RouterModule.forRoot(routes)
+  ],
   exports: [RouterModule]
 })
 export class AppRoutingModule {

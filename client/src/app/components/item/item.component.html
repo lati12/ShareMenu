@@ -1,17 +1,19 @@
 <p-toast></p-toast>
+<div class="flex justify-content-between flex-wrap card-container purple-container">
+  <button pButton pRipple label="Създаване на запис" class="p-button-text" style="margin: 4px" (click)="openNewDialog()"></button>
+  <button pButton pRipple type="button" (click)="showInfoDialog()" icon="pi pi-info" class="p-button-rounded p-button-secondary p-button-outlined"></button>
+</div>
+
 <div class="card card-width-table">
   <p-table #dt [value]="items" [rows]="10" [paginator]="true" [rowHover]="true"
            currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" [showCurrentPageReport]="true">
     <ng-template pTemplate="header">
       <tr>
-        <button pButton pRipple label="New" icon="pi pi-plus" class="p-button-success p-mr-2" style="margin: 4px" (click)="openNew()"></button>
-      </tr>
-      <tr>
-        <th pSortableColumn="name">Name</th>
-        <th pSortableColumn="description">Description</th>
-        <th pSortableColumn="itemCategory">Item Category</th>
-        <th pSortableColumn="price">Price</th>
-        <th pSortableColumn="unit">Unit</th>
+        <th pSortableColumn="name">Име</th>
+        <th pSortableColumn="description">Описание</th>
+        <th pSortableColumn="itemCategory">Категория на артикул</th>
+        <th pSortableColumn="price">Цена</th>
+        <th pSortableColumn="unit">Брой</th>
         <th></th>
       </tr>
     </ng-template>
@@ -23,46 +25,56 @@
         <td>{{item.price}}</td>
         <td>{{item.unit}}</td>
         <td>
-          <button pButton pRipple icon="pi pi-pencil" class="p-button-rounded p-button-success p-mr-2" (click)="editItem(item)"></button>
-          <button pButton pRipple icon="pi pi-trash" class="p-button-rounded p-button-warning" (click)="deleteItem(item)"></button>
+          <button pButton pRipple icon="pi pi-pencil" class="p-button-rounded p-button-success p-mr-2" (click)="openEditDialog(item)"></button>
+          <button pButton pRipple icon="pi pi-trash" class="p-button-rounded p-button-warning" (click)="delete(item)"></button>
         </td>
       </tr>
     </ng-template>
   </p-table>
 </div>
-<p-dialog [(visible)]="itemDialog" [style]="{width: '600px', height: '800px'}" header="Item Details" [modal]="true" styleClass="p-fluid">
+<p-dialog [(visible)]="dialog" [style]="{width: '450px'}" header="Детайли" [modal]="true" styleClass="p-fluid">
   <ng-template pTemplate="content">
     <div class="p-field">
-      <label for="name">Name</label>
+      <label for="name">Име</label>
       <input type="text" pInputText id="name" [(ngModel)]="item.name" required autofocus/>
-      <small class="p-invalid" *ngIf="submitted && !item.name">Name is required.</small>
+      <small class="p-invalid" *ngIf="submitted && !item.name">Полето е задължително.</small>
     </div>
     <div class="p-field">
-      <label for="description">Description</label>
+      <label for="description">Описание</label>
       <input type="text" pInputText id="description" [(ngModel)]="item.description" required autofocus/>
-      <small class="p-invalid" *ngIf="submitted && !item.description">Description is required.</small>
+      <small class="p-invalid" *ngIf="submitted && !item.description">Полето е задължително.</small>
     </div>
     <div>
-      <label for="unit">ItemCategory</label>
-      <p-dropdown [options]="itemCategories" [(ngModel)]="item.itemCategory" placeholder="Select ItemCategory" optionLabel="name">
+      <label for="unit">Категория на артикул</label>
+      <p-dropdown [options]="itemCategories" [(ngModel)]="item.itemCategory" placeholder="Избери категория" optionLabel="name">
       </p-dropdown>
     </div>
     <div class="p-formgrid p-grid">
       <div class="p-field p-col">
-        <label for="price">Price</label>
+        <label for="price">Цена</label>
         <p-inputNumber id="price" [(ngModel)]="item.price"></p-inputNumber>
       </div>
     </div>
     <div class="p-field">
-      <label for="unit">Unit</label>
+      <label for="unit">Брой</label>
       <input type="text" pInputText id="unit" [(ngModel)]="item.unit" required autofocus/>
-      <small class="p-invalid" *ngIf="submitted && !item.unit">Unit is required.</small>
+      <small class="p-invalid" *ngIf="submitted && !item.unit">Полето е задължителен.</small>
     </div>
   </ng-template>
 
   <ng-template pTemplate="footer">
-    <button pButton pRipple label="Cancel" icon="pi pi-times" class="p-button-text" (click)="hideDialog()"></button>
-    <button pButton pRipple label="Save" icon="pi pi-check" class="p-button-text" (click)="saveItem()"></button>
+    <button pButton pRipple label="Отказ" icon="pi pi-times" class="p-button-text" (click)="hideDialog()"></button>
+    <button pButton pRipple label="Запазване" icon="pi pi-check" class="p-button-text" (click)="save()"></button>
   </ng-template>
 </p-dialog>
 <p-confirmDialog [style]="{width: '450px'}"></p-confirmDialog>
+
+<p-dialog header="Как се създава артикул" [closeOnEscape]=true [(visible)]="displayInfoDialog" position="top" [modal]="true" [style]="{width: '50vw'}" [baseZIndex]="10000"
+          [draggable]="false" [resizable]="false">
+  <p>Екранът "Артикули" служи за добавяне на записи, които ще се визулаизират в генерираното меню. Ресторантът може да добави своят асортимент с няколко клика.</p>
+  <ul>
+    <li>Стъпка 1: Избира се бутона Нов запис</li>
+    <li>Стъпка 2: В появилият се диалог се попълва информация за артикула</li>
+    <li>Стъпка 3: Избирате бутонът Запази</li>
+  </ul>
+</p-dialog>

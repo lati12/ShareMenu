@@ -1,5 +1,7 @@
 package com.server.sharemenu.common;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 
 @Entity
@@ -20,6 +22,20 @@ public class EntityLine {
     @ManyToOne
     @JoinColumn(name = "item_id", nullable = false)
     private Item item;
+
+    @ManyToOne
+    @JsonIgnore
+    @JoinColumn(name = "users_id",nullable = false)
+    private User users;
+
+
+    public User getUsers() {
+        return users;
+    }
+
+    public void setUsers(User users) {
+        this.users = users;
+    }
 
     public EntityHeader getEntityHeader() {
         return entityHeader;

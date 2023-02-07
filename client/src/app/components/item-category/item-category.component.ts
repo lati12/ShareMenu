@@ -11,9 +11,9 @@ import {ConfirmationService, MessageService} from "primeng/api";
 export class ItemCategoryComponent implements OnInit {
 
   itemcategoryDialog : boolean = false;
+  displayInfoDialog : boolean = false;
 
   public itemCategories : ItemCategory[] = [];
-
   public itemCategory : ItemCategory = new ItemCategory();
 
   submitted : boolean = false;
@@ -37,7 +37,7 @@ export class ItemCategoryComponent implements OnInit {
   }
   deleteItemCategory(itemcategory : ItemCategory){
     this.confirmationService.confirm({
-      message: 'Are you sure you want to delete ' + itemcategory.name + '?',
+      message: 'Наистина ли искате да изтриете? ' + itemcategory.name + '?',
       header: 'Confirm',
       icon: 'pi pi-exclamation-triangle',
       accept: () => {
@@ -45,7 +45,7 @@ export class ItemCategoryComponent implements OnInit {
         this.itemCategoryService.delete(itemcategory).then(() =>{
           this.itemCategory = new ItemCategory();
         });
-        this.messageService.add({severity:'success', summary: 'Successful', detail: 'Product Deleted', life: 3000});
+        this.messageService.add({severity:'success', summary: 'Успешно изтриване', detail: 'Категория е изтрита', life: 3000});
       }
     });
   }
@@ -65,4 +65,14 @@ export class ItemCategoryComponent implements OnInit {
     });
   }
 
+  showInfoDialog() {
+    this.displayInfoDialog = true;
+
+  }
+
+  openNewDialog()  {
+    this.itemCategory = new ItemCategory();
+    this.submitted = false;
+    this.itemcategoryDialog = true;
+  }
 }

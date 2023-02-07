@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import {AuthService} from "../../services/auth.service";
-import {StorageService} from "../../services/storage.service";
-import {MenuItem, MessageService} from "primeng/api";
+import {AuthService} from "../../services/auth/auth.service";
+import {TokenStorageService} from "../../services/auth/token-storage.service";
 import {Router} from "@angular/router";
+import {LoginRequest} from "../../common/login-request";
+import {Roles} from "../../common/Roles";
 import {FormControl, FormGroup, Validators} from "@angular/forms";
 
 @Component({
@@ -11,6 +12,8 @@ import {FormControl, FormGroup, Validators} from "@angular/forms";
   styleUrls: ['./login.component.scss']
 })
 export class LoginComponent implements OnInit {
+  private loginRequest: LoginRequest = new LoginRequest();
+
   email = new FormControl('', [Validators.required, Validators.email]);
   password = new FormControl('', [Validators.required, Validators.minLength(3)]);
 
@@ -22,33 +25,39 @@ export class LoginComponent implements OnInit {
   isLoggedIn = false;
   isLoginFailed = false;
   errorMessage = '';
-  roles: string[] = [];
+  roles: Roles[] = [];
 
-
-  constructor(private authService: AuthService, private router: Router, private storageService: StorageService,private messageService : MessageService) { }
+  constructor(private authService: AuthService, public router: Router, private tokenStorage: TokenStorageService) { }
 
   ngOnInit(): void {
+    if (this.tokenStorage.getToken()) {
+      this.isLoggedIn = true;
+      this.roles = this.tokenStorage.getUser().roles;
+    }
   }
 
   redirectRegister() {
     this.router.navigate(['/register']).catch(console.error);
   }
 
-  onSubmit(): void {
-    this.authService.login(this.signin.get('email')?.value, this.signin.get('password')?.value).subscribe({
-      next: data => {
-        this.storageService.saveUser(data);
+  async onSubmit() {
+    this.loginRequest.email = this.signin.get('email')?.value;
+    this.loginRequest.password = this.signin.get('password')?.value;
 
-        this.isLoginFailed = false;
+    try {
+      await this.authService.login(this.loginRequest).then((result) => {
+        this.tokenStorage.saveToken(result.jwt);
+        this.tokenStorage.saveUser(result)
         this.isLoggedIn = true;
-        this.roles = this.storageService.getUser().roles;
+        this.isLoginFailed = false;
         this.reloadPage();
-      },
-      error: err => {
-        this.errorMessage = err.error.message;
+      }).catch(reason => {
         this.isLoginFailed = true;
-      }
-    });
+        console.log(reason);
+      });
+    } catch (ex: any) {
+      console.log(ex);
+    }
   }
 
   reloadPage(): void {

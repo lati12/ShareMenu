@@ -8,5 +8,7 @@ import java.util.List;
 
 @Repository
 public interface EntitylineRepository extends JpaRepository<EntityLine, Long> {
-    List<EntityLine> findAllByEntityHeaderId(Long entityHeaderId);
+    List<EntityLine> findEntityLineByUsersId(Long entityHeaderId);
+    EntityLine findEntityLineByIdAndUsersId(Long id, Long usersId);
+    void deleteEntityLineByIdAndUsersId(Long id, Long usersId);
 }

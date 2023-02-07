@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, isDevMode, OnInit} from '@angular/core';
 import {EntityHeader} from "../../common/entityheader";
 import {Sharemenu} from "../../common/sharemenu";
 import {SocialNetworkProvider} from "../../common/socialnetworkprovider";
@@ -6,6 +6,8 @@ import {EntityheaderService} from "../../services/entityheader.service";
 import {SocialNetworkProviderService} from "../../services/social-network-provider.service";
 import {ConfirmationService, MessageService} from "primeng/api";
 import {SharemenuService} from "../../services/sharemenu.service";
+// @ts-ignore
+import { saveAs } from "file-saver";
 
 @Component({
   selector: 'app-sharemenu',
@@ -25,6 +27,8 @@ export class SharemenuComponent implements OnInit {
   socialproviders : SocialNetworkProvider [] = [];
   socialProvider : SocialNetworkProvider = new SocialNetworkProvider();
 
+  displayInfoDialog: boolean = false;
+
   constructor(private sharemenuService: SharemenuService,private entityHeaderService:EntityheaderService,
               private  socialProviderService : SocialNetworkProviderService) { }
 
@@ -39,11 +43,15 @@ export class SharemenuComponent implements OnInit {
   }
 
   generateFile(){
-    this.sharemenuService.generateFile(this.sharemenu).then(() =>{
+    this.sharemenuService.generateFile(this.sharemenu).then((blocb) =>{
       console.log("done");
+      saveAs(blocb, "menu.pdf");
     }).catch(arr => {
       console.log(arr);
     })
   }
 
+  showInfoDialog() {
+      this.displayInfoDialog = true;
+  }
 }

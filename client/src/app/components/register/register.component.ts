@@ -1,9 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import {AuthService} from "../../services/auth.service";
+import {AuthService} from "../../services/auth/auth.service";
 import {Router} from "@angular/router";
 import {FormControl, FormGroup, Validators} from "@angular/forms";
-import {Users} from "../../common/users";
-import {filter} from "rxjs";
+import {RegisterRequest} from "../../common/register-request";
 
 @Component({
   selector: 'app-register',
@@ -14,20 +13,19 @@ export class RegisterComponent implements OnInit {
 
   counter = 95;
   hideRegFields = false;
-  user: Users = new Users();
-
+  registerRequest = new RegisterRequest();
 
   email = new FormControl("", [Validators.email, Validators.required])
   password = new FormControl('', [Validators.required, Validators.minLength(3)])
   passwordConfirm = new FormControl('', [Validators.required])
-  firstName = new FormControl('', [Validators.required]);
+  name = new FormControl('', [Validators.required]);
   lastName = new FormControl('', [Validators.required]);
 
   companyName = new FormControl('', [Validators.required]);
   registerFormGroup: FormGroup = new FormGroup({
     email: this.email,
     password: this.password,
-    firstName: this.firstName,
+    name: this.name,
     lastName: this.lastName,
     passwordConfirm: this.passwordConfirm,
     companyName: this.companyName
@@ -45,26 +43,26 @@ export class RegisterComponent implements OnInit {
   async doRegister() {
     window.scroll(0, 0)
     if(this.email.value != null)
-      this.user.email = this.email.value;
+      this.registerRequest.email = this.email.value
 
     if(this.password.value != null)
-      this.user.password = this.password.value;
+      this.registerRequest.password = this.password.value;
 
-    if(this.firstName.value != null)
-      this.user.name = this.firstName.value;
+    if(this.name.value != null)
+      this.registerRequest.name = this.name.value;
 
     if(this.lastName.value != null)
-      this.user.lastname = this.lastName.value;
+      this.registerRequest.lastName = this.lastName.value;
 
     if(this.companyName.value != null)
-      this.user.companyname = this.companyName.value;
+      this.registerRequest.companyName = this.companyName.value;
 
     try {
-      await this.authService.register(this.user)
+      await this.authService.register(this.registerRequest)
       this.hideRegFields = true;
       this.startCounter()
     } catch (ex: any) {
-      //this.notificationService.notification$.next({severity: 'error', summary: "Registration error", detail: ex.error})
+      console.log(ex);
     }
   }
 

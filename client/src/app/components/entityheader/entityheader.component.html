@@ -1,17 +1,20 @@
 <p-toast></p-toast>
+<div class="flex justify-content-between flex-wrap card-container purple-container">
+  <button pButton pRipple label="Създаване на запис" class="p-button-text" style="margin: 4px" (click)="openNewDialog()"></button>
+  <button pButton pRipple type="button" (click)="showInfoDialog()" icon="pi pi-info" class="p-button-rounded p-button-secondary p-button-outlined"></button>
+</div>
 <div class="card card-width-table">
-  <button pButton pRipple label="New" icon="pi pi-plus" class="p-button-success p-mr-2" style="margin: 4px" (click)="openNewEntityHeader()"></button>
-  <p-table [value]="entityHeaders" selectionMode="single" (onRowSelect)="onRowSelectEntityHeader($event)" >
+ <p-table [value]="entityHeaders" selectionMode="single" (onRowSelect)="onRowSelectEntityHeader($event)" >
     <ng-template pTemplate="header">
       <tr>
-        <th pSortableColumn="name">Name</th>
-        <th pSortableColumn="address">Adress</th>
-        <th pSortableColumn="phone">Phone</th>
-        <th pSortableColumn="templates">Templates</th>
-        <th pSortableColumn="templates">User name</th>
-        <th pSortableColumn="email">Email</th>
-        <th pSortableColumn="city">City</th>
-        <th pSortableColumn="country">Country</th>
+        <th pSortableColumn="name">Ине</th>
+        <th pSortableColumn="address">Адрес</th>
+        <th pSortableColumn="phone">Телефон</th>
+        <th pSortableColumn="templates">Темплейти</th>
+        <th pSortableColumn="users">Име на потребител</th>
+        <th pSortableColumn="email">Имейл</th>
+        <th pSortableColumn="city">Град</th>
+        <th pSortableColumn="country">Държава</th>
         <th></th>
       </tr>
     </ng-template>
@@ -35,53 +38,53 @@
 </div>
 
 
-<p-dialog [(visible)]="entityHeaderDialog" [style]="{width: '450px'}" header="Entity header Details" [modal]="true" styleClass="p-fluid">
+<p-dialog [(visible)]="entityHeaderDialog" [style]="{width: '450px'}" header="Детайли на меню" [modal]="true" styleClass="p-fluid">
   <ng-template pTemplate="content">
     <div class="p-field">
-      <label for="name">Name</label>
+      <label for="name">Име</label>
       <input type="text" pInputText id="name" [(ngModel)]="entityHeader.name" required autofocus />
-      <small class="p-invalid" *ngIf="submittedEntityHeader && !entityHeader.name">Name is required.</small>
+      <small class="p-invalid" *ngIf="submittedEntityHeader && !entityHeader.name">Името е задължително.</small>
     </div>
     <div class="p-field">
-      <label for="address">Address</label>
+      <label for="address">Адрес</label>
       <input type="text" pInputText id="address" [(ngModel)]="entityHeader.address" required autofocus />
-      <small class="p-invalid" *ngIf="submittedEntityHeader && !entityHeader.address">address is required.</small>
+      <small class="p-invalid" *ngIf="submittedEntityHeader && !entityHeader.address">Адресът е задължителен.</small>
     </div>
     <div class="p-field">
-      <label for="phone">Phone</label>
+      <label for="phone">Телефон</label>
       <input type="text" pInputText id="phone" [(ngModel)]="entityHeader.phone" required autofocus />
-      <small class="p-invalid" *ngIf="submittedEntityHeader && !entityHeader.phone">Phone is required.</small>
+      <small class="p-invalid" *ngIf="submittedEntityHeader && !entityHeader.phone">Телефонният номер е задължителен.</small>
     </div>
     <div>
-      <label for="name">Template</label>
-      <p-dropdown [options]="templates" [(ngModel)]="entityHeader.template" placeholder="Select Template" optionLabel="name">
+      <label for="name">Темплейт</label>
+      <p-dropdown [options]="templates" [(ngModel)]="entityHeader.template" placeholder="Избери темплейт" optionLabel="name">
       </p-dropdown>
     </div>
     <div>
-      <label for="name">Users</label>
-      <p-dropdown  [options]="users" [(ngModel)]="entityHeader.users" placeholder="Select Users" optionLabel="name">
+      <label for="name">Потребители</label>
+      <p-dropdown  [options]="users" [(ngModel)]="entityHeader.users" placeholder="Избери потребител" optionLabel="name">
       </p-dropdown>
     </div>
     <div class="p-field">
-      <label for="email">Email</label>
+      <label for="email">Имейл</label>
       <input type="text" pInputText id="email" [(ngModel)]="entityHeader.email" required autofocus />
-      <small class="p-invalid" *ngIf="submittedEntityHeader && !entityHeader.email">Email is required.</small>
+      <small class="p-invalid" *ngIf="submittedEntityHeader && !entityHeader.email">Имейлът е задължителен.</small>
     </div>
     <div class="p-field">
-      <label for="city">City</label>
+      <label for="city">Град</label>
       <input type="text" pInputText id="city" [(ngModel)]="entityHeader.city" required autofocus />
-      <small class="p-invalid" *ngIf="submittedEntityHeader && !entityHeader.city">City is required.</small>
+      <small class="p-invalid" *ngIf="submittedEntityHeader && !entityHeader.city">Градът е задължителен.</small>
     </div>
     <div class="p-field">
-      <label for="country">Country</label>
+      <label for="country">Държава</label>
       <input type="text" pInputText id="country" [(ngModel)]="entityHeader.country" required autofocus />
-      <small class="p-invalid" *ngIf="submittedEntityHeader && !entityHeader.country">Country is required.</small>
+      <small class="p-invalid" *ngIf="submittedEntityHeader && !entityHeader.country">Държавата е задължителна.</small>
     </div>
   </ng-template>
 
   <ng-template pTemplate="footer">
-    <button pButton pRipple label="Cancel" icon="pi pi-times" class="p-button-text" (click)="hideEntityHeaderDialog()"></button>
-    <button pButton pRipple label="Save" icon="pi pi-check" class="p-button-text" (click)="saveEntityHeader()"></button>
+    <button pButton pRipple label="Отказ" icon="pi pi-times" class="p-button-text" (click)="hideEntityHeaderDialog()"></button>
+    <button pButton pRipple label="Запазване" icon="pi pi-check" class="p-button-text" (click)="saveEntityHeader()"></button>
   </ng-template>
 </p-dialog>
 
@@ -137,5 +140,16 @@
 </p-dialog>
 
 <p-confirmDialog [style]="{width: '450px'}"></p-confirmDialog>
+
+<p-dialog header="Как се създава меню" [closeOnEscape]=true [(visible)]="displayInfoDialog" position="top" [modal]="true" [style]="{width: '50vw'}" [baseZIndex]="10000"
+          [draggable]="false" [resizable]="false">
+  <p>Екранът "Меню" служи за добавяне на записи, които ще се визулаизират в генерираното меню. Ресторантът може да добави своят асортимент с няколко клика.</p>
+  <ul>
+    <li>Стъпка 1: Избира се бутона Създаване на запис</li>
+    <li>Стъпка 2: В появилият се диалог се попълва информация за Менюто</li>
+    <li>Стъпка 3: Избирате бутонът Запази</li>
+  </ul>
+</p-dialog>
+
 
 

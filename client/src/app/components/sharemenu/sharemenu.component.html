@@ -1,17 +1,30 @@
- <div class="grid" style="margin-left: 48px">
-    <div class="col">
-      <p-dropdown [options]="entityheaders" [(ngModel)]="sharemenu.entityHeader" placeholder="Select Entity Header" optionLabel="name">
+<div class="flex justify-content-between flex-wrap card-container purple-container">
+  <button pButton pRipple type="button" (click)="showInfoDialog()" icon="pi pi-info" class="p-button-rounded p-button-secondary p-button-outlined"></button>
+</div>
+
+<div class="formgroup-inline" style="margin-left: 48px">
+    <div class="field">
+      <p-dropdown [options]="entityheaders" [(ngModel)]="sharemenu.entityHeader" placeholder="Избиране на меню" optionLabel="name">
       </p-dropdown>
     </div>
-    <div class="col">
-      <p-dropdown [options]="socialproviders" [(ngModel)]="sharemenu.socialNetworkProvider" placeholder="Select Social Provider" optionLabel="name"></p-dropdown>
+    <div class="field">
+      <p-dropdown [options]="socialproviders" [(ngModel)]="sharemenu.socialNetworkProvider" placeholder="Избиране на социална мрежа" optionLabel="name"></p-dropdown>
     </div>
   </div>
   <div class="grid">
-    <div class="col">
-      <button pButton pRipple label="Generate file" icon="pi pi-check" class="p-button-text" (click)="generateFile()"></button>
+    <div class="col-offset-2">
+      <button pButton pRipple label="Генериране на файл" icon="pi pi-check" class="p-button-text" (click)="generateFile()"></button>
     </div>
     <div class="col">
-
     </div>
   </div>
+
+<p-dialog header="Как се създава артикул" [closeOnEscape]=true [(visible)]="displayInfoDialog" position="top" [modal]="true" [style]="{width: '50vw'}" [baseZIndex]="10000"
+          [draggable]="false" [resizable]="false">
+  <p>Екранът "ShareMenu" служи за генерирането и споделянето на меню в социалните мрежи.</p>
+  <ul>
+    <li>Стъпка 1: Избира се от подащият списък менюто, което искаме да генерираме</li>
+    <li>Стъпка 2: С натискане на бутона се генерира файл </li>
+  </ul>
+</p-dialog>
+

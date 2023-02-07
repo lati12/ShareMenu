@@ -1,32 +1,49 @@
 package com.server.sharemenu.common;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import javax.mail.internet.AddressException;
+import javax.mail.internet.InternetAddress;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
 
-@Data
-@AllArgsConstructor
-@NoArgsConstructor
 public class EmailDetails {
-    private String recipient;
-    private String msgBody;
-    private String subject;
-    private String attachment;
+    private String hash;
+    protected String subject;
+    protected Collection<String> toList;
+    protected Collection<String> ccList;
+    protected String text;
 
-    public String getRecipient() {
-        return recipient;
+    public EmailDetails(String hash, List<String> singletonList, String subject, String text) {
+        this.hash = hash;
+        this.subject = subject;
+        this.toList = singletonList;
+        this.text = text;
     }
 
-    public void setRecipient(String recipient) {
-        this.recipient = recipient;
+    public InternetAddress[] getToInternetAddress() throws AddressException {
+        List<InternetAddress> list = new ArrayList<>();
+        for (String email : toList) {
+            InternetAddress internetAddress = new InternetAddress(email);
+            list.add(internetAddress);
+        }
+        return list.toArray(new InternetAddress[0]);
     }
 
-    public String getMsgBody() {
-        return msgBody;
+    public InternetAddress[] getCcInternetAddress() throws AddressException {
+        List<InternetAddress> list = new ArrayList<>();
+        for (String email : ccList) {
+            InternetAddress internetAddress = new InternetAddress(email);
+            list.add(internetAddress);
+        }
+        return list.toArray(new InternetAddress[0]);
     }
 
-    public void setMsgBody(String msgBody) {
-        this.msgBody = msgBody;
+    public String getHash() {
+        return hash;
+    }
+
+    public void setHash(String hash) {
+        this.hash = hash;
     }
 
     public String getSubject() {
@@ -37,11 +54,27 @@ public class EmailDetails {
         this.subject = subject;
     }
 
-    public String getAttachment() {
-        return attachment;
+    public Collection<String> getToList() {
+        return toList;
     }
 
-    public void setAttachment(String attachment) {
-        this.attachment = attachment;
+    public void setToList(Collection<String> toList) {
+        this.toList = toList;
+    }
+
+    public Collection<String> getCcList() {
+        return ccList;
+    }
+
+    public void setCcList(Collection<String> ccList) {
+        this.ccList = ccList;
+    }
+
+    public String getText() {
+        return text;
+    }
+
+    public void setText(String text) {
+        this.text = text;
     }
 }

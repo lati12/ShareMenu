@@ -52,8 +52,9 @@ import { HomeComponent } from './components/home/home.component';
 import { LoginComponent } from './components/login/login.component';
 import { ProfileComponent } from './components/profile/profile.component';
 import { RegisterComponent } from './components/register/register.component';
-import {httpInterceptorProviders} from "./components/_helpers/auth.interceptor";
 import {OverlayPanelModule} from "primeng/overlaypanel";
+import {authInterceptorProviders} from "./services/auth/auth.interceptor";
+import {ConfirmEmailComponent} from "./components/confirm-email/confirm-email.component";
 
 @NgModule({
   declarations: [
@@ -70,7 +71,7 @@ import {OverlayPanelModule} from "primeng/overlaypanel";
     LoginComponent,
     ProfileComponent,
     RegisterComponent,
-
+    ConfirmEmailComponent,
   ],
   imports: [
     BrowserModule,
@@ -100,11 +101,9 @@ import {OverlayPanelModule} from "primeng/overlaypanel";
     DropdownModule,
     DynamicDialogModule,
     OverlayPanelModule,
-    ReactiveFormsModule
-
+    ReactiveFormsModule,
   ],
-  providers: [MessageService,ConfirmationService, EntitylineService, EntityheaderService, ItemService,
-    ItemCategoryService,SharemenuService,SocialNetworkProviderService,TemplateService,UsersService, httpInterceptorProviders],
+  providers: [MessageService,ConfirmationService, authInterceptorProviders],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

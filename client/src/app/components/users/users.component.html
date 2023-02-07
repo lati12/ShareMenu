@@ -5,14 +5,14 @@
            currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" [showCurrentPageReport]="true">
     <ng-template pTemplate="header">
       <tr>
-        <button pButton pRipple label="New" icon="pi pi-plus" class="p-button-success p-mr-2" style="margin: 4px" (click)="openNew()"></button>
+        <button pButton pRipple label="Създаване на запис"  class="p-button-text"  style="margin: 4px" (click)="openNew()"></button>
       </tr>
       <tr>
-        <th pSortableColumn="name">Name</th>
-        <th pSortableColumn="lastname">Last Name</th>
-        <th pSortableColumn="password">Password</th>
-        <th pSortableColumn="email">Email</th>
-        <th pSortableColumn="companyName">Company Name</th>
+        <th pSortableColumn="name">Име</th>
+        <th pSortableColumn="lastname">Фамилия</th>
+        <th pSortableColumn="password">Парола</th>
+        <th pSortableColumn="email">Имейл</th>
+        <th pSortableColumn="companyName">Име на фирма</th>
 
         <th></th>
       </tr>
@@ -33,43 +33,43 @@
     </ng-template>
   </p-table>
 </div>
-<p-dialog [(visible)]="usersDialog" [style]="{width: '450px'}" header="Users Details" [modal]="true" styleClass="p-fluid">
+<p-dialog [(visible)]="usersDialog" [style]="{width: '450px'}" header="Детайли на потребител" [modal]="true" styleClass="p-fluid">
   <ng-template pTemplate="content">
     <div class="p-field">
-      <label for="name">Name</label>
+      <label for="name">Име</label>
       <input type="text" pInputText id="name" [(ngModel)]="user.name" required autofocus/>
-      <small class="p-invalid" *ngIf="submitted && !user.name">Name is required.</small>
+      <small class="p-invalid" *ngIf="submitted && !user.name">Името е задължително.</small>
     </div>
     <div class="p-field p-col">
-      <label for="lastName">Lastname</label>
+      <label for="lastName">Фамилия</label>
       <input type="text" pInputText id="lastName" [(ngModel)]="user.lastname" required autofocus/>
-      <small class="p-invalid" *ngIf="submitted && !user.lastname">Lastname is required.</small>
+      <small class="p-invalid" *ngIf="submitted && !user.lastname">Фамилията е задължителна.</small>
     </div>
     <div class="p-field">
       <div class="p-formgrid p-grid">
-        <label for="password">Password</label>
+        <label for="password">Парола</label>
         <input type="text" pInputText id="password" [(ngModel)]="user.password" required autofocus/>
-        <small class="p-invalid" *ngIf="submitted && !user.password">password is required.</small>
+        <small class="p-invalid" *ngIf="submitted && !user.password">Паролата е задължителна.</small>
       </div>
       <div class="p-formgrid p-grid">
         <div class="p-field p-col">
-          <label for="email">Email</label>
+          <label for="email">Имейл</label>
           <input type="text" pInputText id="email" [(ngModel)]="user.email" required autofocus/>
-          <small class="p-invalid" *ngIf="submitted && !user.email">Email is required.</small>
+          <small class="p-invalid" *ngIf="submitted && !user.email">Имейлът е задължителен.</small>
         </div>
         <div class="p-formgrid p-grid">
           <div class="p-field p-col">
-            <label for="companyName">Company name</label>
-            <input type="text" pInputText id="companyName" [(ngModel)]="user.companyname" required autofocus/>
-            <small class="p-invalid" *ngIf="submitted && !user.companyname">Company name is required.</small>
+            <label for="companyName">Име на фирма</label>
+            <input type="text" pInputText id="companyName" [(ngModel)]="user.companyName" required autofocus/>
+            <small class="p-invalid" *ngIf="submitted && !user.companyName">Името на фирмата е задължително.</small>
           </div>
         </div>
       </div>
     </div>
   </ng-template>
   <ng-template pTemplate="footer">
-    <button pButton pRipple label="Cancel" icon="pi pi-times" class="p-button-text" (click)="hideDialog()"></button>
-    <button pButton pRipple label="Save" icon="pi pi-check" class="p-button-text" (click)="saveUsers()"></button>
+    <button pButton pRipple label="Отказ" icon="pi pi-times" class="p-button-text" (click)="hideDialog()"></button>
+    <button pButton pRipple label="Запазване" icon="pi pi-check" class="p-button-text" (click)="saveUsers()"></button>
   </ng-template>
 </p-dialog>
 

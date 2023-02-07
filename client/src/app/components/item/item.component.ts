@@ -12,19 +12,21 @@ import {ConfirmationService, MessageService} from "primeng/api";
 })
 export class ItemComponent implements OnInit {
 
-  itemDialog : boolean = false;
-
   public items : Item[] = [];
-
   public item : Item = new Item();
-
   public itemCategories : ItemCategory[] = [];
 
+  displayInfoDialog: boolean = false;
+  dialog : boolean = false;
   submitted: boolean = false;
-    constructor(private itemservice: ItemService,private itemCategoryService: ItemCategoryService, private messageService: MessageService, private confirmationService: ConfirmationService) { }
+
+  constructor(private itemService: ItemService
+              , private itemCategoryService: ItemCategoryService
+              , private messageService: MessageService
+              , private confirmationService: ConfirmationService) { }
 
   ngOnInit(): void {
-    this.itemservice.getAll().subscribe(data =>{
+    this.itemService.getAll().subscribe(data =>{
       this.items = data
     });
     this.itemCategoryService.getAll().subscribe(data =>{
@@ -32,43 +34,50 @@ export class ItemComponent implements OnInit {
     });
   }
 
-  openNew(){
+  openNewDialog(){
     this.item = new Item();
     this.submitted = false;
-    this.itemDialog = true;
+    this.dialog = true;
   }
-  editItem(item: Item){
-    this.item = {...item};
-    this.itemDialog = true;
-  }
-  deleteItem(item : Item){
-    this.confirmationService.confirm({
-      message: 'Are you sure you want to delete ' + item.name + '?',
-      header: 'Confirm',
-      icon: 'pi pi-exclamation-triangle',
-      accept: () => {
-        this.items= this.items.filter(val => val.id !== item.id);
-        this.itemservice.delete(item).then(() => {
-          this.item = new Item();
-        });
-        this.messageService.add({severity:'success', summary: 'Successful', detail: 'Product Deleted', life: 3000});
-      }
-    });
-  }
+
   hideDialog(){
     this.submitted = false;
-    this.itemDialog = true;
+    this.dialog = true;
   }
-  saveItem(){
+
+  openEditDialog(item: Item){
+    this.item = new Item();
+    this.dialog = true;
+  }
+
+  showInfoDialog() {
+    this.displayInfoDialog = true;
+  }
+
+  save(){
     this.submitted = true;
 
-    this.itemservice.save(this.item).then(() => {
-      this.itemservice.getAll().subscribe(data => {
+    this.itemService.save(this.item).then(() => {
+      this.itemService.getAll().subscribe(data => {
         this.items = data;
-        this.messageService.add({severity: 'success', summary: 'Successful', detail: 'Product Updated', life: 3000});
-        this.itemDialog = false;
+        this.dialog = false;
         this.item = new Item();
+        console.log("Done with save");
       });
+    });
+  }
+
+  delete(item : Item) {
+    this.confirmationService.confirm({
+      message: 'Наистина ли искате да изтриете? ' + item.name + '?',
+      header: 'Потвърждаване',
+      icon: 'pi pi-exclamation-triangle',
+      accept: () => {
+        this.itemService.delete(item).then(() => {
+          this.item = new Item();
+          console.log("Done with delete");
+        });
+      }
     });
   }
 

@@ -20,6 +20,7 @@ export class EntityheaderComponent {
   entityHeaderDialog : boolean = false;
   entityLineDialog : boolean = false;
   entityLineDetailsDialog: boolean = false;
+  displayInfoDialog : boolean = false;
 
   entityHeader : EntityHeader = new  EntityHeader();
   entityline: Entityline= new Entityline();
@@ -96,7 +97,7 @@ export class EntityheaderComponent {
     this.entityHeaderService.save(this.entityHeader).then(() =>{
       this.entityHeaderService.getAll().subscribe(data => {
         this.entityHeaders = data;
-        this.messageService.add({severity:'success', summary: 'Successful', detail: 'Product Updated', life: 3000});
+        this.messageService.add({severity:'success', summary: 'Successful', detail: 'Менюто е запазено', life: 3000});
         this.entityHeaderDialog = false;
         this.entityHeader = new EntityHeader();
       });
@@ -117,7 +118,7 @@ export class EntityheaderComponent {
 
   deleteEntityHeader(entityHeader: EntityHeader){
     this.confirmationService.confirm({
-      message: 'Are you sure you want to delete ' + entityHeader.name + '?',
+      message: 'Наистина ли искате да изтриете   ' + entityHeader.name + '?',
       header: 'Confirm',
       icon: 'pi pi-exclamation-triangle',
       accept: () => {
@@ -134,7 +135,7 @@ export class EntityheaderComponent {
 
   deleteEntityLineDetails(entityLine: Entityline){
     this.confirmationService.confirm({
-      message: 'Are you sure you want to delete ' + entityLine.item.name + '?',
+      message: 'Наистина ли искате да изтриете линията? ' + entityLine.item.name + '?',
       header: 'Confirm',
       icon: 'pi pi-exclamation-triangle',
       accept: () => {
@@ -142,7 +143,7 @@ export class EntityheaderComponent {
           this.entityLineService.getAll(entityLine.entityHeader.id).subscribe(data => {
             this.entitylines = data;
             this.entityHeader = new EntityHeader();
-            this.messageService.add({severity:'success', summary: 'Successful', detail: 'Line Deleted', life: 3000});
+            this.messageService.add({severity:'success', summary: 'Успешно изтриване', detail: 'Линята е изтрита', life: 3000});
           })
         });
       }
@@ -166,5 +167,15 @@ export class EntityheaderComponent {
       this.openNewEntityLine();
     })
 
+  }
+
+  showInfoDialog() {
+    this.displayInfoDialog = true;
+  }
+
+  openNewDialog() {
+    this.entityHeader = new EntityHeader();
+    this.submittedEntityHeader = false;
+    this.entityHeaderDialog = true;
   }
 }

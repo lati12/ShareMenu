@@ -1,8 +1,8 @@
 import { Component} from '@angular/core';
 import {MenuItem, MessageService} from 'primeng/api';
-import {StorageService} from "./services/storage.service";
-import {AuthService} from "./services/auth.service";
+import {TokenStorageService} from "./services/auth/token-storage.service";
 import {Router} from "@angular/router";
+import {Location} from "@angular/common";
 
 
 @Component({
@@ -12,22 +12,35 @@ import {Router} from "@angular/router";
 })
 export class AppComponent {
 
-  private roles: string[] = [];
   isLoggedIn = false;
-  showAdminBoard = false;
   username?: string;
   items: MenuItem[] = [];
 
-  constructor(private storageService: StorageService,  private messageService : MessageService, private router: Router) { }
+  constructor(private location: Location, private tokenStorageService: TokenStorageService, private messageService : MessageService, private router: Router) { }
 
   ngOnInit(): void {
-    this.isLoggedIn = this.storageService.isLoggedIn();
+    debugger
+    this.isLoggedIn = !!this.tokenStorageService.getToken();
 
     if (this.isLoggedIn) {
       this.router.navigate(['']).catch(console.error);
+      return;
     }
-    else
-      this.router.navigate(['login']).catch(console.error);
+    let path = this.location.path();
+
+    if (path.includes('/'))
+      path = this.location.path().split('/')[1];
+
+    if (path.includes('?'))
+      path = path.split('?')[0];
+
+    switch (path) {
+      case 'confirm-email':
+      case 'register':
+        break;
+      default:
+        this.router.navigate(['login']).catch(console.error);
+    }
   }
 
 

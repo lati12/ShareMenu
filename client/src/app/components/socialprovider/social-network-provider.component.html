@@ -5,10 +5,10 @@
            currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" [showCurrentPageReport]="true">
     <ng-template pTemplate="header">
       <tr>
-        <button pButton pRipple label="New" icon="pi pi-plus" class="p-button-success p-mr-2" style="margin: 4px" (click)="openNew()"></button>
+        <button pButton pRipple label="Създаване на запис"  class="p-button-text" style="margin: 4px" (click)="openNew()"></button>
       </tr>
       <tr>
-        <th pSortableColumn="name">Name</th>
+        <th pSortableColumn="name">Име</th>
         <th pSortableColumn="accessToken">Access Token</th>
         <th pSortableColumn="refreshToken">Refresh Token</th>
 
@@ -29,31 +29,31 @@
     </ng-template>
   </p-table>
 </div>
-<p-dialog [(visible)]="socialProvidersDialog" [style]="{width: '450px'}" header="Social Provider Details" [modal]="true" styleClass="p-fluid">
+<p-dialog [(visible)]="socialProvidersDialog" [style]="{width: '450px'}" header="Детайли на социална мрежа" [modal]="true" styleClass="p-fluid">
   <ng-template pTemplate="content">
     <div class="p-field">
-      <label for="name">Name</label>
+      <label for="name">Име</label>
       <input type="text" pInputText id="name" [(ngModel)]="socialProvider.name" required autofocus/>
-      <small class="p-invalid" *ngIf="submitted && !socialProvider.name">Name is required.</small>
+      <small class="p-invalid" *ngIf="submitted && !socialProvider.name">Името е задължително.</small>
     </div>
     <div class="p-formgrid p-grid">
       <div class="p-field p-col">
         <label for="accessToken">Access token</label>
         <input type="text" pInputText id="accessToken" [(ngModel)]="socialProvider.accessToken" required autofocus/>
-        <small class="p-invalid" *ngIf="submitted && !socialProvider.accessToken">AccessToken is required.</small>
+        <small class="p-invalid" *ngIf="submitted && !socialProvider.accessToken">AccessToken е задължителен.</small>
       </div>
       <div class="p-formgrid p-grid">
         <div class="p-field p-col">
           <label for="refreshToken">Refresh token</label>
           <input type="text" pInputText id="refreshToken" [(ngModel)]="socialProvider.refreshToken" required autofocus/>
-          <small class="p-invalid" *ngIf="submitted && !socialProvider.refreshToken">RefreshToken is required.</small>
+          <small class="p-invalid" *ngIf="submitted && !socialProvider.refreshToken">RefreshToken е задължителен.</small>
         </div>
       </div>
     </div>
   </ng-template>
   <ng-template pTemplate="footer">
-    <button pButton pRipple label="Cancel" icon="pi pi-times" class="p-button-text" (click)="hideDialog()"></button>
-    <button pButton pRipple label="Save" icon="pi pi-check" class="p-button-text" (click)="saveSocialProvider()"></button>
+    <button pButton pRipple label="Отказ" icon="pi pi-times" class="p-button-text" (click)="hideDialog()"></button>
+    <button pButton pRipple label="Запазване" icon="pi pi-check" class="p-button-text" (click)="saveSocialProvider()"></button>
   </ng-template>
 </p-dialog>
 

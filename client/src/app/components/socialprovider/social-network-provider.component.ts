@@ -30,13 +30,27 @@ export class SocialNetworkProviderComponent implements OnInit {
     this.submitted = false;
     this.socialProvidersDialog = true;
   }
-  editSocialProviders(socialProvider : SocialNetworkProvider){
-    this.socialProvider = {...socialProvider};
-    this.socialProvidersDialog = true;
+
+  hideDialog(){
+    this.submitted = false;
+    this.socialProvidersDialog = false;
   }
+
+  saveSocialProvider(){
+    this.submitted = true;
+
+    this.socialProviderService.save(this.socialProvider).then(() =>{
+      this.socialProviderService.getAll().subscribe(data => {
+        this.messageService.add({severity:'success', summary: 'Успешно запазване', detail: 'Product Updated', life: 3000});
+        this.socialProvidersDialog = false;
+        this.socialProvider = new SocialNetworkProvider();
+      })
+    });
+  }
+
   deleteSocialProviders(socialProvider : SocialNetworkProvider) {
     this.confirmationService.confirm({
-      message: 'Are you sure you want to delete ' + socialProvider.name + '?',
+      message: 'Наистина ли искате да изтриете? ' + socialProvider.name + '?',
       header: 'Confirm',
       icon: 'pi pi-exclamation-triangle',
       accept: () => {
@@ -44,24 +58,14 @@ export class SocialNetworkProviderComponent implements OnInit {
         this.socialProviderService.delete(socialProvider).then(() => {
           this.socialProvider = new SocialNetworkProvider();
         });
-        this.messageService.add({severity:'success', summary: 'Successful', detail: 'Product Deleted', life: 3000});
+        this.messageService.add({severity:'success', summary: 'Успешно изтриване', detail: 'Product Deleted', life: 3000});
       }
     });
   }
-  hideDialog(){
-    this.submitted = false;
-    this.socialProvidersDialog = false;
-  }
-  saveSocialProvider(){
-    this.submitted = true;
 
-    this.socialProviderService.save(this.socialProvider).then(() =>{
-      this.socialProviderService.getAll().subscribe(data => {
-        this.messageService.add({severity:'success', summary: 'Successful', detail: 'Product Updated', life: 3000});
-        this.socialProvidersDialog = false;
-        this.socialProvider = new SocialNetworkProvider();
-      })
-    });
+  editSocialProviders(socialProvider : SocialNetworkProvider){
+    this.socialProvider = {...socialProvider};
+    this.socialProvidersDialog = true;
   }
 
 }

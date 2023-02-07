@@ -3,9 +3,9 @@
     <div class="grid col-offset-4" style="margin-top: 2rem">
       <div class="col-6 shadow-5 box" style="background-color: white;">
         <div class="flex flex-row justify-content-between">
-            <h2>Sharemenu</h2>
+            <h2 style="font-family: Verdana">Sharemenu</h2>
           <div>
-            <button class="p-button-text p-button-sm" (click)="redirectRegister()" pButton>Register</button>
+            <button class="p-button-text p-button-sm" (click)="redirectRegister()" pButton>Регистрация</button>
           </div>
         </div>
         <p-divider></p-divider>
@@ -15,16 +15,16 @@
               <div class="p-fluid">
                 <div class="field p-float-label">
                   <input type="text" pInputText id="email" formControlName="email">
-                  <label for="email">Email</label>
+                  <label for="email">Имейл</label>
                 </div>
 
                 <div class="field p-float-label">
                   <input type="password" pInputText id="password"  formControlName="password" >
-                  <label for="password">Password</label>
+                  <label for="password">Парола</label>
                 </div>
 
                 <div class="flex flex-row justify-content-between">
-                  <button type="submit" (click)="onSubmit()" label="Login" class="p-offset-3" pButton></button>
+                  <button type="submit" (click)="onSubmit()" label="Вход" class="p-offset-3" pButton></button>
                 </div>
               </div>
             </form>

@@ -12,6 +12,9 @@ public class EmailConfirmation {
     @Column
     private Boolean confirmed;
 
+    @Column
+    private String hash;
+
     @OneToOne
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
@@ -39,5 +42,13 @@ public class EmailConfirmation {
 
     public void setUser(User user) {
         this.user = user;
+    }
+
+    public String getHash() {
+        return hash;
+    }
+
+    public void setHash(String hash) {
+        this.hash = hash;
     }
 }
