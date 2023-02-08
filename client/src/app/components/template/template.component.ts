@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Template } from 'src/app/common/template';
 import {TemplateService} from "../../services/template.service";
 import {ConfirmationService, MessageService} from "primeng/api";
+import {FileUploadModule} from 'primeng/fileupload';
 
 @Component({
   selector: 'app-template',
@@ -10,38 +11,45 @@ import {ConfirmationService, MessageService} from "primeng/api";
 })
 export class TemplateComponent implements OnInit {
 
-  templateDialog: boolean = false;
+  submitted: boolean = false;
+  dialog: boolean = false;
 
   public templates : Template[] = [];
-
   public template : Template = new Template();
 
-  submitted: boolean = false;
-  constructor(private templateService : TemplateService, private messageService: MessageService, private confirmationService: ConfirmationService) { }
+  constructor(private templateService : TemplateService
+              , private messageService: MessageService
+              , private confirmationService: ConfirmationService) { }
 
   ngOnInit() {
     this.templateService.getAll().subscribe(data => {
       this.templates = data;
     });
   }
-  openNew(){
+  openDialog(){
     this.template = new Template();
     this.submitted = false;
-    this.templateDialog = true;
+    this.dialog = true;
   }
 
-  deleteTemplate(template : Template) {
+  delete(template : Template) {
     this.confirmationService.confirm({
-      message: 'Are you sure you want to delete ' + template.name + '?',
-      header: 'Confirm',
+      message: 'Наистина ли искате да изтриете' + template.name + '?',
+      header: 'Потвърждаване',
       icon: 'pi pi-exclamation-triangle',
       accept: () => {
-        this.templates = this.templates.filter(val => val.id !== template.id);
         this.templateService.delete(template).then(() => {
-          this.template = new Template();
+          this.templateService.getAll().subscribe(data => {
+            this.templates = data;
+            this.template = new Template();
+            console.log("Done with delete");
+          });
         })
-        this.messageService.add({severity:'success', summary: 'Successful', detail: 'Product Deleted', life: 3000});
       }
     });
+  }
+
+  showInfoDialog() {
+
   }
 }

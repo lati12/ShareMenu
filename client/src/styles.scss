@@ -1,3 +1,21 @@
 .card-width-table {
   width: 85vw;
 }
+
+html
+{
+  margin:0px;
+  height:100%;
+  width:100%;
+  background:url('/assets/back.jpg')no-repeat center center fixed;
+  -webkit-background-size:cover;
+  -o-background-size:cover;
+  -moz-background-size:cover;
+  background-size:cover;
+}
+.p-toolbar{
+  border: none !important;
+}
+.p-splitter {
+  height: 85vh;
+}

@@ -47,7 +47,7 @@ export class EntityheaderComponent {
       this.entityHeaders = data;
     });
 
-    this.templateService.getAll().subscribe(data => {
+    this.templateService.getAllByUser().subscribe(data => {
       this.templates = data
     });
     this.usersService.getAll().subscribe(data =>{

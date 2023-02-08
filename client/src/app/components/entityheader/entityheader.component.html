@@ -43,42 +43,37 @@
     <div class="p-field">
       <label for="name">Име</label>
       <input type="text" pInputText id="name" [(ngModel)]="entityHeader.name" required autofocus />
-      <small class="p-invalid" *ngIf="submittedEntityHeader && !entityHeader.name">Името е задължително.</small>
+      <small class="p-invalid" *ngIf="submittedEntityHeader && !entityHeader.name">Полето е задължително!</small>
     </div>
     <div class="p-field">
       <label for="address">Адрес</label>
       <input type="text" pInputText id="address" [(ngModel)]="entityHeader.address" required autofocus />
-      <small class="p-invalid" *ngIf="submittedEntityHeader && !entityHeader.address">Адресът е задължителен.</small>
+      <small class="p-invalid" *ngIf="submittedEntityHeader && !entityHeader.address">Полето е задължително!</small>
     </div>
     <div class="p-field">
       <label for="phone">Телефон</label>
       <input type="text" pInputText id="phone" [(ngModel)]="entityHeader.phone" required autofocus />
-      <small class="p-invalid" *ngIf="submittedEntityHeader && !entityHeader.phone">Телефонният номер е задължителен.</small>
+      <small class="p-invalid" *ngIf="submittedEntityHeader && !entityHeader.phone">Полето е задължително!</small>
     </div>
     <div>
       <label for="name">Темплейт</label>
       <p-dropdown [options]="templates" [(ngModel)]="entityHeader.template" placeholder="Избери темплейт" optionLabel="name">
       </p-dropdown>
     </div>
-    <div>
-      <label for="name">Потребители</label>
-      <p-dropdown  [options]="users" [(ngModel)]="entityHeader.users" placeholder="Избери потребител" optionLabel="name">
-      </p-dropdown>
-    </div>
     <div class="p-field">
       <label for="email">Имейл</label>
       <input type="text" pInputText id="email" [(ngModel)]="entityHeader.email" required autofocus />
-      <small class="p-invalid" *ngIf="submittedEntityHeader && !entityHeader.email">Имейлът е задължителен.</small>
+      <small class="p-invalid" *ngIf="submittedEntityHeader && !entityHeader.email">Полето е задължително!</small>
     </div>
     <div class="p-field">
       <label for="city">Град</label>
       <input type="text" pInputText id="city" [(ngModel)]="entityHeader.city" required autofocus />
-      <small class="p-invalid" *ngIf="submittedEntityHeader && !entityHeader.city">Градът е задължителен.</small>
+      <small class="p-invalid" *ngIf="submittedEntityHeader && !entityHeader.city">Полето е задължително!</small>
     </div>
     <div class="p-field">
       <label for="country">Държава</label>
       <input type="text" pInputText id="country" [(ngModel)]="entityHeader.country" required autofocus />
-      <small class="p-invalid" *ngIf="submittedEntityHeader && !entityHeader.country">Държавата е задължителна.</small>
+      <small class="p-invalid" *ngIf="submittedEntityHeader && !entityHeader.country">Полето е задължително!</small>
     </div>
   </ng-template>
 
@@ -95,9 +90,9 @@
     <p-table #dt [value]="entitylines" [rows]="10" [paginator]="true" [rowHover]="true">
       <ng-template pTemplate="header">
         <tr>
-          <th pSortableColumn="itemName">Item name</th>
-          <th pSortableColumn="price">Price</th>
-          <th pSortableColumn="quantity">Quantity</th>
+          <th pSortableColumn="itemName">Име на артикул</th>
+          <th pSortableColumn="price">Цена</th>
+          <th pSortableColumn="quantity">Стойност</th>
           <th></th>
         </tr>
       </ng-template>
@@ -117,25 +112,25 @@
   </ng-template>
 </p-dialog>
 
-<p-dialog [(visible)]="entityLineDetailsDialog" [closeOnEscape]="false" [style]="{width: '450px'}" header="Entity line Details" [modal]="true" styleClass="p-fluid">
+<p-dialog [(visible)]="entityLineDetailsDialog" [closeOnEscape]="false" [style]="{width: '450px'}" header="Детайли" [modal]="true" styleClass="p-fluid">
   <ng-template pTemplate="content">
     <div class="p-field">
-      <label for="name">Item</label>
-      <p-dropdown  [options]="items" [(ngModel)]="entityline.item" placeholder="Select Item" optionLabel="name">
+      <label for="name">Артикул</label>
+      <p-dropdown  [options]="items" [(ngModel)]="entityline.item" placeholder="Избери артикул" optionLabel="name">
       </p-dropdown>
     </div>
     <div class="p-field">
-      <label for="price">Price</label>
+      <label for="price">Цена</label>
       <input type="number" pInputText id="price" [(ngModel)]="entityline.price" />
     </div>
     <div class="p-field">
-      <label for="quantity">Quantity</label>
+      <label for="quantity">Стойност</label>
       <input type="number" pInputText id="quantity" [(ngModel)]="entityline.quantity" />
     </div>
   </ng-template>
   <ng-template pTemplate="footer">
-    <button pButton pRipple label="Cancel" icon="pi pi-times" class="p-button-text" (click)="hideEntityLineDetailsDialog()"></button>
-    <button pButton pRipple label="Save" icon="pi pi-check" class="p-button-text" (click)="saveEntityLineDetails()" ></button>
+    <button pButton pRipple label="Отказ" icon="pi pi-times" class="p-button-text" (click)="hideEntityLineDetailsDialog()"></button>
+    <button pButton pRipple label="Запазване" icon="pi pi-check" class="p-button-text" (click)="saveEntityLineDetails()" ></button>
   </ng-template>
 </p-dialog>
 

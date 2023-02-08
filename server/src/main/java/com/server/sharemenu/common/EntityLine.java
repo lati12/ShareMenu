@@ -1,6 +1,9 @@
 package com.server.sharemenu.common;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import org.hibernate.annotations.Cascade;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 import javax.persistence.*;
 
@@ -19,23 +22,10 @@ public class EntityLine {
     @ManyToOne
     @JoinColumn(name = "entityheader_id", nullable = false)
     private EntityHeader entityHeader;
+
     @ManyToOne
     @JoinColumn(name = "item_id", nullable = false)
     private Item item;
-
-    @ManyToOne
-    @JsonIgnore
-    @JoinColumn(name = "users_id",nullable = false)
-    private User users;
-
-
-    public User getUsers() {
-        return users;
-    }
-
-    public void setUsers(User users) {
-        this.users = users;
-    }
 
     public EntityHeader getEntityHeader() {
         return entityHeader;

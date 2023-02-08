@@ -32,16 +32,7 @@ import {ConfirmDialogModule} from "primeng/confirmdialog";
 import {InputTextareaModule} from "primeng/inputtextarea";
 import {DividerModule} from "primeng/divider";
 import {DropdownModule} from 'primeng/dropdown';
-import { UploadFileComponent } from './upload-file/upload-file.component';
 import { EntityheaderComponent } from './components/entityheader/entityheader.component';
-import {EntitylineService} from "./services/entityline.service";
-import {EntityheaderService} from "./services/entityheader.service";
-import {ItemService} from "./services/item.service";
-import {ItemCategoryService} from "./services/item-category.service";
-import {SharemenuService} from "./services/sharemenu.service";
-import {SocialNetworkProviderService} from "./services/social-network-provider.service";
-import {TemplateService} from "./services/template.service";
-import {UsersService} from "./services/users.service";
 import {ItemComponent} from "./components/item/item.component";
 import {ItemCategoryComponent} from "./components/item-category/item-category.component";
 import {SharemenuComponent} from "./components/sharemenu/sharemenu.component";
@@ -55,11 +46,12 @@ import { RegisterComponent } from './components/register/register.component';
 import {OverlayPanelModule} from "primeng/overlaypanel";
 import {authInterceptorProviders} from "./services/auth/auth.interceptor";
 import {ConfirmEmailComponent} from "./components/confirm-email/confirm-email.component";
+import { UserTemplateComponent } from './components/user-template/user-template.component';
+import {ImageModule} from "primeng/image";
 
 @NgModule({
   declarations: [
     AppComponent,
-    UploadFileComponent,
     EntityheaderComponent,
     ItemComponent,
     ItemCategoryComponent,
@@ -72,6 +64,7 @@ import {ConfirmEmailComponent} from "./components/confirm-email/confirm-email.co
     ProfileComponent,
     RegisterComponent,
     ConfirmEmailComponent,
+    UserTemplateComponent,
   ],
   imports: [
     BrowserModule,
@@ -102,6 +95,7 @@ import {ConfirmEmailComponent} from "./components/confirm-email/confirm-email.co
     DynamicDialogModule,
     OverlayPanelModule,
     ReactiveFormsModule,
+    ImageModule,
   ],
   providers: [MessageService,ConfirmationService, authInterceptorProviders],
   bootstrap: [AppComponent]

@@ -1,15 +1,16 @@
 <p-toast></p-toast>
+<div class="flex justify-content-between flex-wrap card-container purple-container">
+  <button pButton pRipple label="Създаване на запис"  class="p-button-text"  style="margin: 4px" (click)="openDialog()"></button>
+  <button pButton pRipple type="button" (click)="showInfoDialog()" icon="pi pi-info" class="p-button-rounded p-button-secondary p-button-outlined"></button>
+</div>
+
 <div class="card card-width-table">
   <p-table #dt [value]="templates" [rows]="10" [paginator]="true"
            [rowHover]="true"
            currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" [showCurrentPageReport]="true">
     <ng-template pTemplate="header">
       <tr>
-        <button pButton pRipple label="Създаване на запис"  class="p-button-text"  style="margin: 4px" (click)="openNew()"></button>
-      </tr>
-      <tr>
         <th pSortableColumn="name">Име</th>
-        <th pSortableColumn="file">Файл</th>
         <th></th>
       </tr>
     </ng-template>
@@ -17,17 +18,17 @@
       <tr>
         <td>{{template.name}}</td>
         <td>
-          <button pButton pRipple icon="pi pi-trash" class="p-button-rounded p-button-warning" (click)="deleteTemplate(template)"></button>
+          <button pButton pRipple icon="pi pi-trash" class="p-button-rounded p-button-warning" (click)="delete(template)"></button>
         </td>
       </tr>
     </ng-template>
   </p-table>
 </div>
-<p-dialog [(visible)]="templateDialog" [style]="{width: '450px'}" header="Детайли на темплейт" [modal]="true" styleClass="p-fluid">
+<p-dialog [(visible)]="dialog" [style]="{width: '450px'}" header="Детайли на темплейт" [modal]="true" styleClass="p-fluid">
   <ng-template pTemplate="content">
     <div class="p-field" style="margin: 6px">
       <label>Качване на файл</label>
-      <p-fileUpload mode="basic" name="file" url="http://localhost:4713/sharemenu/api/resource/upload-file/upload"
+      <p-fileUpload mode="basic" name="file" (onBeforeUpload)="dialog=false" url="http://localhost:4713/sharemenu/api/resource/upload-file/upload"
                     accept="*" [maxFileSize]="1000000" [auto]="true" chooseLabel="Качване на файл">
         <ng-template pTemplate="toolbar">
         </ng-template>

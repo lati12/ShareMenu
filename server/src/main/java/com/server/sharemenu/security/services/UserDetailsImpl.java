@@ -18,6 +18,9 @@ public class UserDetailsImpl implements UserDetails {
     private String username;
     private String email;
 
+    private String name;
+    private String lastName;
+
     @JsonInclude
     private String password;
 
@@ -31,6 +34,8 @@ public class UserDetailsImpl implements UserDetails {
         this.username = user.getEmail();
         this.authorities = authorities;
         this.email = user.getEmail();
+        this.name = user.getName();
+        this.lastName = user.getLastname();
     }
     public static UserDetailsImpl build(User user) {
         List<GrantedAuthority> authorities = user.getRoles().stream()
@@ -39,6 +44,22 @@ public class UserDetailsImpl implements UserDetails {
 
         return new UserDetailsImpl(user,
                 authorities);
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getLastName() {
+        return lastName;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
     }
 
     @Override

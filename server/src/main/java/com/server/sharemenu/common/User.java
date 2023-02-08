@@ -1,5 +1,7 @@
 package com.server.sharemenu.common;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
@@ -23,6 +25,7 @@ public class User {
     private String email;
 
     @NotBlank
+    @JsonIgnore
     private String password;
 
     @Column
@@ -45,6 +48,7 @@ public class User {
     private Set<Role> roles = new HashSet<>();
 
     @ManyToMany(fetch = FetchType.LAZY)
+    @JsonIgnore
     @JoinTable(name = "user_template",
             joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "template_id"))
@@ -126,5 +130,13 @@ public class User {
 
     public void setCompanyName(String companyName) {
         this.companyName = companyName;
+    }
+
+    public Set<Template> getTemplates() {
+        return templates;
+    }
+
+    public void setTemplates(Set<Template> templates) {
+        this.templates = templates;
     }
 }

@@ -5,6 +5,7 @@ import {Users} from "../../common/users";
 import {Router} from "@angular/router";
 import {AuthService} from "../../services/auth/auth.service";
 import {Roles} from "../../common/Roles";
+import {extractHostBindings} from "@angular/compiler-cli/src/ngtsc/annotations/directive";
 
 @Component({
   selector: 'app-home',
@@ -26,6 +27,7 @@ export class HomeComponent implements OnInit {
   shareMenuVisable: boolean = false;
   socialProviderVisable: boolean = false;
   templateVisable: boolean = false;
+  userTemplateVisable : boolean = false;
 
 
   constructor(private authService: AuthService, private tokenStorageService: TokenStorageService, public router: Router) { }
@@ -43,52 +45,59 @@ export class HomeComponent implements OnInit {
       this.items = [{
         items: [
           {
-            label: 'Entity Header',
+            label: 'Меню',
             visible: this.entityHeaderVisable,
             command: (_event: Event) => {
               this.router.navigate(['entityheader']).catch(console.error)
             }
           },
           {
-            label: 'Item',
+            label: 'Артикул',
             visible: this.itemVisable,
             command: (_event: Event) => {
               this.router.navigate(['item']).catch(console.error)
             }
           },
           {
-            label: 'Item Category',
+            label: 'Категория на артикул',
             visible: this.itemCategoryVisable,
             command: (_event: Event) => {
               this.router.navigate(['itemcategory']).catch(console.error)
             }
           },
           {
-            label : 'Share Menu',
+            label : 'Споделяне на меню',
             visible: this.shareMenuVisable,
             command: (_event: Event) => {
               this.router.navigate(['sharemenu']).catch(console.error)
             }
           },
           {
-            label: 'Template',
+            label: 'Темплейт',
             visible: this.templateVisable,
             command: (_event: Event) => {
               this.router.navigate(['template']).catch(console.error)
             }
           },
           {
-            label: 'Social Network Providers',
+            label: 'Социални мрежи',
             visible: this.socialProviderVisable,
             command: (_event: Event) => {
               this.router.navigate(['socialprovider']).catch(console.error)
             }
           },
           {
-            label: 'Users',
+            label: 'Потребители',
             visible: this.userVisable,
             command: (_event: Event) => {
               this.router.navigate(['users']).catch(console.error)
+            }
+          },
+          {
+            label: 'Потребител - Темплейт',
+            visible: this.userTemplateVisable,
+            command: (_event: Event) => {
+              this.router.navigate(['usertemplate']).catch(console.error)
             }
           },
         ]
@@ -103,6 +112,7 @@ export class HomeComponent implements OnInit {
     this.shareMenuVisable = false;
     this.templateVisable = false;
     this.socialProviderVisable = false;
+    this.userTemplateVisable = false;
     if (this.roles == null || !this.isLoggedIn) {
       this.slideDisplay = false;
       return;
@@ -117,6 +127,7 @@ export class HomeComponent implements OnInit {
         self.shareMenuVisable = true;
         self.templateVisable = true;
         self.socialProviderVisable = true;
+        self.userTemplateVisable = true;
       } else if (role === Roles.ROLE_USER) {
         self.itemVisable = true;
         self.itemCategoryVisable = true;

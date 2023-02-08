@@ -1,5 +1,7 @@
 package com.server.sharemenu.common;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 
 @Entity
@@ -13,6 +15,7 @@ public class Template {
     private String name;
 
     @Column
+    @JsonIgnore
     private byte[] file;
 
     @ManyToOne

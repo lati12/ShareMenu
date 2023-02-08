@@ -15,6 +15,7 @@ import {Roles} from "./common/Roles";
 import {AuthGuard} from "./services/auth/auth-guard.service";
 import {ConfirmEmailComponent} from "./components/confirm-email/confirm-email.component";
 import {BrowserModule} from "@angular/platform-browser";
+import {UserTemplateComponent} from "./components/user-template/user-template.component";
 
 const routes: Routes = [
 
@@ -91,6 +92,14 @@ const routes: Routes = [
       },
       {
         path: 'itemcategory', component: ItemCategoryComponent,
+        canActivate: [AuthGuard],
+        data:
+          {
+            roles: [Roles.ROLE_ADMIN, Roles.ROLE_USER]
+          }
+      },
+      {
+        path: 'usertemplate', component: UserTemplateComponent,
         canActivate: [AuthGuard],
         data:
           {

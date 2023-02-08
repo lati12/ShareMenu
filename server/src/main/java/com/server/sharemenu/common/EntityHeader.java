@@ -1,5 +1,7 @@
 package com.server.sharemenu.common;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 
 @Entity

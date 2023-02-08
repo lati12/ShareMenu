@@ -1,0 +1,32 @@
+<div class="formgroup-inline" style="margin-top: 48px; margin-left: 48px">
+  <div class="field">
+    <p-dropdown [options]="users" [(ngModel)]="userTemplate.user" placeholder="Избиране на потребител" optionLabel="name"></p-dropdown>
+  </div>
+  <div class="field">
+    <p-dropdown [options]="templates" [(ngModel)]="userTemplate.template" placeholder="Избиране на темплейт" optionLabel="name"></p-dropdown>
+  </div>
+    <button pButton pRipple label="Създаване на връзка"  class="p-button-text"  style="margin: 4px" (click)="generateMap()"></button>
+</div>
+
+<div class="card card-width-table">
+<p-table #dt [value]="userTemplates" [rows]="10" [paginator]="true" [rowHover]="true"
+         currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" [showCurrentPageReport]="true">
+  <ng-template pTemplate="header">
+    <tr>
+      <th pSortableColumn="email">Имейл на потребител</th>
+      <th pSortableColumn="nametemplate">Име на шаблон</th>
+      <th></th>
+    </tr>
+  </ng-template>
+  <ng-template pTemplate="body" let-usertemplate>
+    <tr>
+      <td>{{usertemplate.user.email}}</td>
+      <td>{{usertemplate.template.name}}</td>
+      <td>
+        <button pButton pRipple icon="pi pi-trash" class="p-button-rounded p-button-warning" (click)="delete(usertemplate)"></button>
+      </td>
+    </tr>
+  </ng-template>
+</p-table>
+</div>
+<p-confirmDialog [style]="{width: '450px'}"></p-confirmDialog>

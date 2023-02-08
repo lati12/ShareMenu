@@ -1,17 +1,20 @@
 <p-toolbar>
-  <div class="p-toolbar-group-left">
-    <label class="title">
-      <h4 style="font-family: Verdana">Sharemenu</h4>
-    </label>
-    <img class="logo-small" style="margin: 0 0 8px 8px; width: 48px; height: 48px" draggable="false" src="assets/logo.png">
+  <div class="p-toolbar-group-start">
+    <p-image src="/assets/logo-removebg-preview.png" width="150px" height="50px"></p-image>
   </div>
 
-  <div class="p-toolbar-group-right">
-    <label *ngIf="loggedUser && isLoggedIn" style="margin-right: 8px">
-      <strong>{{loggedUser.name}} {{loggedUser.lastname}}</strong>
-    </label>
-    <button (click)="op.toggle($event)" pButton type="button" icon="pi pi-user"
-            class="p-button-rounded p-button-outlined account-btn"></button>
+  <div class="p-toolbar-group-end">
+    <div class="flex align-content-center flex-wrap card-container yellow-container">
+      <div class="flex align-items-center justify-content-center">
+        <label  *ngIf="loggedUser && isLoggedIn" style="margin-right: 8px">
+          <strong>{{loggedUser.name}} {{loggedUser.lastname}}</strong>
+        </label>
+      </div>
+      <div class="flex align-items-center justify-content-center">
+        <button (click)="op.toggle($event)" pButton type="button" icon="pi pi-user"
+                class="p-button-rounded p-button-outlined account-btn"></button>
+      </div>
+    </div>
   </div>
 </p-toolbar>
 

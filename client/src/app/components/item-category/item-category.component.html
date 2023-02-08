@@ -17,25 +17,25 @@
       <tr>
         <td>{{itemcategory.name}}</td>
         <td>
-          <button pButton pRipple icon="pi pi-pencil" class="p-button-rounded p-button-success p-mr-2" (click)="editItemCategory(itemcategory)"></button>
-          <button pButton pRipple icon="pi pi-trash" class="p-button-rounded p-button-warning" (click)="deleteItemCategory(itemcategory)"></button>
+          <button pButton pRipple icon="pi pi-pencil" class="p-button-rounded p-button-success p-mr-2" (click)="OpenEditDialog(itemcategory)"></button>
+          <button pButton pRipple icon="pi pi-trash" class="p-button-rounded p-button-warning" (click)="delete(itemcategory)"></button>
         </td>
       </tr>
     </ng-template>
   </p-table>
 </div>
-<p-dialog [(visible)]="itemcategoryDialog" [style]="{width: '450px'}" header="Детайли на категория" [modal]="true" styleClass="p-fluid">
+<p-dialog [(visible)]="dialog" [style]="{width: '450px'}" header="Детайли" [modal]="true" styleClass="p-fluid">
   <ng-template pTemplate="content">
     <div class="p-field">
       <label for="name">Име</label>
       <input type="text" pInputText id="name" [(ngModel)]="itemCategory.name" required autofocus />
-      <small class="p-invalid" *ngIf="submitted && !itemCategory.name">Името е задължително.</small>
+      <small class="p-invalid" *ngIf="submitted && !itemCategory.name">Полето е задължително.</small>
     </div>
   </ng-template>
 
   <ng-template pTemplate="footer">
     <button pButton pRipple label="Отказ" icon="pi pi-times" class="p-button-text" (click)="hideDialog()"></button>
-    <button pButton pRipple label="Запазване" icon="pi pi-check" class="p-button-text" (click)="saveItemCategory()"></button>
+    <button pButton pRipple label="Запазване" icon="pi pi-check" class="p-button-text" (click)="save()"></button>
   </ng-template>
 </p-dialog>
 <p-confirmDialog [style]="{width: '450px'}"></p-confirmDialog>

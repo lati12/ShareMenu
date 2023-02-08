@@ -9,11 +9,32 @@ public class JwtResponse {
     private String email;
     private List<String> roles;
 
-    public JwtResponse(String jwt, Long id, String email, List<String> roles) {
+    private String name;
+    private String lastName;
+
+    public JwtResponse(String jwt, Long id, String email, List<String> roles, String name, String lastName) {
         this.jwt = jwt;
         this.id = id;
         this.email = email;
         this.roles = roles;
+        this.name = name;
+        this.lastName = lastName;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getLastName() {
+        return lastName;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
     }
 
     public String getJwt() {

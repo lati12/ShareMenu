@@ -37,12 +37,12 @@
     <div class="p-field">
       <label for="name">Име</label>
       <input type="text" pInputText id="name" [(ngModel)]="item.name" required autofocus/>
-      <small class="p-invalid" *ngIf="submitted && !item.name">Полето е задължително.</small>
+      <small class="p-invalid" *ngIf="submitted && !item.name">Полето е задължително!</small>
     </div>
     <div class="p-field">
       <label for="description">Описание</label>
       <input type="text" pInputText id="description" [(ngModel)]="item.description" required autofocus/>
-      <small class="p-invalid" *ngIf="submitted && !item.description">Полето е задължително.</small>
+      <small class="p-invalid" *ngIf="submitted && !item.description">Полето е задължително!</small>
     </div>
     <div>
       <label for="unit">Категория на артикул</label>
@@ -58,7 +58,7 @@
     <div class="p-field">
       <label for="unit">Брой</label>
       <input type="text" pInputText id="unit" [(ngModel)]="item.unit" required autofocus/>
-      <small class="p-invalid" *ngIf="submitted && !item.unit">Полето е задължителен.</small>
+      <small class="p-invalid" *ngIf="submitted && !item.unit">Полето е задължително!</small>
     </div>
   </ng-template>
 

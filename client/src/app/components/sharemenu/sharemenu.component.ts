@@ -18,7 +18,6 @@ export class SharemenuComponent implements OnInit {
 
   entityheaders : EntityHeader[] = [];
   entityheader: EntityHeader = new EntityHeader();
-
   sharemenu : Sharemenu = new Sharemenu();
 
   shareMenus : Sharemenu [] = [];

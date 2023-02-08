@@ -1,10 +1,13 @@
 package com.server.sharemenu.controllers;
 
 import com.server.sharemenu.common.EntityHeader;
+import com.server.sharemenu.common.User;
 import com.server.sharemenu.repositories.EntityHeaderRepository;
+import com.server.sharemenu.repositories.UserRepository;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.security.Principal;
 import java.util.List;
 import java.util.Optional;
 
@@ -13,15 +16,24 @@ import java.util.Optional;
 @RequestMapping("/api/resource/entityheader")
 public class EntityHeaderController {
     private final EntityHeaderRepository entityHeaderRepository;
+    private final UserRepository userRepository;
 
-    public EntityHeaderController(EntityHeaderRepository entityHeaderRepository) {
+    public EntityHeaderController(EntityHeaderRepository entityHeaderRepository, UserRepository userRepository) {
         this.entityHeaderRepository = entityHeaderRepository;
+        this.userRepository = userRepository;
     }
     @PostMapping("/insert")
-    public ResponseEntity<?> insertEntityHeader(@RequestBody EntityHeader entityHeader) {
-        EntityHeader newEntityHeader = entityHeaderRepository.save(entityHeader);
+    public ResponseEntity<?> insertEntityHeader(@RequestBody EntityHeader entityHeader, Principal principal) {
+        Optional<User> user = userRepository.findByEmailAndEmailConfirmedIsTrue(principal.getName());
 
-        return ResponseEntity.ok(newEntityHeader);
+        if(user.isPresent()) {
+            entityHeader.setUsers(user.get());
+            EntityHeader newEntityHeader = entityHeaderRepository.save(entityHeader);
+            return ResponseEntity.ok(newEntityHeader);
+        }
+
+        return ResponseEntity.ok("Contact admin");
+
     }
     @GetMapping("/get")
     public ResponseEntity<?> getEntityHeader()

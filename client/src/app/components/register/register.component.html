@@ -3,9 +3,7 @@
     <div class="grid col-offset-4" style="margin-top: 2rem">
       <div class="col-6 shadow-5 box" style="background-color: white;">
         <div class="flex flex-row justify-content-between">
-          <div class="title">
-            <h2>Sharemenu</h2>
-          </div>
+          <p-image src="/assets/logo.png" width="300px" height="100px"></p-image>
           <div style="margin-top: 8px">
             <button class="p-button-text p-button-sm" pButton (click)="redirectLogin()">Login</button>
           </div>
@@ -17,49 +15,49 @@
               <div class="p-fluid">
                 <div class="field p-float-label">
                   <input type="text" pInputText id="name" formControlName="name">
-                  <label for="name">Name</label>
-                  <small class="p-error" *ngIf="name.hasError('required') && name.dirty">Name is required!</small>
+                  <label for="name">Име</label>
+                  <small class="p-error" *ngIf="name.hasError('required') && name.dirty">Полето е задължително!</small>
                 </div>
 
                 <div class="field p-float-label">
                   <input type="text" pInputText id="lastName" formControlName="lastName">
-                  <label for="lastName">Last name</label>
-                  <small class="p-error" *ngIf="lastName.hasError('required') && lastName.dirty">Last name is required!</small>
+                  <label for="lastName">Фамилия</label>
+                  <small class="p-error" *ngIf="lastName.hasError('required') && lastName.dirty">Полето е задължително!</small>
                 </div>
 
                 <div class="field p-float-label">
                   <input type="text" pInputText id="companyName" formControlName="companyName">
-                  <label for="lastName">Company name</label>
-                  <small class="p-error" *ngIf="companyName.hasError('required') && companyName.dirty">Company is required!</small>
+                  <label for="lastName">Фирма</label>
+                  <small class="p-error" *ngIf="companyName.hasError('required') && companyName.dirty">Полето е задължително!</small>
                 </div>
 
                 <div class="field p-float-label">
                   <input type="text" pInputText id="email" formControlName="email">
-                  <label for="email">Email</label>
-                  <small class="p-error" *ngIf="email.hasError('email')">Invalid Email</small>
-                  <small class="p-error" *ngIf="email.hasError('required') && email.dirty">Email is required!</small>
+                  <label for="email">Имейл</label>
+                  <small class="p-error" *ngIf="email.hasError('email')">Грешен имейл</small>
+                  <small class="p-error" *ngIf="email.hasError('required') && email.dirty">Изисква се имейл!</small>
                 </div>
 
                 <div class="field p-float-label">
                   <input type="password" pInputText id="password" formControlName="password">
-                  <label for="password">Password</label>
-                  <small class="p-error" *ngIf="password.hasError('password')">Invalid password</small>
-                  <small class="p-error" *ngIf="password.hasError('required') && password.dirty">Password is required!</small>
+                  <label for="password">Парола</label>
+                  <small class="p-error" *ngIf="password.hasError('password')">Грешна парола</small>
+                  <small class="p-error" *ngIf="password.hasError('required') && password.dirty">Полето е задължително!</small>
                 </div>
 
                 <div class="field p-float-label">
                   <input type="password" pInputText id="passwordConfirm" formControlName="passwordConfirm">
-                  <label for="passwordConfirm">Confirm Password</label>
-                  <small class="p-error" *ngIf="passwordConfirm.hasError('required') && passwordConfirm.dirty">Confirm Password is required!</small>
-                  <small class="p-error" *ngIf="passwordConfirm.value!=password.value">Passwords must match</small>
+                  <label for="passwordConfirm">Потвърждаване на парола</label>
+                  <small class="p-error" *ngIf="passwordConfirm.hasError('required') && passwordConfirm.dirty">Полето е задължително!</small>
+                  <small class="p-error" *ngIf="passwordConfirm.value!=password.value">Паролите трябва да съвпадат</small>
                 </div>
 
                 <div class="p-d-flex p-jc-between">
-                  <button type="submit" label="Register" class="p-offset-8" (click)="doRegister()" pButton></button>
+                  <button type="submit" label="Регистрация" class="p-offset-8" (click)="doRegister()" pButton></button>
                 </div>
 
                 <div *ngIf="hideRegFields">
-                  <h3 class="title">Your account has been created, confirmation email has been sent to: <div>{{email.value}}</div></h3>
+                  <h3 class="title">Вашият акаунт е създаден, имейл за потвърждение е изпратен до: <div>{{email.value}}</div></h3>
                   <p-progressBar unit="" [showValue]="false" [value]="counter"></p-progressBar>
                 </div>
 

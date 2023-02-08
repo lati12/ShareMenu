@@ -74,8 +74,11 @@ export class ItemComponent implements OnInit {
       icon: 'pi pi-exclamation-triangle',
       accept: () => {
         this.itemService.delete(item).then(() => {
-          this.item = new Item();
-          console.log("Done with delete");
+          this.itemService.getAll().subscribe(data => {
+            this.items = data;
+            this.item = new Item();
+            console.log("Done with delete");
+          });
         });
       }
     });
