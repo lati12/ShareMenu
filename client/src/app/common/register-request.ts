@@ -1,5 +1,7 @@
 import {Roles} from "./Roles";
 
+//Модел клас, който служи за транспортиране на данни между angular и spring boot
+
 export class RegisterRequest {
   public email: string = "";
   public password: string = "";

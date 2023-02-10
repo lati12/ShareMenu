@@ -11,6 +11,9 @@ import {Observable, throwError} from 'rxjs';
 import {TokenStorageService} from "./token-storage.service";
 
 const TOKEN_HEADER_KEY = 'Authorization';
+
+//Имплементация на механизъм за всяка заявка да се добави "token" в header
+
 @Injectable()
 export class AuthInterceptor implements HttpInterceptor {
   constructor(private token: TokenStorageService) { }

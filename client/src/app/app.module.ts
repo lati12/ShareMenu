@@ -48,6 +48,7 @@ import {authInterceptorProviders} from "./services/auth/auth.interceptor";
 import {ConfirmEmailComponent} from "./components/confirm-email/confirm-email.component";
 import { UserTemplateComponent } from './components/user-template/user-template.component';
 import {ImageModule} from "primeng/image";
+import { AboutProjectComponent } from './components/about-project/about-project.component';
 
 @NgModule({
   declarations: [
@@ -65,6 +66,7 @@ import {ImageModule} from "primeng/image";
     RegisterComponent,
     ConfirmEmailComponent,
     UserTemplateComponent,
+    AboutProjectComponent,
   ],
   imports: [
     BrowserModule,

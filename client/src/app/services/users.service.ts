@@ -2,6 +2,8 @@ import { Injectable } from '@angular/core';
 import {HttpClient} from "@angular/common/http";
 import {Users} from "../common/users";
 
+//Сървисът имплементира коснумация на Users ресурса от Spring boot сървъра;
+
 @Injectable({
   providedIn: 'root'
 })

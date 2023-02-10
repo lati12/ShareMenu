@@ -4,6 +4,8 @@ import {Template} from "../common/template";
 import {UserTemplate} from "../common/user-template";
 import {UserTemplateComponent} from "../components/user-template/user-template.component";
 
+//Сървисът имплементира коснумация на Template ресурса от Spring boot сървъра;
+
 @Injectable({
   providedIn: 'root'
 })

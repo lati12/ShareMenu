@@ -1,5 +1,7 @@
 import {ItemCategory} from "./item-category";
 
+//Модел клас, който служи за транспортиране на данни между angular и spring boot
+
 export class Item{
   id: number = 0;
   name:string = "";

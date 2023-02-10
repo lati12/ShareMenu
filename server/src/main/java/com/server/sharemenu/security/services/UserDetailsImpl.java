@@ -11,6 +11,8 @@ import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
+//Имплементиран е интерфейс, който да съхранява информацията за User подадена по време на заявка от client
+
 public class UserDetailsImpl implements UserDetails {
     private static final long serialVersionUID = 1L;
 

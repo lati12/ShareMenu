@@ -16,6 +16,8 @@ import java.net.MalformedURLException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
+//Сървис клас който служи за качване и сваляне на файлове от сървъра
+
 @Service
 public class FileService {
 
@@ -46,11 +48,10 @@ public class FileService {
 
     public Resource download(String fileName) {
         try {
-            Path file = Paths.get(filesPath)
-                    .resolve(fileName);
+            Path file = Paths.get(fileName);
             Resource resource = new UrlResource(file.toUri());
 
-            if (resource.exists() || resource.isReadable()) {
+            if (resource.exists()) {
                 return resource;
             } else {
                 throw new RuntimeException("Could not read the file!");

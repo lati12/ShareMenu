@@ -8,6 +8,11 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.Optional;
 
+/*
+Класът служи за консумиране на end-poinds от ресурса Users
+и после за отделните методи
+ */
+
 @CrossOrigin(origins = "*", maxAge = 3600)
 @RestController
 @RequestMapping("/api/resource/users")
@@ -18,6 +23,7 @@ public class UsersController {
         this.usersRepository = usersRepository;
     }
 
+    // Методът служи за продуциране на запис в базата данни
     @PostMapping("insert")
     public ResponseEntity<?> insertUsers(@RequestBody User users)
     {
@@ -25,6 +31,7 @@ public class UsersController {
 
         return ResponseEntity.ok(newUsers);
     }
+    // Методът служи за консумиране на записи като данните са филтрирани по User, който прави заявката
     @GetMapping("get")
     public ResponseEntity<?> getUsers()
     {
@@ -32,6 +39,7 @@ public class UsersController {
 
         return ResponseEntity.ok(users);
     }
+    // Методът служи за консумиране на записи като данните са филтрирани по User, който прави заявката
     @GetMapping("getById")
     public ResponseEntity<?> getUsersById(@RequestParam Long id)
     {
@@ -39,6 +47,7 @@ public class UsersController {
 
         return ResponseEntity.ok(users);
     }
+    // Методът служи за изтриване на запис от базата данни
     @DeleteMapping("delete")
     public ResponseEntity<?> deleteUsers(@RequestParam("id") Long id)
     {

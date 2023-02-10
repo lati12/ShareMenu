@@ -11,6 +11,8 @@ import {ItemService} from "../../services/item.service";
 import {Item} from "../../common/item";
 import {EntityHeader} from "../../common/entityheader";
 
+// В компонентът е имплементиран процес, който си взаимодейства с потребителят за лесно и удобно създаване на "Меню"
+
 @Component({
   selector: 'app-entityheader',
   templateUrl: './entityheader.component.html',

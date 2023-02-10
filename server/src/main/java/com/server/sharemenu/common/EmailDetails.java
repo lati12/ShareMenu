@@ -6,6 +6,8 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
+//Класът служи за пакетиране на информация за изпращане на имейл до регистрирал се потребител.
+
 public class EmailDetails {
     private String hash;
     protected String subject;

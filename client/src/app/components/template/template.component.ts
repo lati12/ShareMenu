@@ -4,6 +4,8 @@ import {TemplateService} from "../../services/template.service";
 import {ConfirmationService, MessageService} from "primeng/api";
 import {FileUploadModule} from 'primeng/fileupload';
 
+// Компонентът Template служи за следните операции - добавяне и изтриване на файл
+
 @Component({
   selector: 'app-template',
   templateUrl: './template.component.html',

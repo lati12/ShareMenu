@@ -2,6 +2,10 @@ package com.server.sharemenu.common;
 
 import javax.persistence.*;
 
+// Класът UsersSocialNetworkProvider служи за консумиране и продуциране на информация за Потребителската социална мрежа.
+// Обекта служи и за операции със записа от базата данни.
+
+
 @Entity
 @Table(name = "usersocialnetworkprovider")
 public class UsersSocialNetworkProvider {

@@ -10,12 +10,14 @@
     <ng-template pTemplate="header">
       <tr>
         <th pSortableColumn="name">Име</th>
+        <th pSortableColumn="position">Позиция</th>
         <th></th>
       </tr>
     </ng-template>
     <ng-template pTemplate="body" let-itemcategory>
       <tr>
         <td>{{itemcategory.name}}</td>
+        <td>{{itemcategory.position}}</td>
         <td>
           <button pButton pRipple icon="pi pi-pencil" class="p-button-rounded p-button-success p-mr-2" (click)="OpenEditDialog(itemcategory)"></button>
           <button pButton pRipple icon="pi pi-trash" class="p-button-rounded p-button-warning" (click)="delete(itemcategory)"></button>
@@ -31,6 +33,13 @@
       <input type="text" pInputText id="name" [(ngModel)]="itemCategory.name" required autofocus />
       <small class="p-invalid" *ngIf="submitted && !itemCategory.name">Полето е задължително.</small>
     </div>
+
+    <div class="p-field">
+      <label for="position">Позиция</label>
+      <input type="text" pInputText id="position" [(ngModel)]="itemCategory.position" required autofocus />
+      <small class="p-invalid" *ngIf="submitted && !itemCategory.name">Полето е задължително.</small>
+    </div>
+
   </ng-template>
 
   <ng-template pTemplate="footer">

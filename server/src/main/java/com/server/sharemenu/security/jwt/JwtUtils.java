@@ -15,6 +15,7 @@ import javax.servlet.http.HttpServletRequest;
 import java.util.Date;
 import java.util.UUID;
 
+//Помощен клас за генериране и валидиране на "token"
 
 @Component
 public class JwtUtils {

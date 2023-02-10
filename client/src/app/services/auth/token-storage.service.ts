@@ -6,6 +6,8 @@ import {JwtResponse} from "../../common/jwt-response";
 const TOKEN_KEY = 'auth-token';
 const USER_KEY = 'auth-user';
 
+//Имплементация на съхраняване/четене на "token" в сесията на браузера
+
 @Injectable({
   providedIn: 'root'
 })

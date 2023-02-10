@@ -2,6 +2,8 @@ import { Injectable } from '@angular/core';
 import {HttpClient} from "@angular/common/http";
 import {Entityline} from "../common/entityline";
 
+//Сървисът имплементира коснумация на EntityLine ресурса от Spring boot сървъра;
+
 @Injectable({
   providedIn: 'root'
 })

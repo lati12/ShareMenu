@@ -2,6 +2,8 @@ import { Injectable } from '@angular/core';
 import {HttpClient} from "@angular/common/http";
 import {ItemCategory} from "../common/item-category";
 
+//Сървисът имплементира коснумация на ItemCategory ресурса от Spring boot сървъра;
+
 @Injectable({
   providedIn: 'root'
 })
@@ -10,8 +12,6 @@ export class ItemCategoryService {
   getAllUrl: string = "http://localhost:4713/sharemenu/api/resource/itemcategory/get";
   saveUrl: string = "http://localhost:4713/sharemenu/api/resource/itemcategory/insert";
   deleteUrl:string = "http://localhost:4713/sharemenu/api/resource/itemcategory/delete?id=";
-
-  status: string[] = ['OUTOFSTOCK', 'INSTOCK', 'LOWSTOCK'];
 
   constructor(private http: HttpClient) {
   }

@@ -4,6 +4,9 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
 
+// Класът Item служи за консумиране и продуциране на информация за артикул.
+// Обекта служи и за операции със записа от базата данни.
+
 @Entity
 @Table(name = "item")
 public class Item {

@@ -3,6 +3,9 @@ import {ItemCategory} from "../../common/item-category";
 import {ItemCategoryService} from "../../services/item-category.service";
 import {ConfirmationService, MessageService} from "primeng/api";
 
+// В компонентът ItemCategory са имлементирани CRUD операции и комуникацията със сървъра.
+
+
 @Component({
   selector: 'app-item-category',
   templateUrl: './item-category.component.html',

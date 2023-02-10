@@ -4,6 +4,9 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
 
+// Класът Sharemenu служи за консумиране и продуциране на информация за нейното споделяне и генериране.
+// Обекта служи и за операции със записа от базата данни.
+
 @Entity
 @Table(name = "sharemenu")
 public class ShareMenu {

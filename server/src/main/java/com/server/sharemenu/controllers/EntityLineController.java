@@ -13,6 +13,11 @@ import java.security.Principal;
 import java.util.List;
 import java.util.Optional;
 
+/*
+Класът служи за консумиране на end-poinds от ресурса EntityLine
+ */
+
+
 @CrossOrigin(origins = "*", maxAge = 3600)
 @RestController
 @RequestMapping("/api/resource/entityline")
@@ -25,6 +30,8 @@ public class EntityLineController {
         this.entitylineRepository = entitylineRepository;
         this.userRepository = userRepository;
     }
+
+    //Методът служи за продуциране на запис в базата данни
     @PostMapping("insert")
     @Transactional
     @PreAuthorize("hasRole('ROLE_USER')")
@@ -34,6 +41,7 @@ public class EntityLineController {
         return ResponseEntity.ok(newRestaurantEntityLine);
     }
 
+    //Методът служи за консумиране на записи като данните са филтрирани по User, който прави заявката
     @GetMapping("get")
     @PreAuthorize("hasRole('ROLE_USER')")
     public ResponseEntity<?> getEntityLine(@RequestParam Long headerId)
@@ -42,6 +50,8 @@ public class EntityLineController {
 
         return ResponseEntity.ok(restaurantEntityLines);
     }
+
+    //Методът служи за консумиране на запис по ID като записът е филтриран по User, който прави заявката
     @GetMapping("getById")
     @PreAuthorize("hasRole('ROLE_USER')")
     public ResponseEntity<?> getEntityLineById(@RequestParam Long id)
@@ -50,6 +60,8 @@ public class EntityLineController {
 
         return ResponseEntity.ok(entityLines);
     }
+
+    //Методът служи за изтриване на запис от базата данни
     @DeleteMapping("delete")
     @Transactional
     @PreAuthorize("hasRole('ROLE_USER')")

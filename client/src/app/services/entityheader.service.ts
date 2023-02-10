@@ -2,6 +2,8 @@ import { Injectable } from '@angular/core';
 import {HttpClient} from "@angular/common/http";
 import {EntityHeader} from "../common/entityheader";
 
+//Сървисът имплементира коснумация на EntityHeader ресурса от Spring boot сървъра;
+
 @Injectable({
   providedIn: 'root'
 })

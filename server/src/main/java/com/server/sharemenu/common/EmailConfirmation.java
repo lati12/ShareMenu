@@ -2,6 +2,10 @@ package com.server.sharemenu.common;
 
 import javax.persistence.*;
 
+// Класът EmailConfirmation служи за консумиране и продуциране на информация за потвърждаването на имейл.
+// Обекта служи и за операции със записа от базата данни.
+
+
 @Entity
 @Table(name = "emailconfirmation")
 public class EmailConfirmation {

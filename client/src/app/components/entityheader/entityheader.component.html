@@ -7,7 +7,7 @@
  <p-table [value]="entityHeaders" selectionMode="single" (onRowSelect)="onRowSelectEntityHeader($event)" >
     <ng-template pTemplate="header">
       <tr>
-        <th pSortableColumn="name">Ине</th>
+        <th pSortableColumn="name">Име</th>
         <th pSortableColumn="address">Адрес</th>
         <th pSortableColumn="phone">Телефон</th>
         <th pSortableColumn="templates">Темплейти</th>
@@ -38,7 +38,7 @@
 </div>
 
 
-<p-dialog [(visible)]="entityHeaderDialog" [style]="{width: '450px'}" header="Детайли на меню" [modal]="true" styleClass="p-fluid">
+<p-dialog [(visible)]="entityHeaderDialog" [style]="{width: '450px'}" header="Детайли" [modal]="true" styleClass="p-fluid">
   <ng-template pTemplate="content">
     <div class="p-field">
       <label for="name">Име</label>
@@ -84,15 +84,16 @@
 </p-dialog>
 
 
-<p-dialog [(visible)]="entityLineDialog" [closeOnEscape]="false" [style]="{width: '1280px'}" header="Entity line Details" [modal]="true" styleClass="p-fluid">
+<p-dialog [(visible)]="entityLineDialog" [closeOnEscape]="false" [style]="{width: '1280px'}" header="Детайли" [modal]="true" styleClass="p-fluid">
   <ng-template pTemplate="content">
-    <button pButton pRipple label="Add" icon="pi pi-plus" class="p-button-success" style="width: 96px; padding: 12px 28px" (click)="openNewEntityLineDetails()"></button>
     <p-table #dt [value]="entitylines" [rows]="10" [paginator]="true" [rowHover]="true">
       <ng-template pTemplate="header">
+        <th>
+          <button pButton pRipple label="Създаване на запис" class="p-button-text" (click)="openNewEntityLineDetails()"></button>
+        </th>
         <tr>
           <th pSortableColumn="itemName">Име на артикул</th>
           <th pSortableColumn="price">Цена</th>
-          <th pSortableColumn="quantity">Стойност</th>
           <th></th>
         </tr>
       </ng-template>
@@ -100,7 +101,6 @@
         <tr>
           <td>{{entityline.item.name}}</td>
           <td>{{entityline.price}}</td>
-          <td>{{entityline.quantity}}</td>
           <td>
             <button pButton pRipple icon="pi pi-pencil" class="p-button-rounded p-button-success p-mr-2" (click)="editEntityLineDetails(entityline)"></button>
             <button pButton pRipple icon="pi pi-trash" class="p-button-rounded p-button-warning" (click)="deleteEntityLineDetails(entityline)"></button>
@@ -112,7 +112,7 @@
   </ng-template>
 </p-dialog>
 
-<p-dialog [(visible)]="entityLineDetailsDialog" [closeOnEscape]="false" [style]="{width: '450px'}" header="Детайли" [modal]="true" styleClass="p-fluid">
+<p-dialog [(visible)]="entityLineDetailsDialog" [closeOnEscape]="false" [style]="{height: '600px', width: '500px'}" header="Детайли" [modal]="true" styleClass="p-fluid">
   <ng-template pTemplate="content">
     <div class="p-field">
       <label for="name">Артикул</label>
@@ -122,10 +122,6 @@
     <div class="p-field">
       <label for="price">Цена</label>
       <input type="number" pInputText id="price" [(ngModel)]="entityline.price" />
-    </div>
-    <div class="p-field">
-      <label for="quantity">Стойност</label>
-      <input type="number" pInputText id="quantity" [(ngModel)]="entityline.quantity" />
     </div>
   </ng-template>
   <ng-template pTemplate="footer">
@@ -142,6 +138,12 @@
   <ul>
     <li>Стъпка 1: Избира се бутона Създаване на запис</li>
     <li>Стъпка 2: В появилият се диалог се попълва информация за Менюто</li>
+    <li>Стъпка 3: Избирате бутонът Запази</li>
+  </ul>
+  <p>Екранът "Линия" служи за добавяне на записи, които ще се визулаизират, когато натиснем върху създаденото меню.</p>
+  <ul>
+    <li>Стъпка 1: Избира се бутона Създаване на запис</li>
+    <li>Стъпка 2: В появилият се диалог се попълва информация за Линията</li>
     <li>Стъпка 3: Избирате бутонът Запази</li>
   </ul>
 </p-dialog>

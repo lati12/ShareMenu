@@ -34,8 +34,12 @@ import java.util.Set;
 import java.util.concurrent.CompletableFuture;
 import java.util.stream.Collectors;
 
-@CrossOrigin(origins = "*", maxAge = 3600)
+/*
+Класът служи за консумиране на end-poinds от ресурса Auth
+и после за отделните методи
+ */
 
+@CrossOrigin(origins = "*", maxAge = 3600)
 @RestController
 @RequestMapping("/api/auth")
 public class AuthController {
@@ -62,7 +66,7 @@ public class AuthController {
     @Autowired
     JwtUtils jwtUtils;
 
-
+//Методът служи за влизането в регистрирания профил
     @PostMapping("/login")
     public ResponseEntity<?> authenticateUser(@Valid @RequestBody LoginRequest loginRequest) {
         Authentication authentication = authenticationManager
@@ -84,7 +88,7 @@ public class AuthController {
                 userDetails.getName(),
                 userDetails.getLastName()));
     }
-
+    // Методът служи за регистриране на профил
     @PostMapping("/register")
     @Transactional
     public ResponseEntity<?> registerUser(@Valid @RequestBody RegisterRequest registerRequest) throws MessagingException, TemplateException, IOException {
@@ -138,7 +142,7 @@ public class AuthController {
     private EmailDetails getRecipient(String hash, String email, String subject, String text) {
         return new EmailDetails(hash, Collections.singletonList(email), subject, text);
     }
-
+    // Методът служи за верифициране на профила
     @PostMapping(value = "/verify")
     @Transactional
     public ResponseEntity<?> verify(@RequestParam(value = "hash") String hash) {

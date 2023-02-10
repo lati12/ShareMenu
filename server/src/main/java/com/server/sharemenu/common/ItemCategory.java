@@ -4,6 +4,9 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
 
+// Класът ItemCategory служи за консумиране и продуциране на информация за категория.
+// Обекта служи и за операции със записа от базата данни.
+
 @Entity
 @Table(name = "itemcategory")
 public class ItemCategory {
@@ -53,5 +56,7 @@ public class ItemCategory {
     public void setName(String name) {
         Name = name;
     }
+
+
 
 }

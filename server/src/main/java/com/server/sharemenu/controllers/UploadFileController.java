@@ -11,6 +11,10 @@ import java.io.IOException;
 import java.security.Principal;
 import java.util.Optional;
 
+/*
+Класът служи за консумиране на end-poinds от ресурса UploadFile и после за отделните методи.
+ */
+
 @CrossOrigin(origins = "*", maxAge = 3600)
 @RestController
 @RequestMapping("/api/resource/upload-file")
@@ -23,7 +27,7 @@ public class UploadFileController {
         this.fileService = fileService;
         this.userRepository = userRepository;
     }
-
+    // Методът служи за качване на данни
     @PostMapping(value = "upload")
     public ResponseEntity<?> upload(@RequestParam("file")MultipartFile file, Principal principal) throws IOException {
         Optional<User> user = userRepository.findByEmailAndEmailConfirmedIsTrue(principal.getName());

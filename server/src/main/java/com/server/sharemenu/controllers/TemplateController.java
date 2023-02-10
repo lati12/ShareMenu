@@ -17,6 +17,11 @@ import java.io.IOException;
 import java.security.Principal;
 import java.util.*;
 
+/*
+Класът служи за консумиране на end-poinds от ресурса Template
+и после за отделните методи
+ */
+
 @CrossOrigin(origins = "*", maxAge = 3600)
 @RestController
 @RequestMapping("/api/resource/template")
@@ -31,6 +36,7 @@ public class TemplateController {
         this.userRepository = userRepository;
     }
 
+    // Методът служи за продуциране на запис в базата данни
     @PostMapping("insert")
     @Transactional
     @PreAuthorize("hasRole('ROLE_ADMIN')")
@@ -40,7 +46,7 @@ public class TemplateController {
         return ResponseEntity.ok(newTemplate);
 
     }
-
+    // Методът служи за консумиране на записи като данните са филтрирани по User, който прави заявката
     @GetMapping("get")
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     public ResponseEntity<?> getTemplate() {
@@ -48,7 +54,7 @@ public class TemplateController {
 
         return ResponseEntity.ok(newTemplate);
     }
-
+    // Методът служи за консумиране на записи като данните са филтрирани по User, който прави заявката
     @GetMapping("getByUser")
     @PreAuthorize("hasRole('ROLE_USER')")
     public ResponseEntity<?> getTemplateByUser(Principal principal) {
@@ -69,7 +75,7 @@ public class TemplateController {
 
         return ResponseEntity.ok(template);
     }
-
+    // Методът служи за изтриване на запис от базата данни
     @DeleteMapping("delete")
     @Transactional
     @PreAuthorize("hasRole('ROLE_ADMIN')")

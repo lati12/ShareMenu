@@ -16,6 +16,8 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
+//Конфигуратор клас, с който е настроен security модула на системата
+
 @Configuration
 @EnableGlobalMethodSecurity(
         //securedEnabled = true,

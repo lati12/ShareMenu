@@ -1,6 +1,8 @@
 import {Template} from "./template";
 import {Users} from "./users";
 
+//Модел клас, който служи за транспортиране на данни между angular и spring boot
+
 export class EntityHeader {
   id:number = 0;
   name:string = "";

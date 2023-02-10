@@ -2,6 +2,9 @@ package com.server.sharemenu.common;
 
 import javax.persistence.*;
 
+// Класът Role служи за консумиране и продуциране на роля в апликацията.
+// Обекта служи и за операции със записа от базата данни.
+
 @Entity
 @Table(name = "roles")
 public class Role {

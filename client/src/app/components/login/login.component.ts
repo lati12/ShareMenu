@@ -6,6 +6,8 @@ import {LoginRequest} from "../../common/login-request";
 import {Roles} from "../../common/Roles";
 import {FormControl, FormGroup, Validators} from "@angular/forms";
 
+  // Компонентът Login служи за влизането на потребител в своя акаунт
+
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',

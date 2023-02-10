@@ -9,6 +9,9 @@ import javax.validation.constraints.Size;
 import java.util.HashSet;
 import java.util.Set;
 
+// Класът User служи за консумиране и продуциране на информация за Потребител.
+// Обекта служи и за операции със записа от базата данни.
+
 @Entity
 @Table(name = "users",
 uniqueConstraints = {

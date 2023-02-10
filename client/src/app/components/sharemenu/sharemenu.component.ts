@@ -9,6 +9,8 @@ import {SharemenuService} from "../../services/sharemenu.service";
 // @ts-ignore
 import { saveAs } from "file-saver";
 
+// Компонентът ShareMenu служи за генерирването и споделянето на файл
+
 @Component({
   selector: 'app-sharemenu',
   templateUrl: './sharemenu.component.html',
@@ -45,6 +47,14 @@ export class SharemenuComponent implements OnInit {
     this.sharemenuService.generateFile(this.sharemenu).then((blocb) =>{
       console.log("done");
       saveAs(blocb, "menu.pdf");
+    }).catch(arr => {
+      console.log(arr);
+    })
+  }
+
+  shareMenu(){
+    this.sharemenuService.shareMenu(this.sharemenu).then(() =>{
+      console.log("done");
     }).catch(arr => {
       console.log(arr);
     })

@@ -7,6 +7,8 @@ import {TemplateService} from "../../services/template.service";
 import {Item} from "../../common/item";
 import {ConfirmationService} from "primeng/api";
 
+// Компонентът User - Template служи за създаването на връзката между потребителя и неговия темплейт
+
 @Component({
   selector: 'app-user-template',
   templateUrl: './user-template.component.html',

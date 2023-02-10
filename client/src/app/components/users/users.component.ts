@@ -3,6 +3,9 @@ import {Users} from "../../common/users";
 import {UsersService} from "../../services/users.service";
 import {ConfirmationService, MessageService} from "primeng/api";
 
+// В компонентът Users са имлементирани CRUD операции и комуникацията със сървъра.
+
+
 @Component({
   selector: 'app-users',
   templateUrl: './users.component.html',

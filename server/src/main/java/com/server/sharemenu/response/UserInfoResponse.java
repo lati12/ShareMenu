@@ -2,6 +2,8 @@ package com.server.sharemenu.response;
 
 import java.util.List;
 
+//Класът се използва за транспортиране на данни между client - server
+
 public class UserInfoResponse {
     private Long id;
     private String username;

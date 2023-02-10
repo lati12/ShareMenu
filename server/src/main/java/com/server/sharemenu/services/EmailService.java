@@ -16,6 +16,8 @@ import java.util.Map;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.CompletionException;
 
+//Сървис клас, с който се изпращат имейли с предифинирани smtp нстройки
+
 @Service
 public class EmailService {
 

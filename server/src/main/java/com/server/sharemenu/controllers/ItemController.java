@@ -14,6 +14,12 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+/*
+Класът служи за консумиране на end-poinds от ресурса Item
+и после за отделните методи
+ */
+
+
 @CrossOrigin(origins = "*", maxAge = 3600)
 @RestController
 @RequestMapping("/api/resource/item")
@@ -25,7 +31,7 @@ public class ItemController {
         this.itemRepository = itemRepository;
         this.userRepository = userRepository;
     }
-
+    // Методът служи за продуциране на запис в базата данни
     @PostMapping("/insert")
     @Transactional
     @PreAuthorize("hasRole('ROLE_USER')")
@@ -41,6 +47,7 @@ public class ItemController {
 
         return ResponseEntity.ok("Item not has added. Contact to admin");
     }
+    // Методът служи за консумиране на записи като данните са филтрирани по User, който прави заявката
     @GetMapping("/get")
     @PreAuthorize("hasRole('ROLE_USER')")
     public ResponseEntity<?> getItem(Principal principal){
@@ -54,6 +61,7 @@ public class ItemController {
 
         return ResponseEntity.ok(new ArrayList<Item>());
     }
+    // Методът служи за консумиране на записи като данните са филтрирани по User, който прави заявката
     @GetMapping("/getById")
     @PreAuthorize("hasRole('ROLE_USER')")
     public ResponseEntity<?> getItemById(@RequestParam Long id, Principal principal){
@@ -67,6 +75,7 @@ public class ItemController {
 
         return ResponseEntity.ok(new Item());
     }
+    // Методът служи за изтриване на запис от базата данни
     @DeleteMapping("/delete")
     @PreAuthorize("hasRole('ROLE_USER')")
     @Transactional

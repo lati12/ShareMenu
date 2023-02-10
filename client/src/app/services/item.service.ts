@@ -2,6 +2,8 @@ import { Injectable } from '@angular/core';
 import {HttpClient} from "@angular/common/http";
 import {Item} from "../common/item";
 
+//Сървисът имплементира коснумация на Item ресурса от Spring boot сървъра;
+
 @Injectable({
   providedIn: 'root'
 })
@@ -10,8 +12,6 @@ export class ItemService {
   getAllUrl: string = "http://localhost:4713/sharemenu/api/resource/item/get";
   saveUrl: string = "http://localhost:4713/sharemenu/api/resource/item/insert";
   deleteUrl: string = "http://localhost:4713/sharemenu/api/resource/item/delete?id=";
-
-  status: string[] = ['OUTOFSTOCK', 'INSTOCK', 'LOWSTOCK'];
 
   constructor(private http: HttpClient) {
   }

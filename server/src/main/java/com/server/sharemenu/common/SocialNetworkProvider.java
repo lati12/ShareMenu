@@ -4,6 +4,9 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
 
+// Класът SocialNetworkProvider служи за консумиране и продуциране на информация за социална мрежа.
+// Обекта служи и за операции със записа от базата данни.
+
 @Entity
 @Table(name = "socialnetworkprovider")
 public class SocialNetworkProvider {
@@ -18,10 +21,7 @@ public class SocialNetworkProvider {
     private String accessToken;
 
     @Column(length = 255)
-    private String refreshToken;
-
-    @Column(length = 255)
-    private String link;
+    private String key;
 
     @ManyToOne
     @JsonIgnore
@@ -60,20 +60,11 @@ public class SocialNetworkProvider {
         this.accessToken = acessToken;
     }
 
-    public String getRefreshToken() {
-        return refreshToken;
+    public String getKey() {
+        return key;
     }
 
-    public void setRefreshToken(String refreshToken) {
-        this.refreshToken = refreshToken;
+    public void setKey(String key) {
+        this.key = key;
     }
-
-    public String getLink() {
-        return link;
-    }
-
-    public void setLink(String link) {
-        this.link = link;
-    }
-
 }

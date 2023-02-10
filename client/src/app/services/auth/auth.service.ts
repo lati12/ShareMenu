@@ -8,6 +8,8 @@ import {JwtResponse} from "../../common/jwt-response";
 
 const AUTH_API = 'http://localhost:4713/sharemenu/api/auth/';
 
+//Имплементация за влизане и регистриране в апликацията
+
 const httpOptions = {
   headers: new HttpHeaders({ 'Content-Type': 'application/json' })
 };

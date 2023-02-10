@@ -3,6 +3,8 @@ import { ActivatedRouteSnapshot, CanActivate, Router, RouterStateSnapshot } from
 import {AuthService} from "./auth.service";
 import {TokenStorageService} from "./token-storage.service";
 
+//механизъм за детекване на роля и до какво има достъп юзъра в потребителската част на системата
+
 @Injectable({
   providedIn: 'root',
 })

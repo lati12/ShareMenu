@@ -4,6 +4,8 @@ import {Router} from "@angular/router";
 import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {RegisterRequest} from "../../common/register-request";
 
+// Компонентът Register служи за регистрирването на потребител в апликацията
+
 @Component({
   selector: 'app-register',
   templateUrl: './register.component.html',

@@ -10,6 +10,8 @@ import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 
+//Имплементиран е интерфейс сървис, който се извиква при всяка заявка от клиент и се проверява в базта дали съществута потребителят
+
 @Service
 public class UserDetailsServiceImpl implements UserDetailsService {
     @Autowired

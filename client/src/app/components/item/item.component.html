@@ -12,8 +12,6 @@
         <th pSortableColumn="name">Име</th>
         <th pSortableColumn="description">Описание</th>
         <th pSortableColumn="itemCategory">Категория на артикул</th>
-        <th pSortableColumn="price">Цена</th>
-        <th pSortableColumn="unit">Брой</th>
         <th></th>
       </tr>
     </ng-template>
@@ -22,8 +20,6 @@
         <td>{{item.name}}</td>
         <td>{{item.description}}</td>
         <td>{{item.itemCategory.name}}</td>
-        <td>{{item.price}}</td>
-        <td>{{item.unit}}</td>
         <td>
           <button pButton pRipple icon="pi pi-pencil" class="p-button-rounded p-button-success p-mr-2" (click)="openEditDialog(item)"></button>
           <button pButton pRipple icon="pi pi-trash" class="p-button-rounded p-button-warning" (click)="delete(item)"></button>
@@ -45,20 +41,9 @@
       <small class="p-invalid" *ngIf="submitted && !item.description">Полето е задължително!</small>
     </div>
     <div>
-      <label for="unit">Категория на артикул</label>
-      <p-dropdown [options]="itemCategories" [(ngModel)]="item.itemCategory" placeholder="Избери категория" optionLabel="name">
+      <label for="cateogy">Категория на артикул</label>
+      <p-dropdown id="cateogy" [options]="itemCategories" [(ngModel)]="item.itemCategory" placeholder="Избери категория" optionLabel="name">
       </p-dropdown>
-    </div>
-    <div class="p-formgrid p-grid">
-      <div class="p-field p-col">
-        <label for="price">Цена</label>
-        <p-inputNumber id="price" [(ngModel)]="item.price"></p-inputNumber>
-      </div>
-    </div>
-    <div class="p-field">
-      <label for="unit">Брой</label>
-      <input type="text" pInputText id="unit" [(ngModel)]="item.unit" required autofocus/>
-      <small class="p-invalid" *ngIf="submitted && !item.unit">Полето е задължително!</small>
     </div>
   </ng-template>
 

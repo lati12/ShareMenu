@@ -13,13 +13,16 @@ import net.sf.jasperreports.export.*;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
-import java.io.ByteArrayInputStream;
-import java.io.InputStream;
+import javax.imageio.ImageIO;
+import java.awt.image.BufferedImage;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.atomic.AtomicBoolean;
+
+//Сървис клас който служи за създаване на меню на база JaspreReport шаблон подаден от базата.
 
 @Service
 public class MenuReportService {
@@ -61,7 +64,10 @@ public class MenuReportService {
 
     private JasperPrint mapJasperReport(ShareMenu shareMenu, MenuHeaderView menuHeaderView, List<MenuLineViewJasper> menuLineViews) throws JRException{
 
-        InputStream inputStreamTemplate = new ByteArrayInputStream(shareMenu.getEntityHeader().getTemplate().getFile());
+
+        Template template = templateRepository.findTemplateByName(shareMenu.getEntityHeader().getTemplate().getName());
+
+        InputStream inputStreamTemplate = new ByteArrayInputStream(template.getFile());
 
         JasperDesign jasperDesign = JRXmlLoader.load(inputStreamTemplate);
         JasperReport jasperReport = JasperCompileManager.compileReport(jasperDesign);
@@ -96,6 +102,28 @@ public class MenuReportService {
         exporter.setConfiguration(exporterConfig);
 
         exporter.exportReport();
+
+        File file = new File("image.png");
+        OutputStream ouputStream = null;
+        try {
+            ouputStream = new FileOutputStream(file);
+            DefaultJasperReportsContext ctx = DefaultJasperReportsContext.getInstance();
+            JasperPrintManager printManager = JasperPrintManager.getInstance(ctx);
+
+            BufferedImage rendered_image = null;
+            rendered_image = (BufferedImage) printManager.printPageToImage(jasperPrint, 0, 10f);
+            ImageIO.write(rendered_image, "png", ouputStream);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                ouputStream.close();
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        }
+
         return jasperPrint;
     }
 

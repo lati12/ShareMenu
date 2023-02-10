@@ -1,5 +1,7 @@
 import {Roles} from "./Roles";
 
+//Модел клас, който служи за транспортиране на данни между angular и spring boot
+
 export class JwtResponse {
   public jwt: string = "";
   public type: string = "Bearer";

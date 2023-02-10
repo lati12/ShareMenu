@@ -1,5 +1,7 @@
 package com.server.sharemenu.common;
 
+//Обектър имплементира интерфейс, който обект служи за комуникация с JasperReport
+
 public class MenuLineViewJasper implements MenuLineView {
 
     private String itemCategoryName;
