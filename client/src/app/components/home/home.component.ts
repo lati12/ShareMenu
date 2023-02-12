@@ -18,7 +18,7 @@ export class HomeComponent implements OnInit {
   isLoggedIn = false;
   roles: string[] = [];
   loggedUser: Users | undefined;
-
+  showDialog : boolean = false;
 
   slideDisplay: boolean = true;
   itemVisable: boolean = false;
@@ -152,5 +152,9 @@ export class HomeComponent implements OnInit {
   logout(): void {
     this.tokenStorageService.logout();
     window.location.reload();
+  }
+
+  showInfoDialog() {
+      this.showDialog = true;
   }
 }
