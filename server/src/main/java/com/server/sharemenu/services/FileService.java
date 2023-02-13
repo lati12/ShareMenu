@@ -21,9 +21,6 @@ import java.nio.file.Paths;
 @Service
 public class FileService {
 
-    @Value("${files.path}")
-    private String filesPath;
-
     private final TemplateRepository templateRepository;
 
     public FileService(TemplateRepository templateRepository) {

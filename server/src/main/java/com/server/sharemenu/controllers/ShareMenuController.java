@@ -8,6 +8,7 @@ import com.server.sharemenu.response.facebook.FacebookPostResponse;
 import com.server.sharemenu.services.FileService;
 import com.server.sharemenu.services.MenuReportService;
 import net.sf.jasperreports.engine.JRException;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.core.io.FileSystemResource;
 import org.springframework.http.HttpEntity;
@@ -42,6 +43,13 @@ import java.util.Optional;
 @RestController
 @RequestMapping("/api/resource/sharemenu")
 public class ShareMenuController {
+
+    @Value("${sharemenu.path.files_pdf}")
+    private String tempPdfFolder;
+
+    @Value("${sharemenu.path.files_png}")
+    private String tempPngFolder;
+
     private final ShareMenuRepository shareMenuRepository;
     private final UserRepository userRepository;
     private final MenuReportService menuReportService;
@@ -116,9 +124,11 @@ public class ShareMenuController {
 
     // Методът служи за генерирране на данни
     @PostMapping("/generate-file")
-    public ResponseEntity<?> generateFile(@RequestBody ShareMenu shareMenu) throws JRException, IOException {
-        menuReportService.processReport(shareMenu);
-        Resource file = fileService.download("./test.pdf");
+    public ResponseEntity<?> generateFile(@RequestBody ShareMenu shareMenu, Principal principal) throws JRException, IOException {
+        menuReportService.processReport(shareMenu, principal);
+        String fileKey = principal.getName().replace('@','_');
+
+        Resource file = fileService.download(tempPdfFolder + fileKey + ".pdf");
         Path path = file.getFile().toPath();
 
         return ResponseEntity.ok()
@@ -128,16 +138,23 @@ public class ShareMenuController {
     }
     // Методът служи за споделяне на данни
     @PostMapping("share-menu")
-    public ResponseEntity<?> shareMenu(@RequestBody ShareMenu shareMenu) {
-        String url = "https://graph.facebook.com/"+shareMenu.getSocialNetworkProvider().getKey()+"/photos?";
+    public ResponseEntity<?> shareMenu(@RequestBody ShareMenu shareMenu, Principal principal) throws JRException {
+        String url = "https://graph.facebook.com/"+shareMenu.getSocialNetworkConnectivity().getKey()+"/photos?";
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.MULTIPART_FORM_DATA);
+        String fileKey = principal.getName().replace('@','_');
 
         MultiValueMap<String, Object> body
                 = new LinkedMultiValueMap<>();
-        body.add("source", new FileSystemResource(new File("image.png")));
-        body.add("message", "test");
-        body.add("access_token", shareMenu.getSocialNetworkProvider().getAccessToken());
+
+        File file = new File(tempPngFolder +fileKey + ".png");
+        if(!file.exists()) {
+            menuReportService.processReport(shareMenu, principal);
+        }
+
+        body.add("source", new FileSystemResource(file));
+        //body.add("message", "test");
+        body.add("access_token", shareMenu.getSocialNetworkConnectivity().getAccessToken());
         body.add("published", true);
 
         HttpEntity<MultiValueMap<String, Object>> entity = new HttpEntity<>(body, headers);

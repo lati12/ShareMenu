@@ -22,8 +22,8 @@ public class ShareMenu {
     @JoinColumn(name = "entityheader_id", nullable = false)
     EntityHeader entityHeader;
     @ManyToOne
-    @JoinColumn(name = "socialnetworkprovider_id", nullable = false)
-    SocialNetworkProvider socialNetworkProvider;
+    @JoinColumn(name = "socialnetworkconnectivity_id", nullable = false)
+    SocialNetworkConnectivity socialNetworkConnectivity;
 
     @ManyToOne
     @JsonIgnore
@@ -64,11 +64,11 @@ public class ShareMenu {
         this.entityHeader = entityHeader;
     }
 
-    public SocialNetworkProvider getSocialNetworkProvider() {
-        return socialNetworkProvider;
+    public SocialNetworkConnectivity getSocialNetworkConnectivity() {
+        return socialNetworkConnectivity;
     }
 
-    public void setSocialNetworkProvider(SocialNetworkProvider socialNetworkProvider) {
-        this.socialNetworkProvider = socialNetworkProvider;
+    public void setSocialNetworkConnectivity(SocialNetworkConnectivity socialNetworkConnectivity) {
+        this.socialNetworkConnectivity = socialNetworkConnectivity;
     }
 }

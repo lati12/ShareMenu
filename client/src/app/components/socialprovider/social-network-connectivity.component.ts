@@ -1,26 +1,26 @@
 import { Component, OnInit } from '@angular/core';
-import {SocialNetworkProvider} from "../../common/socialnetworkprovider";
-import {SocialNetworkProviderService} from "../../services/social-network-provider.service";
+import {SocialNetworkConnectivity} from "../../common/socialNetworkConnectivity";
+import {SocialNetworkConnectivityService} from "../../services/social-network-connectivity.service";
 import {ConfirmationService, MessageService} from "primeng/api";
 
 // В компонентът SocialNetworkProvider са имлементирани CRUD операции и комуникацията със сървъра.
 
 @Component({
-  selector: 'app-socialprovider',
-  templateUrl: './social-network-provider.component.html',
-  styleUrls: ['./social-network-provider.component.scss']
+  selector: 'app-socialconnectivity',
+  templateUrl: './social-network-connectivity.component.html',
+  styleUrls: ['./social-network-connectivity.component.scss']
 })
-export class SocialNetworkProviderComponent implements OnInit {
+export class SocialNetworkConnectivityComponent implements OnInit {
 
   socialProvidersDialog: boolean = false;
 
-  public socialProviders : SocialNetworkProvider[] = [];
+  public socialProviders : SocialNetworkConnectivity[] = [];
 
-  public socialProvider : SocialNetworkProvider = new SocialNetworkProvider();
+  public socialNetworkConnectivity : SocialNetworkConnectivity = new SocialNetworkConnectivity();
 
   submitted : boolean = false;
 
-  constructor(private socialProviderService : SocialNetworkProviderService, private messageService: MessageService, private confirmationService: ConfirmationService) { }
+  constructor(private socialProviderService : SocialNetworkConnectivityService, private messageService: MessageService, private confirmationService: ConfirmationService) { }
 
   ngOnInit() {
     this.socialProviderService.getAll().subscribe(data => {
@@ -28,7 +28,7 @@ export class SocialNetworkProviderComponent implements OnInit {
     });
   }
   openNew(){
-    this.socialProvider = new SocialNetworkProvider();
+    this.socialNetworkConnectivity = new SocialNetworkConnectivity();
     this.submitted = false;
     this.socialProvidersDialog = true;
   }
@@ -41,16 +41,16 @@ export class SocialNetworkProviderComponent implements OnInit {
   saveSocialProvider(){
     this.submitted = true;
 
-    this.socialProviderService.getPage(this.socialProvider.name).subscribe(() =>{
+    this.socialProviderService.getPage(this.socialNetworkConnectivity).then(() =>{
       this.socialProviderService.getAll().subscribe(data => {
-        this.messageService.add({severity:'success', summary: 'Успешно запазване', detail: 'Product Updated', life: 3000});
+        this.messageService.add({severity:'success', summary: 'Успешно запазване', life: 3000});
         this.socialProvidersDialog = false;
-        this.socialProvider = new SocialNetworkProvider();
+        this.socialNetworkConnectivity = new SocialNetworkConnectivity();
       })
     });
   }
 
-  deleteSocialProviders(socialProvider : SocialNetworkProvider) {
+  deleteSocialProviders(socialProvider : SocialNetworkConnectivity) {
     this.confirmationService.confirm({
       message: 'Наистина ли искате да изтриете? ' + socialProvider.name + '?',
       header: 'Confirm',
@@ -58,7 +58,7 @@ export class SocialNetworkProviderComponent implements OnInit {
       accept: () => {
         this.socialProviders = this.socialProviders.filter(val => val.id !== socialProvider.id);
         this.socialProviderService.delete(socialProvider).then(() => {
-          this.socialProvider = new SocialNetworkProvider();
+          this.socialNetworkConnectivity = new SocialNetworkConnectivity();
         });
         this.messageService.add({severity: 'success', summary: 'Успешно изтриване', detail: 'Product Deleted', life: 3000});
       }

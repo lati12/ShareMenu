@@ -8,8 +8,8 @@ import javax.persistence.*;
 // Обекта служи и за операции със записа от базата данни.
 
 @Entity
-@Table(name = "socialnetworkprovider")
-public class SocialNetworkProvider {
+@Table(name = "socialnetworkconnectivity")
+public class SocialNetworkConnectivity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
@@ -17,16 +17,38 @@ public class SocialNetworkProvider {
     @Column(length = 255)
     private String name;
 
-    @Column(length = 255)
+    @Column()
     private String accessToken;
 
-    @Column(length = 255)
+    @Column
     private String key;
+
+    @Column
+    private String appId;
+
+    @Column
+    private String secretId;
 
     @ManyToOne
     @JsonIgnore
     @JoinColumn(name = "users_id",nullable = false)
     private User users;
+
+    public String getAppId() {
+        return appId;
+    }
+
+    public void setAppId(String appId) {
+        this.appId = appId;
+    }
+
+    public String getSecretId() {
+        return secretId;
+    }
+
+    public void setSecretId(String secretId) {
+        this.secretId = secretId;
+    }
 
     public User getUsers() {
         return users;

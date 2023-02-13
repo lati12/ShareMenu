@@ -1,9 +1,9 @@
 import {Component, isDevMode, OnInit} from '@angular/core';
 import {EntityHeader} from "../../common/entityheader";
 import {Sharemenu} from "../../common/sharemenu";
-import {SocialNetworkProvider} from "../../common/socialnetworkprovider";
+import {SocialNetworkConnectivity} from "../../common/socialNetworkConnectivity";
 import {EntityheaderService} from "../../services/entityheader.service";
-import {SocialNetworkProviderService} from "../../services/social-network-provider.service";
+import {SocialNetworkConnectivityService} from "../../services/social-network-connectivity.service";
 import {ConfirmationService, MessageService} from "primeng/api";
 import {SharemenuService} from "../../services/sharemenu.service";
 // @ts-ignore
@@ -25,13 +25,13 @@ export class SharemenuComponent implements OnInit {
   shareMenus : Sharemenu [] = [];
   itemDialog: boolean = false;
 
-  socialproviders : SocialNetworkProvider [] = [];
-  socialProvider : SocialNetworkProvider = new SocialNetworkProvider();
+  socialproviders : SocialNetworkConnectivity [] = [];
+  socialProvider : SocialNetworkConnectivity = new SocialNetworkConnectivity();
 
   displayInfoDialog: boolean = false;
 
-  constructor(private sharemenuService: SharemenuService,private entityHeaderService:EntityheaderService,
-              private  socialProviderService : SocialNetworkProviderService) { }
+  constructor(private sharemenuService: SharemenuService,private entityHeaderService:EntityheaderService, private messageService: MessageService,
+              private  socialProviderService : SocialNetworkConnectivityService) { }
 
   ngOnInit(): void {
     this.entityHeaderService.getAll().subscribe(data =>{
@@ -45,6 +45,7 @@ export class SharemenuComponent implements OnInit {
 
   generateFile(){
     this.sharemenuService.generateFile(this.sharemenu).then((blocb) =>{
+      this.messageService.add({severity:'success', summary: 'Неуспешно генериране на меню', life: 3000});
       console.log("done");
       saveAs(blocb, "menu.pdf");
     }).catch(arr => {
@@ -54,9 +55,11 @@ export class SharemenuComponent implements OnInit {
 
   shareMenu(){
     this.sharemenuService.shareMenu(this.sharemenu).then(() =>{
+      this.messageService.add({severity:'success', summary: 'Успешно споделено меню', life: 3000});
       console.log("done");
     }).catch(arr => {
       console.log(arr);
+      this.messageService.add({severity:'error', summary: 'Неуспешно споделяне на меню', life: 3000});
     })
   }
 

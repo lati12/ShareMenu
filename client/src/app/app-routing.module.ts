@@ -1,6 +1,6 @@
 import {NgModule} from '@angular/core';
 import {RouterModule, Routes} from '@angular/router';
-import {SocialNetworkProviderComponent} from "./components/socialprovider/social-network-provider.component";
+import {SocialNetworkConnectivityComponent} from "./components/socialprovider/social-network-connectivity.component";
 import {TemplateComponent} from "./components/template/template.component";
 import {UsersComponent} from "./components/users/users.component";
 import {SharemenuComponent} from "./components/sharemenu/sharemenu.component";
@@ -53,11 +53,11 @@ const routes: Routes = [
           }
       },
       {
-        path: 'socialprovider', component: SocialNetworkProviderComponent,
+        path: 'socialprovider', component: SocialNetworkConnectivityComponent,
         canActivate: [AuthGuard],
         data:
           {
-            roles: [Roles.ROLE_ADMIN, Roles.ROLE_USER]
+            roles: [Roles.ROLE_USER]
           }
       },
       {

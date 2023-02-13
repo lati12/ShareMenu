@@ -36,7 +36,7 @@ import { EntityheaderComponent } from './components/entityheader/entityheader.co
 import {ItemComponent} from "./components/item/item.component";
 import {ItemCategoryComponent} from "./components/item-category/item-category.component";
 import {SharemenuComponent} from "./components/sharemenu/sharemenu.component";
-import {SocialNetworkProviderComponent} from "./components/socialprovider/social-network-provider.component";
+import {SocialNetworkConnectivityComponent} from "./components/socialprovider/social-network-connectivity.component";
 import {TemplateComponent} from "./components/template/template.component";
 import {UsersComponent} from "./components/users/users.component";
 import { HomeComponent } from './components/home/home.component';
@@ -57,7 +57,7 @@ import { AboutProjectComponent } from './components/about-project/about-project.
     ItemComponent,
     ItemCategoryComponent,
     SharemenuComponent,
-    SocialNetworkProviderComponent,
+    SocialNetworkConnectivityComponent,
     TemplateComponent,
     UsersComponent,
     HomeComponent,

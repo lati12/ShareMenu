@@ -10,12 +10,18 @@ import net.sf.jasperreports.engine.design.JasperDesign;
 import net.sf.jasperreports.engine.export.JRPdfExporter;
 import net.sf.jasperreports.engine.xml.JRXmlLoader;
 import net.sf.jasperreports.export.*;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
 import java.io.*;
+import java.security.Principal;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -26,6 +32,16 @@ import java.util.concurrent.atomic.AtomicBoolean;
 
 @Service
 public class MenuReportService {
+
+    @Autowired
+    AuthenticationManager authenticationManager;
+
+    @Value("${sharemenu.path.files_pdf}")
+    private String tempPdfFolder;
+
+    @Value("${sharemenu.path.files_png}")
+    private String tempPngFolder;
+
     private final MenuHeaderViewRepository menuHeaderViewRepository;
     private final MenuLineViewRepository menuLineViewRepository;
     private final TemplateRepository templateRepository;
@@ -62,7 +78,7 @@ public class MenuReportService {
 
     public Resource getResource(){return null;}
 
-    private JasperPrint mapJasperReport(ShareMenu shareMenu, MenuHeaderView menuHeaderView, List<MenuLineViewJasper> menuLineViews) throws JRException{
+    private JasperPrint mapJasperReport(ShareMenu shareMenu, MenuHeaderView menuHeaderView, List<MenuLineViewJasper> menuLineViews, Principal principal) throws JRException{
 
 
         Template template = templateRepository.findTemplateByName(shareMenu.getEntityHeader().getTemplate().getName());
@@ -82,7 +98,9 @@ public class MenuReportService {
 
         JRPdfExporter exporter = new JRPdfExporter();
         exporter.setExporterInput(new SimpleExporterInput(jasperPrint));
-        exporter.setExporterOutput(new SimpleOutputStreamExporterOutput("test.pdf"));
+        String fileKey = principal.getName().replace('@','_');
+
+        exporter.setExporterOutput(new SimpleOutputStreamExporterOutput(tempPdfFolder + fileKey +".pdf"));
 
         SimplePdfReportConfiguration reportConfig =
                 new SimplePdfReportConfiguration();
@@ -91,9 +109,7 @@ public class MenuReportService {
 
         SimplePdfExporterConfiguration exporterConfig
                 = new SimplePdfExporterConfiguration();
-        exporterConfig.setMetadataAuthor("baeldung");
         exporterConfig.setEncrypted(true);
-        exporterConfig.setAllowedPermissionsHint("PRINTING");
 
         exporter.setConfiguration(reportConfig);
         exporter.setConfiguration(exporterConfig);
@@ -103,7 +119,7 @@ public class MenuReportService {
 
         exporter.exportReport();
 
-        File file = new File("image.png");
+        File file = new File(tempPngFolder + fileKey + ".png");
         OutputStream ouputStream = null;
         try {
             ouputStream = new FileOutputStream(file);
@@ -127,7 +143,7 @@ public class MenuReportService {
         return jasperPrint;
     }
 
-    public void processReport(ShareMenu shareMenu) throws  JRException{
-        mapJasperReport(shareMenu, getHeader(shareMenu), getLines(shareMenu));
+    public void processReport(ShareMenu shareMenu, Principal principal) throws  JRException{
+        mapJasperReport(shareMenu, getHeader(shareMenu), getLines(shareMenu), principal);
     }
 }

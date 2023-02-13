@@ -1,9 +1,11 @@
 
 //Модел клас, който служи за транспортиране на данни между angular и spring boot
 
-export class SocialNetworkProvider {
+export class SocialNetworkConnectivity {
   id:string = "";
   name:string = "";
   accessToken:string = "";
-  refreshToken:string = "";
+  key: string = "";
+  appId: string = "";
+  secretId: string = "";
 }

@@ -29,7 +29,6 @@ export class HomeComponent implements OnInit {
   socialProviderVisable: boolean = false;
   templateVisable: boolean = false;
   userTemplateVisable : boolean = false;
-  aboutVisible : boolean = false;
 
 
   constructor(private authService: AuthService, private tokenStorageService: TokenStorageService, public router: Router) { }
@@ -102,13 +101,6 @@ export class HomeComponent implements OnInit {
               this.router.navigate(['usertemplate']).catch(console.error)
             }
           },
-          {
-            label: 'Относно проекта',
-            visible: this.aboutVisible,
-            command: (_event: Event) => {
-              this.router.navigate(['about']).catch(console.error)
-            }
-          },
         ]
       }];
     }
@@ -122,7 +114,6 @@ export class HomeComponent implements OnInit {
     this.templateVisable = false;
     this.socialProviderVisable = false;
     this.userTemplateVisable = false;
-    this.aboutVisible = false;
     if (this.roles == null || !this.isLoggedIn) {
       this.slideDisplay = false;
       return;
@@ -136,15 +127,13 @@ export class HomeComponent implements OnInit {
         self.userVisable = true;
         self.shareMenuVisable = true;
         self.templateVisable = true;
-        self.socialProviderVisable = true;
         self.userTemplateVisable = true;
-        self.aboutVisible = true;
       } else if (role === Roles.ROLE_USER) {
         self.itemVisable = true;
         self.itemCategoryVisable = true;
         self.shareMenuVisable = true;
         self.entityHeaderVisable = true;
-        self.aboutVisible = true;
+        self.socialProviderVisable = true;
       }
     });
   }
