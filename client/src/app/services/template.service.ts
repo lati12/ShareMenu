@@ -3,6 +3,7 @@ import {HttpClient} from "@angular/common/http";
 import {Template} from "../common/template";
 import {UserTemplate} from "../common/user-template";
 import {UserTemplateComponent} from "../components/user-template/user-template.component";
+import {environment} from "../../environments/environment";
 
 //Сървисът имплементира коснумация на Template ресурса от Spring boot сървъра;
 
@@ -11,16 +12,16 @@ import {UserTemplateComponent} from "../components/user-template/user-template.c
 })
 export class  TemplateService {
 
-  getAllUrl: string = "http://localhost:4713/sharemenu/api/resource/template/get";
-  saveUrl: string = "http://localhost:4713/sharemenu/api/resource/template/insert";
-  deleteUrl : string = "http://localhost:4713/sharemenu/api/resource/template/delete?id=";
+  getAllUrl: string =environment.apiEndpoint + "/resource/template/get";
+  saveUrl: string =environment.apiEndpoint + "/resource/template/insert";
+  deleteUrl : string =environment.apiEndpoint + "/resource/template/delete?id=";
 
-  getByUserUrl: string = "http://localhost:4713/sharemenu/api/resource/template/getByUser";
+  getByUserUrl: string = environment.apiEndpoint + "/resource/template/getByUser";
 
 
-  getUserTemplateUrl : string = "http://localhost:4713/sharemenu/api/resource/template/getUserTemplate";
-  deleteUserTemplateUrl : string = "http://localhost:4713/sharemenu/api/resource/template/deleteUserTemplate?";
-  insertUserTemplateUrl : string = "http://localhost:4713/sharemenu/api/resource/template/insertUserTemplate";
+  getUserTemplateUrl : string = environment.apiEndpoint +"/resource/template/getUserTemplate";
+  deleteUserTemplateUrl : string = environment.apiEndpoint + "/resource/template/deleteUserTemplate?";
+  insertUserTemplateUrl : string = environment.apiEndpoint +"/resource/template/insertUserTemplate";
 
   constructor(private http: HttpClient) {}
 

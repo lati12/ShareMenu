@@ -45,7 +45,7 @@ export class SharemenuComponent implements OnInit {
 
   generateFile(){
     this.sharemenuService.generateFile(this.sharemenu).then((blocb) =>{
-      this.messageService.add({severity:'success', summary: 'Неуспешно генериране на меню', life: 3000});
+      this.messageService.add({severity:'success', summary: 'Успешно генериране на меню', life: 3000});
       console.log("done");
       saveAs(blocb, "menu.pdf");
     }).catch(arr => {

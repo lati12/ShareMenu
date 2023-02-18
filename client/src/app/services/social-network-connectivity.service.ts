@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import {HttpClient} from "@angular/common/http";
 import {SocialNetworkConnectivity} from "../common/socialNetworkConnectivity";
+import {environment} from "../../environments/environment";
 
 //Сървисът имплементира коснумация на SocialNetworkProvider ресурса от Spring boot сървъра;
 
@@ -9,11 +10,11 @@ import {SocialNetworkConnectivity} from "../common/socialNetworkConnectivity";
 })
 export class SocialNetworkConnectivityService {
 
-  getALlUrl: string = "http://localhost:4713/sharemenu/api/resource/socialNetworkConnectivity/get";
-  saveUrl: string = "http://localhost:4713/sharemenu/api/resource/socialNetworkConnectivity/insert";
-  deleteUrl : string = "http://localhost:4713/sharemenu/api/resource/socialNetworkConnectivity/delete?id=";
+  getALlUrl: string =environment.apiEndpoint + "/resource/socialNetworkConnectivity/get";
+  saveUrl: string = environment.apiEndpoint + "/resource/socialNetworkConnectivity/insert";
+  deleteUrl : string =environment.apiEndpoint + "/resource/socialNetworkConnectivity/delete?id=";
 
-  getPagesUrl: string = "http://localhost:4713/sharemenu/api/resource/socialNetworkConnectivity/findSocialNetworkPage";
+  getPagesUrl: string =environment.apiEndpoint + "/resource/socialNetworkConnectivity/findSocialNetworkPage";
 
 
   constructor(private http: HttpClient) {}

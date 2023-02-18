@@ -1,10 +1,11 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import {firstValueFrom} from "rxjs";
+import {environment} from "../../../environments/environment";
 
 // Компонентът служи за верифицарането на потребителски акаунт
 
-const AUTH_API = 'http://localhost:4713/sharemenu/api/auth/';
+const AUTH_API = environment.apiEndpoint + '/auth/';
 
 @Injectable({
     providedIn: 'root',

@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import {HttpClient} from "@angular/common/http";
 import {Users} from "../common/users";
+import {environment} from "../../environments/environment";
 
 //Сървисът имплементира коснумация на Users ресурса от Spring boot сървъра;
 
@@ -9,11 +10,10 @@ import {Users} from "../common/users";
 })
 export class UsersService {
 
-  getAllUrl: string = "http://localhost:4713/sharemenu/api/resource/users/get";
-  saveUrl: string = "http://localhost:4713/sharemenu/api/resource/users/insert";
-  deleteUrl : string =  "http://localhost:4713/sharemenu/api/resource/users/delete?id="
+  getAllUrl: string = environment.apiEndpoint + "/resource/users/get";
+  saveUrl: string = environment.apiEndpoint + "/resource/users/insert";
+  deleteUrl : string = environment.apiEndpoint + "/resource/users/delete?id="
 
-  status: string[] = ['OUTOFSTOCK', 'INSTOCK', 'LOWSTOCK'];
 
   constructor(private http: HttpClient) {}
 

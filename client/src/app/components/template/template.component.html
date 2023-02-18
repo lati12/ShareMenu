@@ -28,7 +28,7 @@
   <ng-template pTemplate="content">
     <div class="p-field" style="margin: 6px">
       <label>Качване на файл</label>
-      <p-fileUpload mode="basic" name="file" (onBeforeUpload)="dialog=false" url="http://localhost:4713/sharemenu/api/resource/upload-file/upload"
+      <p-fileUpload mode="basic" name="file" (onBeforeUpload)="dialog=false" [url]="url"
                     accept="*" [maxFileSize]="1000000" [auto]="true" chooseLabel="Качване на файл">
         <ng-template pTemplate="toolbar">
         </ng-template>

@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import {HttpClient} from "@angular/common/http";
 import {Item} from "../common/item";
+import {environment} from "../../environments/environment";
 
 //Сървисът имплементира коснумация на Item ресурса от Spring boot сървъра;
 
@@ -9,9 +10,9 @@ import {Item} from "../common/item";
 })
 export class ItemService {
 
-  getAllUrl: string = "http://localhost:4713/sharemenu/api/resource/item/get";
-  saveUrl: string = "http://localhost:4713/sharemenu/api/resource/item/insert";
-  deleteUrl: string = "http://localhost:4713/sharemenu/api/resource/item/delete?id=";
+  getAllUrl: string =environment.apiEndpoint + "/resource/item/get";
+  saveUrl: string = environment.apiEndpoint +"/resource/item/insert";
+  deleteUrl: string = environment.apiEndpoint +"/resource/item/delete?id=";
 
   constructor(private http: HttpClient) {
   }

@@ -1,1 +1,5 @@
 rootProject.name = 'sharemenu'
+include 'client'
+project(":client").projectDir = file("../client")
+
+

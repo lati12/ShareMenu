@@ -1,0 +1,26 @@
+plugins{
+    id 'java'
+    id("com.github.node-gradle.node") version "3.5.1"
+}
+
+sourceCompatibility = '1.8'
+
+node{
+    version = '16.12.0'
+    npmVersion = '6.14.17'
+    download = true
+}
+
+//jar.dependsOn npmBuild
+//jar.dependsOn(npm_install,'buildApp','copyBuiltFiles')
+
+task buildApp(type: NpmTask) {
+    args = ['run', 'build-prod']
+}
+jar{
+
+}
+
+/*task copyBuiltFiles(type:Copy){
+    from 'dist/sharemenu' into '../server/src/main/resources/static'
+}*/

@@ -23,7 +23,7 @@ import java.util.Optional;
  */
 
 
-@CrossOrigin(origins = "*", maxAge = 3600)
+@CrossOrigin(origins = {"http://sharemenu.eu", "http://localhost:4200"}, maxAge = 3600)
 @RestController
 @RequestMapping("/api/resource/itemcategory")
 public class ItemCategoryController {

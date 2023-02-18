@@ -15,7 +15,7 @@ import java.util.Optional;
 Класът служи за консумиране на end-poinds от ресурса UploadFile и после за отделните методи.
  */
 
-@CrossOrigin(origins = "*", maxAge = 3600)
+@CrossOrigin(origins = {"http://sharemenu.eu", "http://localhost:4200"}, maxAge = 3600)
 @RestController
 @RequestMapping("/api/resource/upload-file")
 public class UploadFileController {

@@ -5,8 +5,9 @@ import {Users} from "../../common/users";
 import {LoginRequest} from "../../common/login-request";
 import {RegisterRequest} from "../../common/register-request";
 import {JwtResponse} from "../../common/jwt-response";
+import {environment} from "../../../environments/environment";
 
-const AUTH_API = 'http://localhost:4713/sharemenu/api/auth/';
+const AUTH_API = environment.apiEndpoint + '/auth/';
 
 //Имплементация за влизане и регистриране в апликацията
 

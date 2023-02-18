@@ -3,6 +3,7 @@ import { Template } from 'src/app/common/template';
 import {TemplateService} from "../../services/template.service";
 import {ConfirmationService, MessageService} from "primeng/api";
 import {FileUploadModule} from 'primeng/fileupload';
+import {environment} from "../../../environments/environment";
 
 // Компонентът Template служи за следните операции - добавяне и изтриване на файл
 
@@ -13,6 +14,7 @@ import {FileUploadModule} from 'primeng/fileupload';
 })
 export class TemplateComponent implements OnInit {
 
+  public url: string = environment.apiEndpoint + "/resource/upload-file/upload";
   submitted: boolean = false;
   dialog: boolean = false;
 

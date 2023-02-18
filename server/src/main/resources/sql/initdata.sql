@@ -4,7 +4,14 @@ INSERT INTO roles (id, name) values (1, 'ROLE_ADMIN'),
 
 
 
-INSERT INTO users (email, email_confirmed, password) values ('testadmin1@test', true, '$2a$12$LM..4Uu7EbHyQweA920B8e44TpVSxsFDR4V37WMXhCl6E8hEMY1py') ON CONFLICT DO NOTHING;
+INSERT INTO users (name, lastname, email, companyname, email_confirmed, password) values (
+                                                                                          'Admin'
+                                                                                          ,'Admin'
+                                                                                          ,'testadmin1@test'
+                                                                                          ,'AdminCompany'
+                                                                                          , true
+                                                                                          , '$2a$12$LM..4Uu7EbHyQweA920B8e44TpVSxsFDR4V37WMXhCl6E8hEMY1py'
+                                                                                          ) ON CONFLICT DO NOTHING;
 
 insert into user_roles (role_id, user_id) values (1, (select id from users where email = 'testadmin1@test')) ON CONFLICT DO NOTHING;
 insert into user_roles (role_id, user_id) values (2, (select id from users where email = 'testadmin1@test')) ON CONFLICT DO NOTHING;
@@ -105,7 +112,8 @@ INSERT INTO item (description, name, price, unit, itemcategory_id, users_id) VAL
 , (select id from users where email = 'testuser1@test')) ON CONFLICT DO NOTHING;
 
 
-insert into template (name, file, users_id) values ('temp', pg_read_file('C:\projects\ShareMenu\server\src\main\resources\sql\sharemenu.jrxml')::bytea, 1);
+--insert into template (name, file, users_id) values ('temp', pg_read_file('C:\projects\ShareMenu\sharemenu.jrxml')::bytea, 1) ON CONFLICT DO NOTHING;
+insert into template (name, file, users_id) values ('temp', pg_read_file('/opt/sharemenu.jrxml')::bytea, 1) ON CONFLICT DO NOTHING;
 
 insert into user_template(user_id, template_id) values ((select id from users where email = 'testuser1@test')
 , (select id from template where name = 'temp')) ON CONFLICT DO NOTHING;
@@ -140,10 +148,11 @@ insert into entityline (price, entityheader_id, item_id) values (9
 , (select id from item where name = 'Плодов сладолед')) ON CONFLICT DO NOTHING;
 
 
-insert into socialnetworkconnectivity (name, access_token, app_id, secret_id,users_id, key) values ('Test Graph api',
-                                                                                                    'EAAGDxOMPzygBADOan3x7KOj3WL7BcDgVxotulZCsplDvPXbZBJkzJh5hi7DWW8t7zqF7vbZAwxbZCSGTuMzMWk9ZAYofZAw7GL8JZBZAdgW3kZBNDrJZCSvjpZAwyZBIpRZALJTDFiJBp4MG3sInhrc6j1qW3JnlxFFPjp6vLVDrSucvb3gcfxSYuWVKR',
-                                                                                                    '426356623003432', 'f8375f983197c12a856435bffa7407d3', 2,
-                                                                                                    '111787558471004')
+insert into socialnetworkconnectivity (name, access_token, app_id, secret_id,users_id, key) values ('ShareMenu',
+                                                                                                    'EAAJ15yJArJABAB33XJViVq4wT71T01f8kHJ7SjvI8ZAf6hZAWOmxvTZAlB9SiQLpbSJj1XTMY7JVbdh05i0OZC2woCb1mAk1qOQKNRo2TuZCdpPnm5WZBOTcRc2BFlEdXJyHRtShkBtccJ5CGN2gfPFGoVlxFCQtxeGZAgQclQF4E4fLFLbnuobq6W69ZA3HgpkZD',
+                                                                                                    '692585525980304', 'ced0b6ad67e41cab01e0d9487fc44eef',
+                                                                                                    (select id from users where email = 'testuser1@test'),
+                                                                                                    '103325612689885')
 
 
 

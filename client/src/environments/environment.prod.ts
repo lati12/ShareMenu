@@ -1,3 +1,5 @@
 export const environment = {
-  production: true
+  production: true,
+  apiEndpoint: 'http://sharemenu.eu:8022/api',
+
 };

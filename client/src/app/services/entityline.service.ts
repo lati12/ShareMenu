@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import {HttpClient} from "@angular/common/http";
 import {Entityline} from "../common/entityline";
+import {environment} from "../../environments/environment";
 
 //Сървисът имплементира коснумация на EntityLine ресурса от Spring boot сървъра;
 
@@ -9,9 +10,9 @@ import {Entityline} from "../common/entityline";
 })
 export class EntitylineService {
 
-  getAllUrl: string = "http://localhost:4713/sharemenu/api/resource/entityline/get?headerId=";
-  saveUrl: string = "http://localhost:4713/sharemenu/api/resource/entityline/insert";
-  deleteUrl:string = "http://localhost:4713/sharemenu/api/resource/entityline/delete?id=";
+  getAllUrl: string = environment.apiEndpoint +"/resource/entityline/get?headerId=";
+  saveUrl: string = environment.apiEndpoint +"/resource/entityline/insert";
+  deleteUrl:string = environment.apiEndpoint +"/resource/entityline/delete?id=";
 
   constructor(private http: HttpClient) {}
 

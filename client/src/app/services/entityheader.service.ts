@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import {HttpClient} from "@angular/common/http";
 import {EntityHeader} from "../common/entityheader";
+import {environment} from "../../environments/environment";
 
 //Сървисът имплементира коснумация на EntityHeader ресурса от Spring boot сървъра;
 
@@ -9,11 +10,9 @@ import {EntityHeader} from "../common/entityheader";
 })
 export class EntityheaderService {
 
-  getAllUrl: string = "http://localhost:4713/sharemenu/api/resource/entityheader/get";
-  saveUrl: string = "http://localhost:4713/sharemenu/api/resource/entityheader/insert";
-  deleteUrl:string = "http://localhost:4713/sharemenu/api/resource/entityheader/delete?id=";
-
-  status: string[] = ['OUTOFSTOCK', 'INSTOCK', 'LOWSTOCK'];
+  getAllUrl: string = environment.apiEndpoint + "/resource/entityheader/get";
+  saveUrl: string = environment.apiEndpoint + "/resource/entityheader/insert";
+  deleteUrl:string = environment.apiEndpoint + "/resource/entityheader/delete?id=";
 
   constructor(private http : HttpClient) {}
 

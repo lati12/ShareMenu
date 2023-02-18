@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import {HttpClient} from "@angular/common/http";
 import {Sharemenu} from "../common/sharemenu";
+import {environment} from "../../environments/environment";
 
 //Сървисът имплементира коснумация на ShareMenu ресурса от Spring boot сървъра;
 
@@ -9,10 +10,10 @@ import {Sharemenu} from "../common/sharemenu";
 })
 export class SharemenuService {
 
-  getAllUrl: string = "http://localhost:4713/sharemenu/api/resource/sharemenu/get";
-  shareMenuUrl: string = "http://localhost:4713/sharemenu/api/resource/sharemenu/share-menu"
+  getAllUrl: string = environment.apiEndpoint + "/resource/sharemenu/get";
+  shareMenuUrl: string = environment.apiEndpoint + "/resource/sharemenu/share-menu"
 
-  generateFileUrl: string = "http://localhost:4713/sharemenu/api/resource/sharemenu/generate-file"
+  generateFileUrl: string = environment.apiEndpoint + "/resource/sharemenu/generate-file"
   constructor (private http : HttpClient) { }
 
   async generateFile(shareMenu : Sharemenu){

@@ -13,7 +13,7 @@ import java.util.Optional;
 и после за отделните методи
  */
 
-@CrossOrigin(origins = "*", maxAge = 3600)
+@CrossOrigin(origins = {"http://sharemenu.eu", "http://localhost:4200"}, maxAge = 3600)
 @RestController
 @RequestMapping("/api/resource/users")
 public class UsersController {

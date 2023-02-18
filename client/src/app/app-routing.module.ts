@@ -16,7 +16,6 @@ import {AuthGuard} from "./services/auth/auth-guard.service";
 import {ConfirmEmailComponent} from "./components/confirm-email/confirm-email.component";
 import {BrowserModule} from "@angular/platform-browser";
 import {UserTemplateComponent} from "./components/user-template/user-template.component";
-import {AboutProjectComponent} from "./components/about-project/about-project.component";
 
 //Тук се случва руутига между компонентите
 const routes: Routes = [
@@ -102,14 +101,6 @@ const routes: Routes = [
       },
       {
         path: 'usertemplate', component: UserTemplateComponent,
-        canActivate: [AuthGuard],
-        data:
-          {
-            roles: [Roles.ROLE_ADMIN, Roles.ROLE_USER]
-          }
-      },
-      {
-        path: 'about', component: AboutProjectComponent,
         canActivate: [AuthGuard],
         data:
           {
