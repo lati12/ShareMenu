@@ -4,8 +4,11 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
 
-// Класът EntityHeader служи за консумиране и продуциране на информация за меню.
-// Обекта служи и за операции със записа от базата данни.
+
+/**
+ * The EntityHeader class serves to consume and produce menu information.
+ * The object is also used for database write operations.
+ */
 
 @Entity
 @Table(name = "entityheader")

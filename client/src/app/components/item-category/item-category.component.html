@@ -36,7 +36,7 @@
 
     <div class="p-field">
       <label for="position">Позиция</label>
-      <input type="text" pInputText id="position" [(ngModel)]="itemCategory.position" required autofocus />
+      <input type="number" pInputText id="position" [(ngModel)]="itemCategory.position" required autofocus />
       <small class="p-invalid" *ngIf="submitted && !itemCategory.name">Полето е задължително.</small>
     </div>
 

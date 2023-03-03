@@ -1,6 +1,8 @@
 package com.server.sharemenu.common;
 
-//enum oбекта се използва за по четимо настройване на роли на потребител
+/**
+ * The enum object is used to more readably set roles per user
+ */
 
 public enum ERole {
     ROLE_USER,

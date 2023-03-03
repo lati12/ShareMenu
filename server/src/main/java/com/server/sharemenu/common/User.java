@@ -1,23 +1,30 @@
 package com.server.sharemenu.common;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import org.springframework.security.core.CredentialsContainer;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
+import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
 
-// Класът User служи за консумиране и продуциране на информация за Потребител.
-// Обекта служи и за операции със записа от базата данни.
+/**
+ * The User class serves to consume and produce information about a User.
+ * The object is also used for database write operations.
+ */
 
 @Entity
 @Table(name = "users",
-uniqueConstraints = {
-        @UniqueConstraint(columnNames = "email")
-})
-public class User {
+        uniqueConstraints = {
+                @UniqueConstraint(columnNames = "email")
+        })
+public class User implements UserDetails, CredentialsContainer  {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -44,7 +51,7 @@ public class User {
     private String companyName;
 
 
-    @ManyToMany(fetch = FetchType.LAZY)
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "user_roles",
             joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "role_id"))
@@ -56,6 +63,12 @@ public class User {
             joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "template_id"))
     private Set<Template> templates = new HashSet<>();
+
+    @Transient
+    private Set<SimpleGrantedAuthority> authorities;
+
+    @Column
+    private boolean enabled;
 
 
     public User(String email, String password, Boolean emailConfirmed, String name, String lastname, String companyName) {
@@ -142,4 +155,52 @@ public class User {
     public void setTemplates(Set<Template> templates) {
         this.templates = templates;
     }
+
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        return authorities;
+    }
+
+    public void setAuthorities(Set<SimpleGrantedAuthority> authorities) {
+        this.authorities = authorities;
+    }
+
+    @Override
+    public String getUsername() {
+        return email;
+    }
+
+    @Override
+    public boolean isAccountNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isAccountNonLocked() {
+        return true;
+    }
+
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isEnabled() {
+        return enabled;
+    }
+
+    @Override
+    public void eraseCredentials() {
+        this.password = null;
+    }
+
+    public void setEnabled(boolean enabled) {
+        this.enabled = enabled;
+    }
+
+    public boolean getEnabled(boolean enabled) {
+        return enabled;
+    }
+
 }

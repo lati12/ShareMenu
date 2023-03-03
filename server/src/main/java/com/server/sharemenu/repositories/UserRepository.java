@@ -6,11 +6,15 @@ import org.springframework.stereotype.Repository;
 
 import java.util.Optional;
 
-//Интерфейсът е създаден с цел комуникация с базата данни посредством Hibernate и JPA
-
+/**
+ * The interface was created to communicate with the database using Hibernate and JPA
+ */
 
 @Repository
 public interface UserRepository extends JpaRepository<User, Long> {
     Optional<User> findByEmailAndEmailConfirmedIsTrue(String email);
     Boolean existsByEmail(String email);
+
+    Optional<User> findUserByEmailAndEnabledIsTrue(String email);
+    User findByEmail(String email);
 }

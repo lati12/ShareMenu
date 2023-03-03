@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import {ItemCategory} from "../../common/item-category";
 import {ItemCategoryService} from "../../services/item-category.service";
 import {ConfirmationService, MessageService} from "primeng/api";
+import {NotificationService} from "../../services/notification.service";
 
 // В компонентът ItemCategory са имлементирани CRUD операции и комуникацията със сървъра.
 
@@ -21,8 +22,8 @@ export class ItemCategoryComponent implements OnInit {
 
   submitted : boolean = false;
   constructor(private itemCategoryService : ItemCategoryService
-              , private messageService: MessageService
-              , private confirmationService: ConfirmationService) { }
+    , private notificationService: NotificationService
+    , private confirmationService: ConfirmationService) { }
 
 
   ngOnInit(): void {
@@ -61,7 +62,9 @@ export class ItemCategoryComponent implements OnInit {
         this.itemCategory = new ItemCategory();
         console.log("Done with save");
       });
-    });
+    }).catch(ex=>{
+      this.notificationService.notification$.next({severity: 'error', summary: 'Грешка', detail: ex.error});
+    })
   }
 
   delete(itemcategory : ItemCategory){
@@ -76,6 +79,8 @@ export class ItemCategoryComponent implements OnInit {
             this.itemCategory = new ItemCategory();
             console.log("Done with delete");
           })
+        }).catch(ex => {
+          this.notificationService.notification$.next({severity: 'error', summary: 'Грешка', detail: ex.error});
         });
       }
     });

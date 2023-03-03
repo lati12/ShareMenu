@@ -6,12 +6,14 @@ import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
-//Интерфейсът е създаден с цел комуникация с базата данни посредством Hibernate и JPA
-
+/**
+ * The interface was created to communicate with the database using Hibernate and JPA
+ */
 
 @Repository
 public interface ItemRepository extends JpaRepository<Item, Long > {
     List<Item> findItemsByUsersId(Long usersId);
     Item findItemByIdAndUsersId(Long id, Long usersId);
     void deleteItemByIdAndUsersId(Long id, Long usersId);
+    boolean existsItemByItemCategoryId(Long itemCategoryId);
 }

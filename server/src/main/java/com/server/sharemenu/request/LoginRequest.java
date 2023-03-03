@@ -2,7 +2,9 @@ package com.server.sharemenu.request;
 
 import javax.validation.constraints.NotBlank;
 
-//Класът служи за транспортиране на Login информация между client / server
+/**
+ * The class serves to transport Login information between client / server
+ */
 public class LoginRequest {
     @NotBlank
     private String email;

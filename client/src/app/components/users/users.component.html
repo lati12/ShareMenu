@@ -10,9 +10,10 @@
       <tr>
         <th pSortableColumn="name">Име</th>
         <th pSortableColumn="lastname">Фамилия</th>
-        <th pSortableColumn="password">Парола</th>
         <th pSortableColumn="email">Имейл</th>
         <th pSortableColumn="companyName">Име на фирма</th>
+        <th pSortableColumn="confirmedEmail">Потвърден имейл</th>
+        <th pSortableColumn="enabled">Активиран акаунт</th>
 
         <th></th>
       </tr>
@@ -21,9 +22,10 @@
       <tr>
         <td>{{user.name}}</td>
         <td>{{user.lastname}}</td>
-        <td>{{user.password}}</td>
         <td>{{user.email}}</td>
         <td>{{user.companyName}}</td>
+        <td >{{user.emailConfirmed === true ? 'true' : 'false'}}</td>
+        <td >{{user.enabled === true ? 'true' : 'false'}}</td>
 
         <td>
           <button pButton pRipple icon="pi pi-pencil" class="p-button-rounded p-button-success p-mr-2" (click)="editUsers(user)"></button>
@@ -46,11 +48,7 @@
       <small class="p-invalid" *ngIf="submitted && !user.lastname">Фамилията е задължителна.</small>
     </div>
     <div class="p-field">
-      <div class="p-formgrid p-grid">
-        <label for="password">Парола</label>
-        <input type="text" pInputText id="password" [(ngModel)]="user.password" required autofocus/>
-        <small class="p-invalid" *ngIf="submitted && !user.password">Паролата е задължителна.</small>
-      </div>
+
       <div class="p-formgrid p-grid">
         <div class="p-field p-col">
           <label for="email">Имейл</label>
@@ -63,6 +61,14 @@
             <input type="text" pInputText id="companyName" [(ngModel)]="user.companyName" required autofocus/>
             <small class="p-invalid" *ngIf="submitted && !user.companyName">Името на фирмата е задължително.</small>
           </div>
+        </div>
+        <div class="field-checkbox">
+          <label for="EmailConfirmation">Потвърден имейл</label>
+          <p-checkbox [(ngModel)]="user.emailConfirmed" [binary]="true" inputId="binary"></p-checkbox>
+        </div>
+        <div class="field-checkbox">
+          <label for="Enabled">Активиран акаунт</label>
+          <p-checkbox [(ngModel)]="user.enabled" [binary]="true" inputId="binary"></p-checkbox>
         </div>
       </div>
     </div>

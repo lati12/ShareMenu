@@ -7,9 +7,11 @@ import org.hibernate.annotations.OnDeleteAction;
 
 import javax.persistence.*;
 
-// Класът EntityLine служи за консумиране и продуциране на информация за линия.
-// Обекта служи и за операции със записа от базата данни.
 
+/**
+ * The EntityLine class serves to consume and produce line information.
+ * The object is also used for database write operations.
+ */
 @Entity
 @Table(name = "entityline")
 public class EntityLine {

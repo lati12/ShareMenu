@@ -1,6 +1,8 @@
 package com.server.sharemenu.response;
 
-//Класът се използва за транспортиране на данни между client - server
+/**
+ *The class is used to transport data between client - server
+ */
 public class MessageResponse {
     private String message;
 

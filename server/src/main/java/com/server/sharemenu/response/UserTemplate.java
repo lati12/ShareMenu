@@ -3,8 +3,9 @@ package com.server.sharemenu.response;
 import com.server.sharemenu.common.Template;
 import com.server.sharemenu.common.User;
 
-//Класът се използва за транспортиране на данни между client - server
-
+/**
+ * The class is used to transport data between client - server
+ */
 public class UserTemplate {
     private User user;
     private Template template;

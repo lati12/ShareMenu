@@ -1,7 +1,8 @@
 package com.server.sharemenu.common;
 
-//Обектър имплементира интерфейс, който обект служи за комуникация с JasperReport
-
+/**
+ * An object implements an interface that an object serves to communicate with JasperReport
+ */
 public class MenuHeaderViewJasper implements MenuHeaderView{
     private String companyName;
     private String phone;

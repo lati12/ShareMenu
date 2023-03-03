@@ -28,8 +28,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.atomic.AtomicBoolean;
 
-//Сървис клас който служи за създаване на меню на база JaspreReport шаблон подаден от базата.
-
+/**
+ * Service class that serves to create a menu based on the JaspreReport template provided by the database.
+ */
 @Service
 public class MenuReportService {
 

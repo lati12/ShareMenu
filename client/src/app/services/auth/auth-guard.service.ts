@@ -16,11 +16,20 @@ export class AuthGuard implements CanActivate {
   ) {}
 
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
+    if (this.authService.isTokenExpired(this.storageService.getAccessToken())) {
+      this.router.navigate(['login']).catch(console.error);
+      return false;
+    }
+
     return this.detectUserRole(route, state);
   }
 
   detectUserRole(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean {
-    let userRoles = this.storageService.getUser().roles;
+    let user = this.authService.getUser();
+    if (user === null)
+      return false;
+
+    let userRoles = user.roles;
     let requiredRoles = route.data.roles;
 
     if (!userRoles) {

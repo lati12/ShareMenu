@@ -1,8 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+  import { Component, OnInit } from '@angular/core';
 import {AuthService} from "../../services/auth/auth.service";
 import {Router} from "@angular/router";
 import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {RegisterRequest} from "../../common/register-request";
+import {NotificationService} from "../../services/notification.service";
 
 // Компонентът Register служи за регистрирването на потребител в апликацията
 
@@ -33,7 +34,9 @@ export class RegisterComponent implements OnInit {
     companyName: this.companyName
   });
 
-  constructor(private authService : AuthService, private router: Router) {
+  constructor(private authService : AuthService,
+              private router: Router,
+              private notificationService : NotificationService) {
   }
   ngOnInit() : void {
   }
@@ -60,9 +63,13 @@ export class RegisterComponent implements OnInit {
       this.registerRequest.companyName = this.companyName.value;
 
     try {
-      await this.authService.register(this.registerRequest)
-      this.hideRegFields = true;
-      this.startCounter()
+      debugger
+      await this.authService.register(this.registerRequest).then(() => {
+        this.hideRegFields = true;
+        this.startCounter()
+      }).catch(ex => {
+        this.notificationService.notification$.next({severity: 'error', summary: 'Моля попълнете данни', detail: ex.error});
+      })
     } catch (ex: any) {
       console.log(ex);
     }

@@ -7,7 +7,7 @@
   <div class="p-toolbar-group-end">
     <div class="flex align-content-center flex-wrap card-container yellow-container">
       <div class="flex align-items-center justify-content-center">
-        <label  *ngIf="loggedUser && isLoggedIn" style="margin-right: 8px">
+        <label *ngIf="loggedUser && isTokenExpired" style="margin-right: 8px">
           <strong>{{loggedUser.name}} {{loggedUser.lastname}}</strong>
         </label>
       </div>
@@ -22,8 +22,8 @@
 <p-splitter [panelSizes]="[10,90]">
   <ng-template pTemplate="">
     <div class="flex justify-content-between flex-wrap card-container purple-container">
-    <button pButton pRipple type="button"  (click)="showInfoDialog()" label="За нас" class="p-button-info p-button-text absolute bottom-0 left-2  text-blue-500 font-bold border-round  "
-            style="min-width: 120px; min-height: 50px; "></button>
+      <button pButton pRipple type="button"  (click)="showInfoDialog()" label="За нас" class="p-button-info p-button-text absolute bottom-0 left-2  text-blue-500 font-bold border-round  "
+              style="min-width: 120px; min-height: 50px; "></button>
     </div>
     <p-menu [model]="items"></p-menu>
   </ng-template>

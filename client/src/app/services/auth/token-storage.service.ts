@@ -1,11 +1,6 @@
 import { Injectable } from '@angular/core';
-import {Users} from "../../common/users";
-import {observable} from "rxjs";
-import {JwtResponse} from "../../common/jwt-response";
 
 const TOKEN_KEY = 'auth-token';
-const USER_KEY = 'auth-user';
-
 //Имплементация на съхраняване/четене на "token" в сесията на браузера
 
 @Injectable({
@@ -13,29 +8,29 @@ const USER_KEY = 'auth-user';
 })
 export class TokenStorageService {
 
+
+  logout() {
+    window.localStorage.removeItem(TOKEN_KEY);
+  }
+
+  public saveAccessToken(token: string) {
+    TokenStorageService.saveToken(TOKEN_KEY, token);
+  }
+
+  private static saveToken(key: string, value: string) {
+    window.localStorage.removeItem(key);
+    window.localStorage.setItem(key, value);
+  }
+
+  public getAccessToken(): string | null {
+    return TokenStorageService.getToken(TOKEN_KEY);
+  }
+
+
+  private static getToken(key: string): string | null {
+    return localStorage.getItem(key);
+  }
+
+
   constructor() { }
-
-  logout(): void {
-    window.sessionStorage.clear();
-  }
-
-  public saveToken(token: string): void {
-    window.sessionStorage.removeItem(TOKEN_KEY);
-    window.sessionStorage.setItem(TOKEN_KEY, token);
-  }
-
-  public getToken(): string | null {
-    return sessionStorage.getItem(TOKEN_KEY);
-  }
-
-  public saveUser(user: JwtResponse): void {
-    window.sessionStorage.removeItem(USER_KEY);
-    window.sessionStorage.setItem(USER_KEY, JSON.stringify(user));
-  }
-
-  public getUser(): Users{
-    let obj = sessionStorage.getItem(USER_KEY);
-    return JSON.parse(obj !== null ? obj : "");
-  }
-
 }

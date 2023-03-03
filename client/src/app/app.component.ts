@@ -3,7 +3,8 @@ import {MenuItem, MessageService} from 'primeng/api';
 import {TokenStorageService} from "./services/auth/token-storage.service";
 import {Router} from "@angular/router";
 import {Location} from "@angular/common";
-
+import {AuthService} from "./services/auth/auth.service";
+import {NotificationService} from "./services/notification.service";
 
 @Component({
   selector: 'app-root',
@@ -12,16 +13,27 @@ import {Location} from "@angular/common";
 })
 export class AppComponent {
 
-  isLoggedIn = false;
+  isTokenExpired = false;
   username?: string;
   items: MenuItem[] = [];
 
-  constructor(private location: Location, private tokenStorageService: TokenStorageService, private messageService : MessageService, private router: Router) { }
+  constructor(private location: Location, private tokenStorageService: TokenStorageService
+    , private messageService : MessageService, private router: Router
+    , private notificationService: NotificationService
+    , private authService: AuthService) { }
 
   ngOnInit(): void {
-    this.isLoggedIn = !!this.tokenStorageService.getToken();
+    this.isTokenExpired = this.authService.isTokenExpired(this.tokenStorageService.getAccessToken());
 
-    if (this.isLoggedIn) {
+    this.notificationService.notification$.subscribe((message) => {
+      this.messageService.add({
+        severity: message.severity,
+        summary: message.summary,
+        detail: message.detail,
+      });
+    });
+
+    if (!this.isTokenExpired) {
       this.router.navigate(['']).catch(console.error);
       return;
     }
@@ -41,7 +53,4 @@ export class AppComponent {
         this.router.navigate(['login']).catch(console.error);
     }
   }
-
-
-
 }

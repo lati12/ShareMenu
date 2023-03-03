@@ -4,17 +4,37 @@
 
 <div class="formgroup-inline" style="margin-left: 48px">
     <div class="field">
-      <p-dropdown [options]="entityheaders" [(ngModel)]="sharemenu.entityHeader" placeholder="Избиране на меню" optionLabel="name">
+      <label for="entityheader">Изберете меню</label>
+      <p-dropdown [options]="entityheaders" [(ngModel)]="sharemenu.entityHeader" optionLabel="name" [filter]="true" filterBy="name" [showClear]="true" placeholder="Изберете меню">
+        <ng-template>
+          <div class="p-invalid" *ngIf="sharemenu.entityHeader.name">
+            <div>{{sharemenu.entityHeader.name}}</div>
+          </div>
+        </ng-template>
       </p-dropdown>
     </div>
     <div class="field">
-      <p-dropdown [options]="socialproviders" [(ngModel)]="sharemenu.socialNetworkConnectivity" placeholder="Избиране на социална мрежа" optionLabel="name"></p-dropdown>
+      <label for="socialprovider">Изберете социална мрежа</label>
+      <p-dropdown [options]="socialproviders" [(ngModel)]="sharemenu.socialNetworkConnectivity" optionLabel="name" [filter]="true" filterBy="name" [showClear]="true" placeholder="Изберете социална мрежа">
+        <ng-template>
+          <div class="p-invalid" *ngIf="sharemenu.socialNetworkConnectivity">
+            <div>{{sharemenu.socialNetworkConnectivity}}</div>
+          </div>
+        </ng-template>
+      </p-dropdown>
     </div>
   </div>
   <div class="grid">
     <div class="col-offset-2">
-      <button pButton pRipple label="Генериране на файл"  class="p-button-text" (click)="generateFile()"></button>
-      <button pButton pRipple label="Споделяне" class="p-button-text" (click)="shareMenu()"></button>
+      <p-dialog [(visible)]="spinnerDialog" position="center" [modal]="true" [style]="{width: '20vw'}" [baseZIndex]="10000"
+                [draggable]="false" [resizable]="false">
+        <h3> Изчакайте докато се генерира файлът.</h3>
+        <p-progressSpinner></p-progressSpinner>
+      </p-dialog>
+      <button pButton pRipple label="Генериране на файл"  class="p-button-text" (click)="generateFile()">
+      </button>
+      <button pButton pRipple label="Споделяне" class="p-button-text" (click)="shareMenu()">
+      </button>
     </div>
   </div>
 

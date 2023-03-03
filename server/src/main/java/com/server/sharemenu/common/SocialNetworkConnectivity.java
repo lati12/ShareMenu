@@ -4,9 +4,10 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
 
-// Класът SocialNetworkProvider служи за консумиране и продуциране на информация за социална мрежа.
-// Обекта служи и за операции със записа от базата данни.
-
+/**
+ * The SocialNetworkProvider class serves to consume and produce social network information.
+ * The object is also used for database write operations.
+ */
 @Entity
 @Table(name = "socialnetworkconnectivity")
 public class SocialNetworkConnectivity {

@@ -4,6 +4,7 @@ import {ItemCategory} from "../../common/item-category";
 import {ItemService} from "../../services/item.service";
 import {ItemCategoryService} from "../../services/item-category.service";
 import {ConfirmationService, MessageService} from "primeng/api";
+import {NotificationService} from "../../services/notification.service";
 
 // В компонентът Item са имлементирани CRUD операции и комуникацията със сървъра.
 
@@ -24,7 +25,7 @@ export class ItemComponent implements OnInit {
 
   constructor(private itemService: ItemService
               , private itemCategoryService: ItemCategoryService
-              , private messageService: MessageService
+              , private notificationService: NotificationService
               , private confirmationService: ConfirmationService) { }
 
   ngOnInit(): void {
@@ -44,11 +45,11 @@ export class ItemComponent implements OnInit {
 
   hideDialog(){
     this.submitted = false;
-    this.dialog = true;
+    this.dialog = false;
   }
 
   openEditDialog(item: Item){
-    this.item = new Item();
+    this.item = item;
     this.dialog = true;
   }
 
@@ -66,7 +67,9 @@ export class ItemComponent implements OnInit {
         this.item = new Item();
         console.log("Done with save");
       });
-    });
+    }).catch(ex => {
+        this.notificationService.notification$.next({severity: 'error', summary: 'Моля попълнете данните', detail: ex.error});
+    })
   }
 
   delete(item : Item) {
@@ -81,7 +84,9 @@ export class ItemComponent implements OnInit {
             this.item = new Item();
             console.log("Done with delete");
           });
-        });
+        }).catch(ex =>{
+          this.notificationService.notification$.next({severity: 'error', summary: 'Моля попълнете данните', detail: ex.error});
+        })
       }
     });
   }

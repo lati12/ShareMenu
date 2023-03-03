@@ -9,5 +9,8 @@ export  class Users {
   password:string = "";
   email:string = "";
   companyName:string = "";
+  emailConfirmed:boolean = false;
+  enabled:boolean = false;
+
   roles: Roles[] = [];
 }

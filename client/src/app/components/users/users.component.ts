@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import {Users} from "../../common/users";
 import {UsersService} from "../../services/users.service";
 import {ConfirmationService, MessageService} from "primeng/api";
+import {NotificationService} from "../../services/notification.service";
 
 // В компонентът Users са имлементирани CRUD операции и комуникацията със сървъра.
 
@@ -21,7 +22,9 @@ export class UsersComponent implements OnInit {
 
   submitted: boolean = false;
 
-  constructor(private usersService : UsersService, private messageService: MessageService, private confirmationService: ConfirmationService) { }
+  constructor(private usersService : UsersService,
+              private notificationService : NotificationService,
+              private confirmationService: ConfirmationService) { }
 
   ngOnInit() {
     this.usersService.getAll().subscribe(data => {
@@ -43,11 +46,13 @@ export class UsersComponent implements OnInit {
     this.submitted = true;
     this.usersService.save(this.user).then(() => {
       this.usersService.getAll().subscribe(data => {
-        this.messageService.add({severity: 'success', summary: 'Успешно запазване', detail: 'Потребителят е запазен', life: 3000});
         this.usersDialog = false;
         this.user = new Users();
       });
-    });
+      debugger
+    }).catch(ex =>{
+      this.notificationService.notification$.next({severity: 'error', summary: 'Моля попълнете данните', detail: ex.error});
+    })
   }
 
   editUsers(user: Users){
@@ -56,13 +61,12 @@ export class UsersComponent implements OnInit {
   }
   deleteUsers(user :Users) {
     this.confirmationService.confirm({
-      message: 'Наистина ли искате да изтриетв? ' + user.name + '?', header: 'Confirm', icon: 'pi pi-exclamation-triangle',
+      message: 'Наистина ли искате да изтриете? ' + user.name + '?', header: 'Confirm', icon: 'pi pi-exclamation-triangle',
       accept: () => {
         this.users = this.users.filter(val => val.id !== user.id);
         this.usersService.delete(user).then(() =>{
           this.user = new Users();
         });
-        this.messageService.add({severity:'success', summary: 'Успешно изтрит', detail: 'Потребителят е изтрит', life: 3000});
       }
     });
   }

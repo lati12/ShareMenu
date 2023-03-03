@@ -1,6 +1,8 @@
 package com.server.sharemenu.controllers;
 
 import com.server.sharemenu.common.*;
+import com.server.sharemenu.exception.CustomException;
+import com.server.sharemenu.exception.UserAlreadyExists;
 import com.server.sharemenu.repositories.EmailConfirmationRepository;
 import com.server.sharemenu.repositories.RoleRepository;
 import com.server.sharemenu.repositories.UserRepository;
@@ -8,8 +10,7 @@ import com.server.sharemenu.request.LoginRequest;
 import com.server.sharemenu.request.RegisterRequest;
 import com.server.sharemenu.response.JwtResponse;
 import com.server.sharemenu.response.MessageResponse;
-import com.server.sharemenu.security.jwt.JwtUtils;
-import com.server.sharemenu.security.services.UserDetailsImpl;
+import com.server.sharemenu.security.JwtProvider;
 import com.server.sharemenu.services.EmailService;
 import freemarker.template.TemplateException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,7 +27,6 @@ import org.springframework.web.bind.annotation.*;
 import javax.mail.MessagingException;
 import javax.validation.Valid;
 import java.io.IOException;
-import java.time.LocalDateTime;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
@@ -34,12 +34,11 @@ import java.util.Set;
 import java.util.concurrent.CompletableFuture;
 import java.util.stream.Collectors;
 
-/*
-Класът служи за консумиране на end-poinds от ресурса Auth
-и после за отделните методи
+/**
+ * The class serves to consume end-points from the Auth resource
+ * and then for the individual methods
  */
 
-@CrossOrigin(origins = {"http://sharemenu.eu", "http://localhost:4200"}, maxAge = 3600)
 @RestController
 @RequestMapping("/api/auth")
 public class AuthController {
@@ -64,38 +63,29 @@ public class AuthController {
     EmailConfirmationRepository emailConfirmationRepository;
 
     @Autowired
-    JwtUtils jwtUtils;
+    JwtProvider jwtProvider;
 
-//Методът служи за влизането в регистрирания профил
-    @PostMapping("/login")
-    public ResponseEntity<?> authenticateUser(@Valid @RequestBody LoginRequest loginRequest) {
-        Authentication authentication = authenticationManager
-                .authenticate(new UsernamePasswordAuthenticationToken(loginRequest.getEmail(), loginRequest.getPassword()));
-
-        SecurityContextHolder.getContext().setAuthentication(authentication);
-        String jwt = jwtUtils.generateJwtToken(authentication);
-
-        UserDetailsImpl userDetails = (UserDetailsImpl) authentication.getPrincipal();
-
-        List<String> roles = userDetails.getAuthorities().stream()
-                .map(item -> item.getAuthority())
-                .collect(Collectors.toList());
-
-        return ResponseEntity.ok(new JwtResponse(jwt,
-                userDetails.getId(),
-                userDetails.getEmail(),
-                roles,
-                userDetails.getName(),
-                userDetails.getLastName()));
-    }
-    // Методът служи за регистриране на профил
     @PostMapping("/register")
     @Transactional
-    public ResponseEntity<?> registerUser(@Valid @RequestBody RegisterRequest registerRequest) throws MessagingException, TemplateException, IOException {
-        if (userRepository.existsByEmail(registerRequest.getEmail())){
-            return ResponseEntity.badRequest().body(new MessageResponse("Error: Email is already in use"));
-        }
 
+    /**
+     * The method serves to register a profile
+     */
+    public ResponseEntity<?> registerUser(@RequestBody RegisterRequest registerRequest) throws MessagingException, TemplateException, IOException, UserAlreadyExists, CustomException {
+        if (registerRequest.getName().equals(""))
+            throw new CustomException("The element name is required");
+        if (registerRequest.getLastName().equals(""))
+            throw new CustomException("The last name of the element is required");
+        if (registerRequest.getCompanyName().equals(""))
+            throw new CustomException("The company is required");
+        if (registerRequest.getEmail().equals(""))
+            throw new CustomException("Item email is required");
+        if (registerRequest.getPassword().equals(""))
+            throw new CustomException("Item password is required");
+
+        if (userRepository.existsByEmail(registerRequest.getEmail())){
+            throw new UserAlreadyExists("User with this email already exists!");
+        }
         User user = new User(registerRequest.getEmail(),
                 encoder.encode(registerRequest.getPassword()),
                 false,
@@ -104,9 +94,14 @@ public class AuthController {
                 registerRequest.getCompanyName()
         );
 
+        if (user.getEmail().equals("")
+                || user.getName().equals("")
+                || user.getLastname().equals("")
+                || user.getPassword().equals("")) {
+            throw new CustomException("Fields are required");
+        }
 
-
-        String hash = jwtUtils.generateHash();
+        String hash = jwtProvider.generateHash();
 
         EmailDetails recepient = getRecipient(hash, user.getEmail(), "Confirm email",
                 "Please confirm your email with following email");
@@ -135,16 +130,21 @@ public class AuthController {
         roles.add(userRole);
 
         user.setRoles(roles);
+        user.setEnabled(true);
         userRepository.save(user);
-        return ResponseEntity.ok(new MessageResponse("User registered successfully!"));
+        return ResponseEntity.ok("user has been created");
     }
 
     private EmailDetails getRecipient(String hash, String email, String subject, String text) {
         return new EmailDetails(hash, Collections.singletonList(email), subject, text);
     }
-    // Методът служи за верифициране на профила
+
     @PostMapping(value = "/verify")
     @Transactional
+    /**
+     * The method serves to verify the profile
+     */
+
     public ResponseEntity<?> verify(@RequestParam(value = "hash") String hash) {
 
         EmailConfirmation emailVerification = emailConfirmationRepository.findByHash(hash);

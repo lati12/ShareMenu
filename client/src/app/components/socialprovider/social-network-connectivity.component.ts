@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import {SocialNetworkConnectivity} from "../../common/socialNetworkConnectivity";
 import {SocialNetworkConnectivityService} from "../../services/social-network-connectivity.service";
 import {ConfirmationService, MessageService} from "primeng/api";
+import {NotificationService} from "../../services/notification.service";
 
 // В компонентът SocialNetworkProvider са имлементирани CRUD операции и комуникацията със сървъра.
 
@@ -20,7 +21,9 @@ export class SocialNetworkConnectivityComponent implements OnInit {
 
   submitted : boolean = false;
 
-  constructor(private socialProviderService : SocialNetworkConnectivityService, private messageService: MessageService, private confirmationService: ConfirmationService) { }
+  constructor(private socialProviderService : SocialNetworkConnectivityService,
+              private notificationService : NotificationService
+              , private confirmationService: ConfirmationService) { }
 
   ngOnInit() {
     this.socialProviderService.getAll().subscribe(data => {
@@ -43,11 +46,12 @@ export class SocialNetworkConnectivityComponent implements OnInit {
 
     this.socialProviderService.getPage(this.socialNetworkConnectivity).then(() =>{
       this.socialProviderService.getAll().subscribe(data => {
-        this.messageService.add({severity:'success', summary: 'Успешно запазване', life: 3000});
         this.socialProvidersDialog = false;
         this.socialNetworkConnectivity = new SocialNetworkConnectivity();
       })
-    });
+    }).catch(ex =>{
+      this.notificationService.notification$.next({severity: 'error', summary: 'Моля попълнете данни', detail: ex.error});
+    })
   }
 
   deleteSocialProviders(socialProvider : SocialNetworkConnectivity) {
@@ -60,7 +64,6 @@ export class SocialNetworkConnectivityComponent implements OnInit {
         this.socialProviderService.delete(socialProvider).then(() => {
           this.socialNetworkConnectivity = new SocialNetworkConnectivity();
         });
-        this.messageService.add({severity: 'success', summary: 'Успешно изтриване', detail: 'Product Deleted', life: 3000});
       }
     });
   }

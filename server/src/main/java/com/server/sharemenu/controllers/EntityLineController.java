@@ -8,17 +8,16 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
-import javax.transaction.Transactional;
+import org.springframework.transaction.annotation.Transactional;
 import java.security.Principal;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-/*
-Класът служи за консумиране на end-poinds от ресурса EntityLine
+
+/**
+ * The class serves to consume endpoints from the Entity Line resource
  */
-
-
-@CrossOrigin(origins = {"http://sharemenu.eu", "http://localhost:4200"}, maxAge = 3600)
 @RestController
 @RequestMapping("/api/resource/entityline")
 public class EntityLineController {
@@ -31,44 +30,72 @@ public class EntityLineController {
         this.userRepository = userRepository;
     }
 
-    //Методът служи за продуциране на запис в базата данни
+
     @PostMapping("insert")
     @Transactional
+    /**
+     * The method serves to produce a record in the database
+     */
     @PreAuthorize("hasRole('ROLE_USER')")
-    public ResponseEntity<?> insertEntityLine(@RequestBody EntityLine restaurantEntityLine) {
-        EntityLine newRestaurantEntityLine = entitylineRepository.save(restaurantEntityLine);
+    public ResponseEntity<?> insertEntityLine(@RequestBody EntityLine restaurantEntityLine, Principal principal) {
 
-        return ResponseEntity.ok(newRestaurantEntityLine);
+        Optional<User> user = userRepository.findByEmailAndEmailConfirmedIsTrue(principal.getName());
+
+        if(user.isPresent()) {
+            EntityLine newRestaurantEntityLine = entitylineRepository.save(restaurantEntityLine);
+            return ResponseEntity.ok(newRestaurantEntityLine);
+        }
+
+        return ResponseEntity.ok("Contact admin");
     }
 
-    //Методът служи за консумиране на записи като данните са филтрирани по User, който прави заявката
     @GetMapping("get")
     @PreAuthorize("hasRole('ROLE_USER')")
-    public ResponseEntity<?> getEntityLine(@RequestParam Long headerId)
+    /**
+     * The method serves to consume records as the data is filtered by the User making the request
+     */
+    public ResponseEntity<?> getEntityLine(@RequestParam Long headerId, Principal principal)
     {
-        List<EntityLine> restaurantEntityLines = entitylineRepository.findAllByEntityHeaderId(headerId);
+        Optional<User> user = userRepository.findByEmailAndEmailConfirmedIsTrue(principal.getName());
 
-        return ResponseEntity.ok(restaurantEntityLines);
+        if(user.isPresent()) {
+            List<EntityLine> restaurantEntityLines = entitylineRepository.findAllByEntityHeaderId(headerId);
+            return ResponseEntity.ok(restaurantEntityLines);
+        }
+        return ResponseEntity.ok(new ArrayList<EntityLine>());
     }
 
-    //Методът служи за консумиране на запис по ID като записът е филтриран по User, който прави заявката
     @GetMapping("getById")
     @PreAuthorize("hasRole('ROLE_USER')")
-    public ResponseEntity<?> getEntityLineById(@RequestParam Long id)
+    /**
+     * The method serves to consume a record by ID, with the record filtered by the User making the request
+     */
+    public ResponseEntity<?> getEntityLineById(@RequestParam Long id, Principal principal)
     {
-        Optional<EntityLine> entityLines = entitylineRepository.findById(id);
+        Optional<User> user = userRepository.findByEmailAndEmailConfirmedIsTrue(principal.getName());
 
-        return ResponseEntity.ok(entityLines);
+        if(user.isPresent()) {
+            EntityLine entityLines = entitylineRepository.findEntityLineById(id);
+            return ResponseEntity.ok(entityLines);
+        }
+        return ResponseEntity.ok(new EntityLine());
     }
 
-    //Методът служи за изтриване на запис от базата данни
     @DeleteMapping("delete")
     @Transactional
     @PreAuthorize("hasRole('ROLE_USER')")
-    public ResponseEntity<?> deleteEntityLine(@RequestParam(value = "id") Long id)
+    /**
+     * The method serves to delete a record from the database
+     */
+    public ResponseEntity<?> deleteEntityLine(@RequestParam(value = "id") Long id, Principal principal)
     {
-        entitylineRepository.deleteById(id);
+        Optional<User> user = userRepository.findByEmailAndEmailConfirmedIsTrue(principal.getName());
 
-        return ResponseEntity.ok("Record has been deleted");
+        if(user.isPresent()) {
+            entitylineRepository.deleteEntityLineById(id);
+            return ResponseEntity.ok("Record has been deleted");
+        }
+
+        return ResponseEntity.ok("Delete record not allowed");
     }
 }

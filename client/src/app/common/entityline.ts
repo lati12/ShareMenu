@@ -7,6 +7,7 @@ export class Entityline {
   id:number = 0;
   price: number = 0;
   quantity: number = 0;
+  unit: string = "";
   entityHeader : EntityHeader = new EntityHeader();
   item : Item = new Item()
 }

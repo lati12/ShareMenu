@@ -70,6 +70,8 @@ export class EntityheaderComponent {
   openNewEntityLine(){
     this.submittedEntityLine = false;
     this.entityLineDialog = true;
+
+
   }
 
   openNewEntityLineDetails(){
@@ -167,10 +169,8 @@ export class EntityheaderComponent {
       this.entityHeader = event.data;
       this.entitylines = data;
       this.openNewEntityLine();
-    })
-
+    });
   }
-
   showInfoDialog() {
     this.displayInfoDialog = true;
   }
@@ -179,5 +179,12 @@ export class EntityheaderComponent {
     this.entityHeader = new EntityHeader();
     this.submittedEntityHeader = false;
     this.entityHeaderDialog = true;
+  }
+
+  chenageItem($event: any) {
+    let selectedItem = $event.value;
+    if(selectedItem !== null) {
+      this.entityline.price = selectedItem.price;
+    }
   }
 }

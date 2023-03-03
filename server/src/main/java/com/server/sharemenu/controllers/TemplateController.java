@@ -12,17 +12,15 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.print.attribute.HashPrintServiceAttributeSet;
-import javax.transaction.Transactional;
+import org.springframework.transaction.annotation.Transactional;
 import java.io.IOException;
 import java.security.Principal;
 import java.util.*;
 
-/*
-Класът служи за консумиране на end-poinds от ресурса Template
-и после за отделните методи
+/**
+ * The class serves to consume endpoints from the Template resource
+ * and then for the individual methods
  */
-
-@CrossOrigin(origins = {"http://sharemenu.eu", "http://localhost:4200"}, maxAge = 3600)
 @RestController
 @RequestMapping("/api/resource/template")
 public class TemplateController {
@@ -36,7 +34,12 @@ public class TemplateController {
         this.userRepository = userRepository;
     }
 
-    // Методът служи за продуциране на запис в базата данни
+
+    /**
+     * The method serves to produce a record in the database
+     * @param template is transport object between client and server
+     * @return new object template
+     */
     @PostMapping("insert")
     @Transactional
     @PreAuthorize("hasRole('ROLE_ADMIN')")
@@ -46,17 +49,21 @@ public class TemplateController {
         return ResponseEntity.ok(newTemplate);
 
     }
-    // Методът служи за консумиране на записи като данните са филтрирани по User, който прави заявката
     @GetMapping("get")
     @PreAuthorize("hasRole('ROLE_ADMIN')")
+    /**
+     * The method serves to consume records as the data is filtered by the User making the request
+     */
     public ResponseEntity<?> getTemplate() {
         List<Template> newTemplate = templateRepository.findAll();
 
         return ResponseEntity.ok(newTemplate);
     }
-    // Методът служи за консумиране на записи като данните са филтрирани по User, който прави заявката
     @GetMapping("getByUser")
     @PreAuthorize("hasRole('ROLE_USER')")
+    /**
+     * The method serves to consume records as the data is filtered by the User making the request
+     */
     public ResponseEntity<?> getTemplateByUser(Principal principal) {
         Optional<User> userOptional = userRepository.findByEmailAndEmailConfirmedIsTrue(principal.getName());
 
@@ -70,15 +77,20 @@ public class TemplateController {
 
     @GetMapping("getById")
     @PreAuthorize("hasRole('ROLE_ADMIN')")
+    /**
+     * The method serves to consume records as the data is filtered by ID
+     */
     public ResponseEntity<?> getTemplateById(@RequestParam Long id) {
         Optional<Template> template = templateRepository.findById(id);
 
         return ResponseEntity.ok(template);
     }
-    // Методът служи за изтриване на запис от базата данни
     @DeleteMapping("delete")
     @Transactional
     @PreAuthorize("hasRole('ROLE_ADMIN')")
+    /**
+     * The method serves to delete a record from the database
+     */
     public ResponseEntity<?> deleteTemplate(@RequestParam("id") Long id) {
         templateRepository.deleteById(id);
 
@@ -88,6 +100,9 @@ public class TemplateController {
     @PostMapping(value = "upload")
     @Transactional
     @PreAuthorize("hasRole('ROLE_ADMIN')")
+    /**
+     * The method serves to insert a file
+     */
     public ResponseEntity<?> upload(@RequestParam("file") MultipartFile file, Principal principal) throws IOException {
 
         Optional<User> user = userRepository.findByEmailAndEmailConfirmedIsTrue(principal.getName());
@@ -103,6 +118,9 @@ public class TemplateController {
     @PostMapping("insertUserTemplate")
     @Transactional
     @PreAuthorize("hasRole('ROLE_ADMIN')")
+    /**
+     * The method serves to add a template filtered by Admin
+     */
     public ResponseEntity<?> insertTemplate(@RequestBody UserTemplate userTemplate) {
         Optional<User> userOptional = userRepository.findById(userTemplate.getUser().getId());
 
@@ -117,10 +135,10 @@ public class TemplateController {
 
     @GetMapping("getUserTemplate")
     @PreAuthorize("hasRole('ROLE_ADMIN')")
+    /**
+     * The method serves to consume records as the data is filtered by Admin
+     */
     public ResponseEntity<?> getTemplates() {
-        //get all from user_template table
-        //get list from userRepository
-        //get Set of template in user
         List<User> users = userRepository.findAll();
         List<UserTemplate> userTemplateRespons = new ArrayList<>();
 
@@ -140,6 +158,9 @@ public class TemplateController {
     @DeleteMapping("deleteUserTemplate")
     @Transactional
     @PreAuthorize("hasRole('ROLE_ADMIN')")
+    /**
+     * The method serves to delete data
+     */
     public ResponseEntity<?> deleteUserTemplate(@RequestParam("user_id") Long userId, @RequestParam("template_id") Long templateId) {
         Optional<User> userOptional = userRepository.findById(userId);
 

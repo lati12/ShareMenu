@@ -5,8 +5,9 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 import java.util.Set;
 
-//Класът служи за транспортиране на Login информация между client / server
-
+/**
+ * The class serves to transport Login information between client / server
+ */
 public class RegisterRequest {
     @NotBlank
     @Size(max = 50)

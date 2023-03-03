@@ -6,9 +6,12 @@ import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
-//Интерфейсът е създаден с цел комуникация с базата данни посредством Hibernate и JPA
-
+/**
+ * The interface was created to communicate with the database using Hibernate and JPA
+ */
 @Repository
 public interface EntityLineRepository extends JpaRepository<EntityLine, Long> {
     List<EntityLine> findAllByEntityHeaderId(Long entityHeaderId);
+    EntityLine findEntityLineById(Long id);
+    void deleteEntityLineById(Long id);
 }

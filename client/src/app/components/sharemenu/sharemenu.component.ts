@@ -8,6 +8,8 @@ import {ConfirmationService, MessageService} from "primeng/api";
 import {SharemenuService} from "../../services/sharemenu.service";
 // @ts-ignore
 import { saveAs } from "file-saver";
+import {NotificationService} from "../../services/notification.service";
+import {isFatalLinkerError} from "@angular/compiler-cli/linker";
 
 // Компонентът ShareMenu служи за генерирването и споделянето на файл
 
@@ -24,16 +26,20 @@ export class SharemenuComponent implements OnInit {
 
   shareMenus : Sharemenu [] = [];
   itemDialog: boolean = false;
+  spinnerDialog : boolean = false;
 
   socialproviders : SocialNetworkConnectivity [] = [];
   socialProvider : SocialNetworkConnectivity = new SocialNetworkConnectivity();
 
   displayInfoDialog: boolean = false;
 
-  constructor(private sharemenuService: SharemenuService,private entityHeaderService:EntityheaderService, private messageService: MessageService,
+  constructor(private sharemenuService: SharemenuService,
+              private entityHeaderService:EntityheaderService,
+              private notificationService: NotificationService,
               private  socialProviderService : SocialNetworkConnectivityService) { }
 
   ngOnInit(): void {
+    debugger
     this.entityHeaderService.getAll().subscribe(data =>{
       this.entityheaders = data;
     });
@@ -44,22 +50,30 @@ export class SharemenuComponent implements OnInit {
   }
 
   generateFile(){
+    //init spinner
+    this.spinnerDialog = true;
     this.sharemenuService.generateFile(this.sharemenu).then((blocb) =>{
-      this.messageService.add({severity:'success', summary: 'Успешно генериране на меню', life: 3000});
+
+    this.spinnerDialog = false;
+      this.notificationService.notification$.next({severity:'success', summary: 'Успешно генериране на меню', life: 3000});
       console.log("done");
       saveAs(blocb, "menu.pdf");
     }).catch(arr => {
+      //close spinner with error meesage
+      this.spinnerDialog = false;
       console.log(arr);
     })
   }
 
   shareMenu(){
+    this.spinnerDialog = true;
     this.sharemenuService.shareMenu(this.sharemenu).then(() =>{
-      this.messageService.add({severity:'success', summary: 'Успешно споделено меню', life: 3000});
+      this.notificationService.notification$.next({severity:'success', summary: 'Успешно споделено меню', life: 3000});
       console.log("done");
     }).catch(arr => {
+      this.spinnerDialog = false;
       console.log(arr);
-      this.messageService.add({severity:'error', summary: 'Неуспешно споделяне на меню', life: 3000});
+      this.notificationService.notification$.error({severity:'error', summary: 'Неуспешно споделяне на меню', life: 3000});
     })
   }
 

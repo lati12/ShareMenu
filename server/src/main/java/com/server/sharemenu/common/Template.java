@@ -4,9 +4,10 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
 
-// Класът Template служи за консумиране и продуциране на информация за темплейт.
-// Обекта служи и за операции със записа от базата данни.
-
+/**
+ * The Template class serves to consume and produce template information.
+ * The object is also used for database write operations.
+ */
 @Entity
 @Table(name = "template")
 public class Template {

@@ -15,7 +15,7 @@ import {Roles} from "../../common/Roles";
 })
 export class HomeComponent implements OnInit {
   items: MenuItem[] = [];
-  isLoggedIn = false;
+  isTokenExpired = false;
   roles: string[] = [];
   loggedUser: Users | undefined;
   showDialog : boolean = false;
@@ -34,11 +34,16 @@ export class HomeComponent implements OnInit {
   constructor(private authService: AuthService, private tokenStorageService: TokenStorageService, public router: Router) { }
 
   ngOnInit(): void {
-    this.isLoggedIn = !!this.tokenStorageService.getToken();
+    this.isTokenExpired = this.authService.isTokenExpired(this.tokenStorageService.getAccessToken());
 
-    if (this.isLoggedIn) {
-      this.roles = this.tokenStorageService.getUser().roles;
-      this.loggedUser = this.tokenStorageService.getUser();
+    if (!this.isTokenExpired) {
+      let user = this.authService.getUser();
+      if (user == null) {
+        return;
+      }
+
+      this.roles = user.roles;
+      this.loggedUser = user;
 
       this.setVisibleItems()
       let self = this;
@@ -114,7 +119,7 @@ export class HomeComponent implements OnInit {
     this.templateVisable = false;
     this.socialProviderVisable = false;
     this.userTemplateVisable = false;
-    if (this.roles == null || !this.isLoggedIn) {
+    if (this.roles == null || this.isTokenExpired) {
       this.slideDisplay = false;
       return;
     }
@@ -144,6 +149,6 @@ export class HomeComponent implements OnInit {
   }
 
   showInfoDialog() {
-      this.showDialog = true;
+    this.showDialog = true;
   }
 }

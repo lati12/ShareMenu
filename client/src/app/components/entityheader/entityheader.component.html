@@ -56,9 +56,16 @@
       <small class="p-invalid" *ngIf="submittedEntityHeader && !entityHeader.phone">Полето е задължително!</small>
     </div>
     <div>
-      <label for="name">Темплейт</label>
-      <p-dropdown [options]="templates" [(ngModel)]="entityHeader.template" placeholder="Избери темплейт" optionLabel="name">
-      </p-dropdown>
+      <div class="p-field">
+        <label for="template">Темплейт</label>
+        <p-dropdown [options]="templates" [(ngModel)]="entityHeader.template" optionLabel="name" [filter]="true" filterBy="name" [showClear]="true" placeholder="Изберете темплейт">
+          <ng-template>
+            <div class="p-invalid" *ngIf="submittedEntityHeader && !entityHeader.template">
+              <div>{{entityHeader.template}}</div>
+            </div>
+          </ng-template>
+        </p-dropdown>
+      </div>
     </div>
     <div class="p-field">
       <label for="email">Имейл</label>
@@ -94,6 +101,7 @@
         <tr>
           <th pSortableColumn="itemName">Име на артикул</th>
           <th pSortableColumn="price">Цена</th>
+          <th pSortableColumn="unit">Мерна единица</th>
           <th></th>
         </tr>
       </ng-template>
@@ -101,6 +109,7 @@
         <tr>
           <td>{{entityline.item.name}}</td>
           <td>{{entityline.price}}</td>
+          <td>{{entityline.unit}}</td>
           <td>
             <button pButton pRipple icon="pi pi-pencil" class="p-button-rounded p-button-success p-mr-2" (click)="editEntityLineDetails(entityline)"></button>
             <button pButton pRipple icon="pi pi-trash" class="p-button-rounded p-button-warning" (click)="deleteEntityLineDetails(entityline)"></button>
@@ -115,13 +124,23 @@
 <p-dialog [(visible)]="entityLineDetailsDialog" [closeOnEscape]="false" [style]="{height: '600px', width: '500px'}" header="Детайли" [modal]="true" styleClass="p-fluid">
   <ng-template pTemplate="content">
     <div class="p-field">
-      <label for="name">Артикул</label>
-      <p-dropdown  [options]="items" [(ngModel)]="entityline.item" placeholder="Избери артикул" optionLabel="name">
+      <label for="item">Артикул</label>
+      <p-dropdown [options]="items" (onChange)="chenageItem($event)" [(ngModel)]="entityline.item.name" optionLabel="name" [filter]="true" filterBy="name" [showClear]="true" placeholder="Изберете артикул">
+        <ng-template>
+          <div class="p-invalid" *ngIf="submittedEntityLine && !entityline.item.name">
+            <div>{{entityline.item.name}}</div>
+          </div>
+        </ng-template>
       </p-dropdown>
     </div>
     <div class="p-field">
       <label for="price">Цена</label>
       <input type="number" pInputText id="price" [(ngModel)]="entityline.price" />
+    </div>
+    <div class="p-field">
+      <label for="unit">Мерна единица</label>
+      <input type="text" pInputText id="unit" [(ngModel)]="entityline.unit" required autofocus />
+      <small class="p-invalid" *ngIf="submittedEntityLine && !entityline.unit">Полето е задължително!</small>
     </div>
   </ng-template>
   <ng-template pTemplate="footer">

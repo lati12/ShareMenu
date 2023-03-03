@@ -12,6 +12,9 @@
         <th pSortableColumn="name">Име</th>
         <th pSortableColumn="description">Описание</th>
         <th pSortableColumn="itemCategory">Категория на артикул</th>
+        <th pSortableColumn="price">Цена</th>
+        <th pSortableColumn="unit">Мерна еденица</th>
+
         <th></th>
       </tr>
     </ng-template>
@@ -20,6 +23,9 @@
         <td>{{item.name}}</td>
         <td>{{item.description}}</td>
         <td>{{item.itemCategory.name}}</td>
+        <td>{{item.price}}</td>
+        <td>{{item.unit}}</td>
+
         <td>
           <button pButton pRipple icon="pi pi-pencil" class="p-button-rounded p-button-success p-mr-2" (click)="openEditDialog(item)"></button>
           <button pButton pRipple icon="pi pi-trash" class="p-button-rounded p-button-warning" (click)="delete(item)"></button>
@@ -41,9 +47,24 @@
       <small class="p-invalid" *ngIf="submitted && !item.description">Полето е задължително!</small>
     </div>
     <div>
-      <label for="cateogy">Категория на артикул</label>
-      <p-dropdown id="cateogy" [options]="itemCategories" [(ngModel)]="item.itemCategory" placeholder="Избери категория" optionLabel="name">
+      <label for="category">Категория на артикул</label>
+      <p-dropdown [options]="itemCategories" [(ngModel)]="item.itemCategory" optionLabel="name" [filter]="true" filterBy="name" [showClear]="true" placeholder="Изберете категория">
+        <ng-template>
+          <div class="p-invalid" *ngIf="submitted && !item.itemCategory.name">
+            <div>{{item.itemCategory.name}}</div>
+          </div>
+        </ng-template>
       </p-dropdown>
+    </div>
+    <div class="p-field">
+      <label for="price">Цена</label>
+      <input type="text" pInputText id="price" [(ngModel)]="item.price" required autofocus/>
+      <small class="p-invalid" *ngIf="submitted && !item.price">Полето е задължително!</small>
+    </div>
+    <div class="p-field">
+      <label for="unit">Мерна еденица</label>
+      <input type="text" pInputText id="unit" [(ngModel)]="item.unit" required autofocus/>
+      <small class="p-invalid" *ngIf="submitted && !item.unit">Полето е задължително!</small>
     </div>
   </ng-template>
 

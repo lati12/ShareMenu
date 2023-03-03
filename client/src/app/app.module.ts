@@ -17,7 +17,7 @@ import {ConfirmationService, MessageService} from "primeng/api";
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {TableModule} from 'primeng/table';
-import { HttpClientModule } from '@angular/common/http';
+import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
 
 
 import {InputNumberModule} from "primeng/inputnumber";
@@ -44,10 +44,13 @@ import { LoginComponent } from './components/login/login.component';
 import { ProfileComponent } from './components/profile/profile.component';
 import { RegisterComponent } from './components/register/register.component';
 import {OverlayPanelModule} from "primeng/overlaypanel";
-import {authInterceptorProviders} from "./services/auth/auth.interceptor";
+import {AuthInterceptor, authInterceptorProviders} from "./services/auth/auth.interceptor";
 import {ConfirmEmailComponent} from "./components/confirm-email/confirm-email.component";
 import { UserTemplateComponent } from './components/user-template/user-template.component';
 import {ImageModule} from "primeng/image";
+import {JWT_OPTIONS, JwtHelperService} from "@auth0/angular-jwt";
+import {CheckboxModule} from "primeng/checkbox";
+import {ProgressSpinnerModule} from "primeng/progressspinner";
 
 @NgModule({
   declarations: [
@@ -66,38 +69,45 @@ import {ImageModule} from "primeng/image";
     ConfirmEmailComponent,
     UserTemplateComponent,
   ],
-  imports: [
-    BrowserModule,
-    AppRoutingModule,
-    ToolbarModule,
-    ButtonModule,
-    SplitButtonModule,
-    TabMenuModule,
-    MessageModule,
-    MenuModule,
-    BrowserAnimationsModule,
-    SplitterModule,
-    FormsModule,
-    TableModule,
-    HttpClientModule,
-    InputNumberModule,
-    ToastModule,
-    FileUploadModule,
-    RippleModule,
-    InputTextModule,
-    RatingModule,
-    DialogModule,
-    RadioButtonModule,
-    ConfirmDialogModule,
-    InputTextareaModule,
-    DividerModule,
-    DropdownModule,
-    DynamicDialogModule,
-    OverlayPanelModule,
-    ReactiveFormsModule,
-    ImageModule,
-  ],
-  providers: [MessageService,ConfirmationService, authInterceptorProviders],
+    imports: [
+        BrowserModule,
+        AppRoutingModule,
+        ToolbarModule,
+        ButtonModule,
+        SplitButtonModule,
+        TabMenuModule,
+        MessageModule,
+        MenuModule,
+        BrowserAnimationsModule,
+        SplitterModule,
+        FormsModule,
+        TableModule,
+        HttpClientModule,
+        InputNumberModule,
+        ToastModule,
+        FileUploadModule,
+        RippleModule,
+        InputTextModule,
+        RatingModule,
+        DialogModule,
+        RadioButtonModule,
+        ConfirmDialogModule,
+        InputTextareaModule,
+        DividerModule,
+        DropdownModule,
+        DynamicDialogModule,
+        OverlayPanelModule,
+        ReactiveFormsModule,
+        ImageModule,
+        CheckboxModule,
+        ProgressSpinnerModule,
+    ],
+  providers: [authInterceptorProviders,
+    MessageService,
+    ConfirmationService,
+    {provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true},
+    {provide: JWT_OPTIONS, useValue: JWT_OPTIONS},
+    JwtHelperService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

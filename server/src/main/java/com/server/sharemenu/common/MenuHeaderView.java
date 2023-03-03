@@ -1,6 +1,8 @@
 package com.server.sharemenu.common;
 
-//Интерфейсът служи за изкуствено създаване на View oбект, в който да се извлекат данни в плосък вид
+/**
+ * The interface serves to artificially create a View object in which to retrieve data in a flat form
+ */
 
 public interface MenuHeaderView {
     String getName();

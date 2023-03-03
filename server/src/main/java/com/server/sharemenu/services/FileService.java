@@ -16,8 +16,9 @@ import java.net.MalformedURLException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
-//Сървис клас който служи за качване и сваляне на файлове от сървъра
-
+/**
+ * Service class that serves to upload and download files from the server
+ */
 @Service
 public class FileService {
 

@@ -7,10 +7,10 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
-/*
-Интерфейсът е създаден с цел комуникация с базата данни и изкуствено пресъздаване на SQL View, което посредством Sql заявка
-да предаде информацията в плосък вид
-*/
+/**
+ * The interface was created for the purpose of communicating with the database and artificially recreating the SQL View, which by means of a Sql query
+ * to convey the information in a flat form
+ */
 @Repository
 public interface MenuHeaderViewRepository extends JpaRepository<EntityHeader, Long> {
     @Query(nativeQuery = true, value = "SELECT users.companyName as companyName " +

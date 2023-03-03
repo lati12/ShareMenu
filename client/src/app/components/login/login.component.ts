@@ -5,8 +5,9 @@ import {Router} from "@angular/router";
 import {LoginRequest} from "../../common/login-request";
 import {Roles} from "../../common/Roles";
 import {FormControl, FormGroup, Validators} from "@angular/forms";
+import {NotificationService} from "../../services/notification.service";
 
-  // Компонентът Login служи за влизането на потребител в своя акаунт
+// Компонентът Login служи за влизането на потребител в своя акаунт
 
 @Component({
   selector: 'app-login',
@@ -29,40 +30,25 @@ export class LoginComponent implements OnInit {
   errorMessage = '';
   roles: Roles[] = [];
 
-  constructor(private authService: AuthService, public router: Router, private tokenStorage: TokenStorageService) { }
+  constructor(private authService: AuthService, public router: Router,
+              private notificationService: NotificationService) { }
 
-  ngOnInit(): void {
-    if (this.tokenStorage.getToken()) {
-      this.isLoggedIn = true;
-      this.roles = this.tokenStorage.getUser().roles;
-    }
+  async onSubmit() {
+    const formData = new FormData();
+    formData.append('email', this.signin.get('email')?.value);
+    formData.append('password', this.signin.get('password')?.value);
+
+    await this.authService.login(formData).then(() => {
+      this.router.navigate(['']).catch(console.error);
+    }).catch(ex => {
+      this.notificationService.notification$.next({severity: 'error', summary: 'Проблем с логване', detail: 'Грешни данни'})
+    });
   }
 
   redirectRegister() {
     this.router.navigate(['/register']).catch(console.error);
   }
 
-  async onSubmit() {
-    this.loginRequest.email = this.signin.get('email')?.value;
-    this.loginRequest.password = this.signin.get('password')?.value;
-
-    try {
-      await this.authService.login(this.loginRequest).then((result) => {
-        this.tokenStorage.saveToken(result.jwt);
-        this.tokenStorage.saveUser(result)
-        this.isLoggedIn = true;
-        this.isLoginFailed = false;
-        this.reloadPage();
-      }).catch(reason => {
-        this.isLoginFailed = true;
-        console.log(reason);
-      });
-    } catch (ex: any) {
-      console.log(ex);
-    }
-  }
-
-  reloadPage(): void {
-    window.location.reload();
+  ngOnInit(): void {
   }
 }

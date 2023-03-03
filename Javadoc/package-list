@@ -1,0 +1,12 @@
+com.server.sharemenu
+com.server.sharemenu.common
+com.server.sharemenu.controllers
+com.server.sharemenu.exception
+com.server.sharemenu.repositories
+com.server.sharemenu.request
+com.server.sharemenu.response
+com.server.sharemenu.response.facebook
+com.server.sharemenu.security
+com.server.sharemenu.security.filter
+com.server.sharemenu.security.services
+com.server.sharemenu.services

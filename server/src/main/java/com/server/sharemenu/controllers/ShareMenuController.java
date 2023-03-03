@@ -23,7 +23,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.core.io.Resource;
 import org.springframework.web.client.RestTemplate;
 
-import javax.transaction.Transactional;
+import org.springframework.transaction.annotation.Transactional;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
@@ -33,13 +33,11 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-/*
-Класът служи за консумиране на end-poinds от ресурса ShareMenu
-и после за отделните методи
+/**
+ * The class serves to consume end-points from the ShareMenu resource
+ * and then for the individual methods
  */
 
-
-@CrossOrigin(origins = {"http://sharemenu.eu", "http://localhost:4200"}, maxAge = 3600)
 @RestController
 @RequestMapping("/api/resource/sharemenu")
 public class ShareMenuController {
@@ -64,10 +62,12 @@ public class ShareMenuController {
         this.userRepository = userRepository;
         this.restTemplate = restTemplateBuilder.build();
     }
-    // Методът служи за продуциране на запис в базата данни
     @PostMapping("/insert")
     @Transactional
     @PreAuthorize("hasRole('ROLE_USER')")
+    /**
+     * The method serves to produce a record in the database
+     */
     public ResponseEntity<?> InsertShareMenu(@RequestBody ShareMenu shareMenu, Principal principal){
 
         Optional<User> user = userRepository.findByEmailAndEmailConfirmedIsTrue(principal.getName());
@@ -80,9 +80,11 @@ public class ShareMenuController {
         return ResponseEntity.ok("Record not allowed to save.");
 
     }
-    // Методът служи за консумиране на записи като данните са филтрирани по User, който прави заявката
     @GetMapping("/get")
     @PreAuthorize("hasRole('ROLE_USER')")
+    /**
+     * The method serves to consume records as the data is filtered by the User making the request
+     */
     public ResponseEntity<?> getShareMenu(Principal principal){
         Optional<User> user = userRepository.findByEmailAndEmailConfirmedIsTrue(principal.getName());
 
@@ -94,9 +96,11 @@ public class ShareMenuController {
         return ResponseEntity.ok(new ArrayList<ShareMenu>());
 
     }
-    // Методът служи за консумиране на записи като данните са филтрирани по User, който прави заявката
     @GetMapping("/getById")
     @PreAuthorize("hasRole('ROLE_USER')")
+    /**
+     * The method serves to consume records as the data is filtered by the User making the request
+     */
     public ResponseEntity<?> getShareMenuById(@RequestParam Long id, Principal principal){
         Optional<User> user = userRepository.findByEmailAndEmailConfirmedIsTrue(principal.getName());
 
@@ -107,10 +111,12 @@ public class ShareMenuController {
 
         return ResponseEntity.ok("Read record not allowed for user");
     }
-    // Методът служи за изтриване на запис от базата данни
     @DeleteMapping("/delete")
     @PreAuthorize("hasRole('ROLE_USER')")
     @Transactional
+    /**
+     *  The method serves to delete a record from the database
+     */
     public ResponseEntity<?> DeleteShareMenu(@PathVariable Long id, Principal principal){
         Optional<User> user = userRepository.findByEmailAndEmailConfirmedIsTrue(principal.getName());
 
@@ -122,8 +128,10 @@ public class ShareMenuController {
         return ResponseEntity.ok("Delete record not allowed");
     }
 
-    // Методът служи за генерирране на данни
     @PostMapping("/generate-file")
+    /**
+     * The method serves to generate data
+     */
     public ResponseEntity<?> generateFile(@RequestBody ShareMenu shareMenu, Principal principal) throws JRException, IOException {
         menuReportService.processReport(shareMenu, principal);
         String fileKey = principal.getName().replace('@','_');
@@ -136,8 +144,10 @@ public class ShareMenuController {
                 .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + file.getFilename() + "\"")
                 .body(file);
     }
-    // Методът служи за споделяне на данни
     @PostMapping("share-menu")
+    /**
+     * The method serves to share data
+     */
     public ResponseEntity<?> shareMenu(@RequestBody ShareMenu shareMenu, Principal principal) throws JRException {
         String url = "https://graph.facebook.com/"+shareMenu.getSocialNetworkConnectivity().getKey()+"/photos?";
         HttpHeaders headers = new HttpHeaders();
@@ -153,7 +163,6 @@ public class ShareMenuController {
         }
 
         body.add("source", new FileSystemResource(file));
-        //body.add("message", "test");
         body.add("access_token", shareMenu.getSocialNetworkConnectivity().getAccessToken());
         body.add("published", true);
 

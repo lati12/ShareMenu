@@ -2,6 +2,7 @@ package com.server.sharemenu.controllers;
 
 import com.server.sharemenu.common.SocialNetworkConnectivity;
 import com.server.sharemenu.common.User;
+import com.server.sharemenu.exception.CustomException;
 import com.server.sharemenu.repositories.SocialNetworkConnectivityRepository;
 import com.server.sharemenu.repositories.UserRepository;
 import com.server.sharemenu.response.facebook.FacebookAccountPackResponse;
@@ -12,18 +13,17 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
 
-import javax.transaction.Transactional;
+import org.springframework.transaction.annotation.Transactional;
 import java.security.Principal;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-/*
-Класът служи за консумиране на end-poinds от ресурса SocialNetworkConnectivity
-и после за отделните методи
+/**
+ * The class serves to consume endpoints from the Social Network Connectivity resource
+ * and then for the individual methods
  */
 
-@CrossOrigin(origins = {"http://sharemenu.eu", "http://localhost:4200"}, maxAge = 3600)
 @RestController
 @RequestMapping("/api/resource/socialNetworkConnectivity")
 public class SocialNetworkConnectivityController {
@@ -39,14 +39,17 @@ public class SocialNetworkConnectivityController {
         this.userRepository = userRepository;
         this.restTemplate = restTemplateBuilder.build();
     }
-    // Методът служи за продуциране на запис в базата данни
     @PostMapping("/insert")
     @Transactional
     @PreAuthorize("hasRole('ROLE_USER')")
-    public ResponseEntity<?> insertSocialNetworkConnectivity(@RequestBody SocialNetworkConnectivity socialNetworkConnectivity, Principal principal) {
+    /**
+     * The method serves to produce a record in the database
+     */
+    public ResponseEntity<?> insertSocialNetworkConnectivity(@RequestBody SocialNetworkConnectivity socialNetworkConnectivity, Principal principal) throws CustomException {
         Optional<User> user = userRepository.findByEmailAndEmailConfirmedIsTrue(principal.getName());
 
         if (user.isPresent()){
+
             socialNetworkConnectivity.setUsers(user.get());
             SocialNetworkConnectivity newSocialNetworkConnectivity = socialNetworkConnectivityRepository.save(socialNetworkConnectivity);
             return ResponseEntity.ok(newSocialNetworkConnectivity);
@@ -54,9 +57,11 @@ public class SocialNetworkConnectivityController {
 
         return ResponseEntity.ok("Record not allowed to save.");
     }
-    // Методът служи за консумиране на записи като данните са филтрирани по User, който прави заявката
     @GetMapping("/get")
     @PreAuthorize("hasRole('ROLE_USER')")
+    /**
+     * The method serves to consume records as the data is filtered by the User making the request
+     */
     public ResponseEntity<?> getSocialNetworkConnectivity(Principal principal) {
         Optional<User> user = userRepository.findByEmailAndEmailConfirmedIsTrue(principal.getName());
 
@@ -67,9 +72,11 @@ public class SocialNetworkConnectivityController {
         return ResponseEntity.ok(new ArrayList<SocialNetworkConnectivity>());
 
     }
-    // Методът служи за консумиране на записи като данните са филтрирани по User, който прави заявката
     @GetMapping("/getById")
     @PreAuthorize("hasRole('ROLE_USER')")
+    /**
+     * The method serves to consume records as the data is filtered by the User making the request
+     */
     public ResponseEntity<?> getSocialNetworkConnectivityById(@RequestParam Long id, Principal principal) {
         Optional<User> user = userRepository.findByEmailAndEmailConfirmedIsTrue(principal.getName());
 
@@ -80,10 +87,12 @@ public class SocialNetworkConnectivityController {
         return ResponseEntity.ok("Read record not allowed for user");
 
     }
-    // Методът служи за изтриване на запис от базата данни
     @DeleteMapping("/delete")
     @PreAuthorize("hasRole('ROLE_USER')")
     @Transactional
+    /**
+     * The method serves to delete a record from the database
+     */
     public ResponseEntity<?> deleteSocialNetworkConnectivity(@RequestParam("id") Long id, Principal principal) {
         Optional<User> user = userRepository.findByEmailAndEmailConfirmedIsTrue(principal.getName());
 
@@ -98,12 +107,24 @@ public class SocialNetworkConnectivityController {
 
     @PostMapping("/findSocialNetworkPage")
     @PreAuthorize("hasRole('ROLE_USER')")
-    public ResponseEntity<?> findSocialNetworkPage(@RequestBody SocialNetworkConnectivity socialNetworkConnectivity, Principal principal) {
-        //filter page
-        //after find the page set a record in database
+    /**
+     * The method serves to find a social network
+     */
+    public ResponseEntity<?> findSocialNetworkPage(@RequestBody SocialNetworkConnectivity socialNetworkConnectivity, Principal principal) throws CustomException {
+
         Optional<User> user = userRepository.findByEmailAndEmailConfirmedIsTrue(principal.getName());
 
         if (user.isPresent()) {
+            if(socialNetworkConnectivity.getAccessToken().equals(""))
+                throw new CustomException("The element token is required");
+            if(socialNetworkConnectivity.getName().equals(""))
+                throw new CustomException("The element name is required");
+            if(socialNetworkConnectivity.getAppId().equals(""))
+                throw new CustomException("Application Item Id is required");
+            if(socialNetworkConnectivity.getSecretId().equals(""))
+                throw new CustomException("The item's secret key is required");
+
+
             SocialNetworkConnectivity local = socialNetworkConnectivityRepository.findSocialNetworkConnectivityByNameAndUsersId(socialNetworkConnectivity.getName(), user.get().getId());
             if (local != null) {
                 return ResponseEntity.ok("Already exists");

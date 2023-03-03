@@ -1,6 +1,7 @@
 package com.server.sharemenu.controllers;
 
 import com.server.sharemenu.common.EntityHeader;
+import com.server.sharemenu.common.Item;
 import com.server.sharemenu.common.User;
 import com.server.sharemenu.repositories.EntityHeaderRepository;
 import com.server.sharemenu.repositories.UserRepository;
@@ -8,15 +9,15 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-/*
-Класът служи за консумиране на end-poinds от ресурса EntityHeader
-и после за отделните методи
+/**
+ * The class serves to consume endpoints from the Entity Header resource
+ * and then for the individual methods
  */
 
-@CrossOrigin(origins = {"http://sharemenu.eu", "http://localhost:4200"}, maxAge = 3600)
 @RestController
 @RequestMapping("/api/resource/entityheader")
 public class EntityHeaderController {
@@ -28,8 +29,10 @@ public class EntityHeaderController {
         this.userRepository = userRepository;
     }
 
-    //Методът служи за продуциране на запис в базата данни
     @PostMapping("/insert")
+    /**
+     * The method serves to produce a record in the database
+     */
     public ResponseEntity<?> insertEntityHeader(@RequestBody EntityHeader entityHeader, Principal principal) {
         Optional<User> user = userRepository.findByEmailAndEmailConfirmedIsTrue(principal.getName());
 
@@ -42,28 +45,48 @@ public class EntityHeaderController {
         return ResponseEntity.ok("Contact admin");
 
     }
-    // Методът служи за консумиране на записи като данните са филтрирани по User, който прави заявката
     @GetMapping("/get")
-    public ResponseEntity<?> getEntityHeader()
+    /**
+     * The method serves to consume records as the data is filtered by the User making the request
+     */
+    public ResponseEntity<?> getEntityHeader(Principal principal)
     {
-        List<EntityHeader> entityHeaders = entityHeaderRepository.findAll();
+        Optional<User> user = userRepository.findByEmailAndEmailConfirmedIsTrue(principal.getName());
 
-        return ResponseEntity.ok(entityHeaders);
+        if(user.isPresent()) {
+            List<EntityHeader> entityHeaders = entityHeaderRepository.findEntityHeadersByUsersId(user.get().getId());
+            return ResponseEntity.ok(entityHeaders);
+        }
+        return ResponseEntity.ok(new ArrayList<EntityHeader>());
     }
-    //Методът служи за консумиране на запис по ID като записът е филтриран по User, който прави заявката
     @GetMapping("getById")
-    public ResponseEntity<?> getEntityHeaderById(@RequestParam Long id)
+    /**
+     * The method serves to consume a record by ID, with the record filtered by the User making the request
+     */
+    public ResponseEntity<?> getEntityHeaderById(@RequestParam Long id, Principal principal)
     {
-        Optional<EntityHeader> entityHeader = entityHeaderRepository.findById(id);
+        Optional<User> user = userRepository.findByEmailAndEmailConfirmedIsTrue(principal.getName());
 
-        return ResponseEntity.ok(entityHeader);
+        if(user.isPresent()) {
+            EntityHeader entityHeader = entityHeaderRepository.findEntityHeaderByIdAndUsersId(id, user.get().getId());
+            return ResponseEntity.ok(entityHeader);
+        }
+        return ResponseEntity.ok(new EntityHeader());
     }
-    // Методът служи за изтриване на запис от базата данни
-    @DeleteMapping("delete")
-    public ResponseEntity<?> deleteEntityHeader(@RequestParam(value ="id") Long id)
-    {
-        entityHeaderRepository.deleteById(id);
 
-        return ResponseEntity.ok("Record has been deleted");
+    @DeleteMapping("delete")
+    /**
+     * The method serves to delete a record from the database
+     */
+    public ResponseEntity<?> deleteEntityHeader(@RequestParam(value ="id") Long id, Principal principal)
+    {
+        Optional<User> user = userRepository.findByEmailAndEmailConfirmedIsTrue(principal.getName());
+
+        if(user.isPresent()) {
+            entityHeaderRepository.deleteEntityHeaderByIdAndUsersId(id, user.get().getId());
+            return ResponseEntity.ok("Record has been deleted");
+        }
+
+        return ResponseEntity.ok("Delete record not allowed");
     }
 }

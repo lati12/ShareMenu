@@ -1,6 +1,8 @@
 package com.server.sharemenu.response.facebook;
 
-//Класът се използва за транспортиране на данни между client - server
+/**
+ * The class is used to transport data between client - server
+ */
 public class FacebookAccountsResponse {
     private String name;
     private String access_token;
