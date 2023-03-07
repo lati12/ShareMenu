@@ -12,6 +12,7 @@ node{
 }
 
 /*
+
 //jar.dependsOn npmBuild
 jar.dependsOn(npm_install,'buildApp','copyBuiltFiles')
 
@@ -25,4 +26,4 @@ jar{
 task copyBuiltFiles(type:Copy){
   from 'dist/sharemenu' into '../server/src/main/resources/static'
 }
- */
+*/

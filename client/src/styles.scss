@@ -19,3 +19,22 @@ html
 .p-splitter {
   height: 85vh;
 }
+.p-datatable .p-datatable-tbody > tr {
+  height: 48px !important;
+}
+
+.p-datatable .p-datatable-tbody > tr > td {
+  padding: 0.2rem 0.2rem !important;
+}
+
+.p-button.p-button-success, .p-buttonset.p-button-success > .p-button, .p-splitbutton.p-button-success > .p-button {
+  width: 36px !important;
+  height: 36px !important;
+  margin: 4px;
+}
+
+.p-button.p-button-warning, .p-buttonset.p-button-warning > .p-button, .p-splitbutton.p-button-warning > .p-button {
+  width: 36px !important;
+  height: 36px !important;
+  margin: 4px;
+}

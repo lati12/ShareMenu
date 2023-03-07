@@ -100,7 +100,7 @@
 			<image hAlign="Center">
 				<reportElement x="214" y="10" width="130" height="130" uuid="f85d6fa2-e32f-4d9b-92fc-67ab40ee2acb"/>
 				<box topPadding="0" leftPadding="0" bottomPadding="0" rightPadding="0"/>
-				<imageExpression><![CDATA["http://sharemenu.eu/res/logo1.jpg"]]></imageExpression>
+				<imageExpression><![CDATA["https://sharemenu.eu/res/logo1.jpg"]]></imageExpression>
 			</image>
 		</band>
 	</title>

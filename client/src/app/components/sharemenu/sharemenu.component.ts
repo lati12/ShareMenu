@@ -53,14 +53,14 @@ export class SharemenuComponent implements OnInit {
     //init spinner
     this.spinnerDialog = true;
     this.sharemenuService.generateFile(this.sharemenu).then((blocb) =>{
-
-    this.spinnerDialog = false;
+      this.spinnerDialog = false;
       this.notificationService.notification$.next({severity:'success', summary: 'Успешно генериране на меню', life: 3000});
       console.log("done");
       saveAs(blocb, "menu.pdf");
     }).catch(arr => {
       //close spinner with error meesage
       this.spinnerDialog = false;
+      this.notificationService.notification$.next({severity:'error', summary: 'Неуспешно генериране на меню', life: 3000});
       console.log(arr);
     })
   }
@@ -68,12 +68,13 @@ export class SharemenuComponent implements OnInit {
   shareMenu(){
     this.spinnerDialog = true;
     this.sharemenuService.shareMenu(this.sharemenu).then(() =>{
+      this.spinnerDialog = false;
       this.notificationService.notification$.next({severity:'success', summary: 'Успешно споделено меню', life: 3000});
       console.log("done");
     }).catch(arr => {
       this.spinnerDialog = false;
       console.log(arr);
-      this.notificationService.notification$.error({severity:'error', summary: 'Неуспешно споделяне на меню', life: 3000});
+      this.notificationService.notification$.next({severity:'error', summary: 'Неуспешно споделяне на меню', life: 3000});
     })
   }
 

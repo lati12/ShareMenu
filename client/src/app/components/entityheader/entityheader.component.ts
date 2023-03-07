@@ -10,6 +10,7 @@ import {EntitylineService} from "../../services/entityline.service";
 import {ItemService} from "../../services/item.service";
 import {Item} from "../../common/item";
 import {EntityHeader} from "../../common/entityheader";
+import {NotificationService} from "../../services/notification.service";
 
 // В компонентът е имплементиран процес, който си взаимодейства с потребителят за лесно и удобно създаване на "Меню"
 
@@ -30,7 +31,7 @@ export class EntityheaderComponent {
   entityHeaders : EntityHeader[] = [];
   entitylines: Entityline[] = [];
   templates : Template [] = [];
-  items : Item [] = [];
+  items : Item[] = [];
   users: Users[] = [];
   submittedEntityHeader : boolean = false;
   submittedEntityLine : boolean = false;
@@ -41,7 +42,7 @@ export class EntityheaderComponent {
               private itemService : ItemService,
               private templateService : TemplateService,
               private usersService : UsersService,
-              private messageService: MessageService,
+              private notificationService: NotificationService ,
               private confirmationService: ConfirmationService) { }
 
   ngOnInit(){
@@ -59,6 +60,7 @@ export class EntityheaderComponent {
     this.itemService.getAll().subscribe(data => {
       this.items = data;
     })
+
   }
 
   openNewEntityHeader(){
@@ -97,27 +99,33 @@ export class EntityheaderComponent {
 
   saveEntityHeader(){
     this.submittedEntityHeader = true;
-    debugger
+
     this.entityHeaderService.save(this.entityHeader).then(() =>{
       this.entityHeaderService.getAll().subscribe(data => {
         this.entityHeaders = data;
-        this.messageService.add({severity:'success', summary: 'Successful', detail: 'Менюто е запазено', life: 3000});
+        this.notificationService.notification$.next({severity:'success', summary: 'Successful', detail: 'Менюто е запазено', life: 3000});
         this.entityHeaderDialog = false;
         this.entityHeader = new EntityHeader();
       });
-    });
+    }).catch(ex =>{
+      this.notificationService.notification$.next({severity: 'error', summary: 'Грешка', detail: ex.error});
+    })
   }
 
   saveEntityLineDetails() {
-    this.submittedEntityLineDetails = true;
+    debugger
+      this.submittedEntityLineDetails = true;
     this.entityline.entityHeader = this.entityHeader;
     this.entityLineService.save(this.entityline).then(() => {
       this.entityLineService.getAll(this.entityHeader.id).subscribe(data => {
         this.entitylines = data;
+        this.notificationService.notification$.next({severity:'success', summary: 'Successful', detail: 'Линията е запазена', life: 3000});
         this.entityLineDetailsDialog = false;
         this.entityline = new Entityline();
       });
-    });
+    }).catch(ex =>{
+      this.notificationService.notification$.next({severity: 'error', summary: 'Грешка', detail: ex.error});
+    })
   }
 
   deleteEntityHeader(entityHeader: EntityHeader){
@@ -130,9 +138,11 @@ export class EntityheaderComponent {
           this.entityHeaderService.getAll().subscribe(data => {
             this.entityHeaders = data;
             this.entityHeader = new EntityHeader();
-            this.messageService.add({severity:'success', summary: 'Successful', detail: 'Header Deleted', life: 3000});
+            this.notificationService.notification$.next({severity:'success', summary: 'Successful', detail: 'Header Deleted', life: 3000});
           });
-        });
+        }).catch(ex => {
+          this.notificationService.notification$.next({severity: 'error', summary: 'Грешка', detail: ex.error});
+        })
       }
     });
   }
@@ -147,8 +157,10 @@ export class EntityheaderComponent {
           this.entityLineService.getAll(entityLine.entityHeader.id).subscribe(data => {
             this.entitylines = data;
             this.entityHeader = new EntityHeader();
-            this.messageService.add({severity:'success', summary: 'Успешно изтриване', detail: 'Линята е изтрита', life: 3000});
-          })
+            this.notificationService.notification$.next({severity:'success', summary: 'Успешно изтриване', detail: 'Линята е изтрита', life: 3000});
+          });
+        }).catch(ex => {
+          this.notificationService.notification$.next({severity: 'error', summary: 'Грешка', detail: ex.error});
         });
       }
     });
@@ -181,8 +193,8 @@ export class EntityheaderComponent {
     this.entityHeaderDialog = true;
   }
 
-  chenageItem($event: any) {
-    let selectedItem = $event.value;
+  changeItem(event: any) {
+    let selectedItem = event.value;
     if(selectedItem !== null) {
       this.entityline.price = selectedItem.price;
     }

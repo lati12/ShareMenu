@@ -8,7 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
-import org.springframework.transaction.annotation.Transactional;
+    import org.springframework.transaction.annotation.Transactional;
 import java.security.Principal;
 import java.util.ArrayList;
 import java.util.List;
@@ -92,7 +92,7 @@ public class EntityLineController {
         Optional<User> user = userRepository.findByEmailAndEmailConfirmedIsTrue(principal.getName());
 
         if(user.isPresent()) {
-            entitylineRepository.deleteEntityLineById(id);
+            entitylineRepository.deleteEntityLineById(id    );
             return ResponseEntity.ok("Record has been deleted");
         }
 

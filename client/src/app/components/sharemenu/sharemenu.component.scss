@@ -1,3 +1,5 @@
-ul {
-  text-align:center;
+.oneLine {
+  text-overflow: ellipsis !important;
+  white-space: nowrap !important;
 }
+

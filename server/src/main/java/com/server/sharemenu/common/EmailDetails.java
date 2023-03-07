@@ -15,12 +15,14 @@ public class EmailDetails {
     protected Collection<String> toList;
     protected Collection<String> ccList;
     protected String text;
+    protected String email;
 
-    public EmailDetails(String hash, List<String> singletonList, String subject, String text) {
+    public EmailDetails(String hash, List<String> singletonList, String subject, String text, String email) {
         this.hash = hash;
         this.subject = subject;
         this.toList = singletonList;
         this.text = text;
+        this.email = email;
     }
 
     public InternetAddress[] getToInternetAddress() throws AddressException {
@@ -79,5 +81,13 @@ public class EmailDetails {
 
     public void setText(String text) {
         this.text = text;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 }

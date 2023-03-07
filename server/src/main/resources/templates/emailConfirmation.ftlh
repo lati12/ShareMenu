@@ -18,21 +18,25 @@
                                             <td height="24" style="padding:0px;margin:0px auto;line-height:1px;font-size:1px;font-size:0px;line-height:1px;padding:0px"> &nbsp; </td>
                                         </tr>
                                         <tr>
-                                            <td align="right" style="padding:0px;margin: 0px auto;line-height:1px;font-size:1px;font-size:0px;line-height:1px;padding:0px;font-size:0px;line-height:100%;padding:5px"> <a href="https://twitter.com" style="text-decoration:none;border-style:none;border:0px;padding:2px;margin:2px" target="_blank"> <img src="https://scontent.fsof9-1.fna.fbcdn.net/v/t39.30808-6/330026214_2389015677941831_5154397558193039284_n.jpg?_nc_cat=111&ccb=1-7&_nc_sid=730e14&_nc_ohc=iAAllTeG1A4AX9RZJXT&_nc_ht=scontent.fsof9-1.fna&oh=00_AfC7hKOCpZ300aVEdsUIQLShvaY8fg4-qNjQ90Tny4wOMA&oe=63FC2E86" width="159" alt="ShareMenu" title="ShareMenu" style="margin:2px;padding:0px;display:inline-block;border:none;outline:none" class="CToWUd" data-bit="iit"> </a>
+                                            <td align="center" style="padding:0px;margin: 0px auto;line-height:1px;font-size:1px;font-size:0px;line-height:1px;padding:0px;font-size:0px;line-height:100%;padding:5px"> <style="text-decoration:none;border-style:none;border:0px;padding:2px;margin:2px" target="_blank">
+                                                <a href="https://sharemenu.eu/">
+                                                <img src="https://sharemenu.eu/assets/logo.png" width="159" alt="ShareMenu" title="ShareMenu" style="margin:2px;padding:0px;display:inline-block;border:none;outline:none" class="CToWUd" data-bit="iit">
+                                                </a>
                                             </td>
                                         </tr>
                                         <tr>
                                             <td height="24" style="padding:0px;margin:0px auto;line-height:1px;font-size:1px;font-size:0px;line-height:1px;padding:0px"> &nbsp; </td>
                                         </tr>
                                         <tr>
-                                            <td align="left" dir="ltr" style="padding:0px;margin:0px auto;line-height:1px;font-size:1px;font-family:'Helvetica Neue',Helvetica,Arial,sans-serif;font-size:24px;padding:0px;margin:0px;font-weight:bold;line-height:32px"> Последната стъпка...
-                                                #{email } </td>
+                                            <td align="left" dir="ltr" style="padding:0px;margin:0px auto;line-height:1px;font-size:1px;font-family:'Helvetica Neue',Helvetica,Arial,sans-serif;font-size:18px;padding:0px;margin:0px;font-weight:bold;line-height:32px"> Последната стъпка...</td>
                                         </tr>
                                         <tr>
                                             <td height="24" style="padding:0px;margin:0px auto;line-height:1px;font-size:1px;font-size:0px;line-height:1px;padding:0px"> &nbsp; </td>
                                         </tr>
                                         <tr>
-                                            <td align="left" dir="ltr" style="padding:0px;margin:0px auto;line-height:2px;font-size:2px;font-family:'Helvetica Neue Light',Helvetica,Arial,sans-serif;font-size:16px;padding:0px;margin:0px;font-weight:normal;line-height:20px;font-family:'Helvetica Neue Light',Helvetica,Arial,sans-serif;font-size:16px;padding:0px;margin:0px;font-weight:normal;line-height:30px"> Потвърди имейл адреса си, за да завършиш профила си в ShareMenu #{name} #{lastname}. Бързо е - трябва само да цъкнеш върху бутона . </td>
+                                            <td align="left" dir="ltr" style="padding:0px;margin:0px auto;line-height:2px;font-size:2px;font-family:'Helvetica Neue Light',Helvetica,Arial,sans-serif;font-size:14px;padding:0px;margin:0px;font-weight:normal;line-height:20px;font-family:'Helvetica Neue Light',Helvetica,Arial,sans-serif;font-size:16px;padding:0px;margin:0px;font-weight:normal;line-height:30px">
+                                                Потвърди имейл адреса (<i>${recipient.email}</i>) си, за да завършиш профила си в ShareMenu . Бързо е - трябва само да цъкнеш върху бутона .
+                                            </td>
                                         </tr>
                                         <tr>
                                             <td height="24" style="padding:0px;margin:0px auto;line-height:1px;font-size:1px;font-size:0px;line-height:1px;padding:0px"> &nbsp; </td>
@@ -42,7 +46,8 @@
                                                 <table border="0" cellspacing="0" cellpadding="0" align="left" style="padding:0px;line-height:1px;font-size:1px">
                                                     <tbody>
                                                     <tr>
-                                                        <td align="center" bgcolor=":#0081ff" dir="ltr" style="padding:0px;margin:0px auto;line-height:1px;font-size:1px;text-align:center;margin:auto;border-radius:25px;line-height:18px"> <a href="http://sharemenu.eu/confirm-email?hash=${recipient.hash}" style="text-decoration:none;border-style:#0081ff;border:0px;padding:0px;margin:0px;color::#0081ff; text-decoration:none;font-size:16px;font-family:'HelveticaNeue','Helvetica Neue',Helvetica,Arial,sans-serif;color:#ffffff;text-decoration:none;border-radius:25px;padding:11px 30px;border:1px solid #0081ff;display:inline-block;font-weight:bold" target="_blank">
+                                                        <td align="center" bgcolor="#0081ff" dir="ltr" style="padding:0px;margin:0px auto;line-height:1px;font-size:1px;text-align:center;margin:auto;border-radius:22px;line-height:18px">
+                                                            <a href="https://sharemenu.eu/confirm-email?hash=${recipient.hash}" style="text-decoration:none; border:0px;padding:0px;margin:0px;color:#0081ff; text-decoration:none;font-size:14px;font-family:'HelveticaNeue','Helvetica Neue',Helvetica,Arial,sans-serif;color:#ffffff;text-decoration:none;border-radius:25px;padding:11px 30px;border:1px solid #0081ff;display:inline-block;font-weight:bold" target="_blank">
                                                                 Потвърждаване сега
                                                             </a> </td>
                                                     </tr>
@@ -72,7 +77,7 @@
                                             <td height="12" style="padding:0px;margin:0px auto;line-height:1px;font-size:1px;font-size:0px;line-height:1px;padding:0px"> &nbsp; </td>
                                         </tr>
                                         <tr>
-                                            <td align="center" style="padding:0px;margin:0px auto;line-height:1px;font-size:1px;color::#0081ff;font-family:'Helvetica Neue Light',Helvetica,Arial,sans-serif;font-size:12px;padding:0px;margin:0px;font-weight:normal;line-height:16px;text-align:center;margin:auto"> <span class="m_1857879915023223027addressLink"><span style="color:#0081ff!important;text-decoration:none!important">ShareMenu</span></a>
+                                            <td align="center" style="padding:0px;margin:0px auto;line-height:1px;font-size:1px;color:#0081ff;font-family:'Helvetica Neue Light',Helvetica,Arial,sans-serif;font-size:12px;padding:0px;margin:0px;font-weight:normal;line-height:16px;text-align:center;margin:auto"> <span class="m_1857879915023223027addressLink"><span style="color:#0081ff!important;text-decoration:none!important">ShareMenu</span></a>
 </span> </td>
                                         </tr>
                                         <tr>

@@ -10,9 +10,9 @@ import {environment} from "../../environments/environment";
 })
 export class EntitylineService {
 
-  getAllUrl: string = environment.apiEndpoint +"/resource/entityline/get?headerId=";
-  saveUrl: string = environment.apiEndpoint +"/resource/entityline/insert";
-  deleteUrl:string = environment.apiEndpoint +"/resource/entityline/delete?id=";
+  getAllUrl: string = environment.apiEndpoint + "/resource/entityline/get?headerId=";
+  saveUrl: string = environment.apiEndpoint + "/resource/entityline/insert";
+  deleteUrl:string = environment.apiEndpoint + "/resource/entityline/delete?id=";
 
   constructor(private http: HttpClient) {}
 

@@ -5,6 +5,7 @@ import com.server.sharemenu.exception.CustomException;
 import com.server.sharemenu.exception.UserAlreadyExists;
 import com.server.sharemenu.repositories.EmailConfirmationRepository;
 import com.server.sharemenu.repositories.RoleRepository;
+import com.server.sharemenu.repositories.TemplateRepository;
 import com.server.sharemenu.repositories.UserRepository;
 import com.server.sharemenu.request.LoginRequest;
 import com.server.sharemenu.request.RegisterRequest;
@@ -65,6 +66,9 @@ public class AuthController {
     @Autowired
     JwtProvider jwtProvider;
 
+    @Autowired
+    TemplateRepository templateRepository;
+
     @PostMapping("/register")
     @Transactional
 
@@ -103,7 +107,7 @@ public class AuthController {
 
         String hash = jwtProvider.generateHash();
 
-        EmailDetails recepient = getRecipient(hash, user.getEmail(), "Confirm email",
+        EmailDetails recepient = getRecipient(hash, user.getEmail(), "ShareMenu email confirmation",
                 "Please confirm your email with following email");
         CompletableFuture<Boolean> cf = emailService.sendMailFuture(recepient,
                 emailVerificationTemplate);
@@ -129,6 +133,13 @@ public class AuthController {
         Role userRole = roleRepository.findByName(ERole.ROLE_USER).get();
         roles.add(userRole);
 
+
+        //set default template
+        Set<Template> templates = new HashSet<>();
+        Template userTemp = templateRepository.findById(1L).get();
+        templates.add(userTemp);
+
+        user.setTemplates(templates);
         user.setRoles(roles);
         user.setEnabled(true);
         userRepository.save(user);
@@ -136,7 +147,7 @@ public class AuthController {
     }
 
     private EmailDetails getRecipient(String hash, String email, String subject, String text) {
-        return new EmailDetails(hash, Collections.singletonList(email), subject, text);
+        return new EmailDetails(hash, Collections.singletonList(email), subject, text, email);
     }
 
     @PostMapping(value = "/verify")

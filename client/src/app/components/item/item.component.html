@@ -21,11 +21,14 @@
     <ng-template pTemplate="body" let-item>
       <tr>
         <td>{{item.name}}</td>
-        <td>{{item.description}}</td>
+        <td>
+          <div class="white-space-nowrap overflow-hidden text-overflow-ellipsis" style="width:400px">
+          {{item.description}}
+          </div>
+        </td>
         <td>{{item.itemCategory.name}}</td>
         <td>{{item.price}}</td>
         <td>{{item.unit}}</td>
-
         <td>
           <button pButton pRipple icon="pi pi-pencil" class="p-button-rounded p-button-success p-mr-2" (click)="openEditDialog(item)"></button>
           <button pButton pRipple icon="pi pi-trash" class="p-button-rounded p-button-warning" (click)="delete(item)"></button>
@@ -43,15 +46,15 @@
     </div>
     <div class="p-field">
       <label for="description">Описание</label>
-      <input type="text" pInputText id="description" [(ngModel)]="item.description" required autofocus/>
+      <textarea rows="5" cols="30" id="description" pInputTextarea [(ngModel)]="item.description" required autofocus></textarea>
       <small class="p-invalid" *ngIf="submitted && !item.description">Полето е задължително!</small>
     </div>
     <div>
       <label for="category">Категория на артикул</label>
       <p-dropdown [options]="itemCategories" [(ngModel)]="item.itemCategory" optionLabel="name" [filter]="true" filterBy="name" [showClear]="true" placeholder="Изберете категория">
         <ng-template>
-          <div class="p-invalid" *ngIf="submitted && !item.itemCategory.name">
-            <div>{{item.itemCategory.name}}</div>
+          <div class="p-invalid" *ngIf="submitted && !item.itemCategory">
+            <div>{{item.itemCategory}}</div>
           </div>
         </ng-template>
       </p-dropdown>
