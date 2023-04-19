@@ -64,14 +64,14 @@ public class MenuReportService {
         String groupCategory = "";
 
         for (MenuLineView menuLineView : menuLineViewList) {
-            if(!groupCategory.equals(menuLineView.getItemCategoryName()))
+           /* if(!groupCategory.equals(menuLineView.getItemCategoryName()))
             {
                 MenuLineViewJasper categoryLine = new MenuLineViewJasper(menuLineView.getItemCategoryName());
                 menuLineViewJaspers.add(categoryLine);
             }
-
+*/
             menuLineViewJaspers.add(new MenuLineViewJasper(menuLineView));
-            groupCategory = menuLineView.getItemCategoryName();
+           // groupCategory = menuLineView.getItemCategoryName();
         }
 
         return menuLineViewJaspers;
@@ -95,7 +95,7 @@ public class MenuReportService {
         parameters.put("ShareMenuParameter", dataSource);
 
         JasperPrint jasperPrint = JasperFillManager
-                .fillReport(jasperReport,parameters, new JREmptyDataSource());
+                .fillReport(jasperReport,parameters, dataSource);//new JREmptyDataSource());
 
         JRPdfExporter exporter = new JRPdfExporter();
         exporter.setExporterInput(new SimpleExporterInput(jasperPrint));

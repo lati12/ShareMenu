@@ -13,7 +13,7 @@ public class MenuLineViewJasper implements MenuLineView {
     private Double price;
 
     public MenuLineViewJasper(MenuLineView menuLineView) {
-        this.itemCategoryName = "";
+        this.itemCategoryName = menuLineView.getItemCategoryName();
         this.itemName = menuLineView.getItemName();
         this.itemDescription = menuLineView.getItemDescription();
         this.quantity = menuLineView.getQuantity();
