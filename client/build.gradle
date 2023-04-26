@@ -11,9 +11,10 @@ node{
   download = true
 }
 
-/*
+
 
 //jar.dependsOn npmBuild
+/*
 jar.dependsOn(npm_install,'buildApp','copyBuiltFiles')
 
 task buildApp(type: NpmTask) {
