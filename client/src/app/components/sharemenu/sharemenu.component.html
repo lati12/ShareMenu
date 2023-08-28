@@ -26,11 +26,6 @@
   </div>
   <div class="grid">
     <div class="col-offset-2">
-      <p-dialog [(visible)]="spinnerDialog" position="center" [modal]="true" [style]="{width: '20vw'}" [baseZIndex]="10000"
-                [draggable]="false" [resizable]="false">
-        <h3> Изчакайте докато се генерира файлът.</h3>
-        <p-progressSpinner></p-progressSpinner>
-      </p-dialog>
       <button pButton pRipple label="Генериране на файл"  class="p-button-text" (click)="generateFile()">
       </button>
       <button pButton pRipple label="Споделяне" class="p-button-text" (click)="shareMenu()">
@@ -45,5 +40,15 @@
     <li>Стъпка 1: Избира се от подащият списък менюто, което искаме да генерираме</li>
     <li>Стъпка 2: С натискане на бутона се генерира файл </li>
   </ul>
+</p-dialog>
+
+<p-dialog [(visible)]="spinnerDialog" position="center" [closable]="false" [closeOnEscape]="false" [modal]="true" [style]="{width: '20vw'}" [baseZIndex]="10000"
+          [draggable]="false" [resizable]="false">
+  <ng-template pTemplate="header">
+    <h3> Генериране на файл ... </h3>
+  </ng-template>
+  <div class="flex justify-content-center flex-wrap">
+    <p-progressSpinner></p-progressSpinner>
+  </div>
 </p-dialog>
 

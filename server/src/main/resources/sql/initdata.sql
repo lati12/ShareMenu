@@ -114,8 +114,8 @@ INSERT INTO item (description, name, price, unit, itemcategory_id, users_id) VAL
 
 
 --insert into template (name, file, users_id) values ('temp', pg_read_file('C:\projects\ShareMenu\sharemenu.jrxml')::bytea, 1) ON CONFLICT DO NOTHING;
-insert into template (name, file, users_id) values ('temp', pg_read_file('/opt/sharemenu.jrxml')::bytea, 1) ON CONFLICT DO NOTHING;
---insert into template (name, file, users_id) values ('temp', pg_read_file('/Users/yuri/projects/ShareMenu/sharemenu.jrxml')::bytea, 1) ON CONFLICT DO NOTHING;
+--insert into template (name, file, users_id) values ('temp', pg_read_file('/opt/sharemenu.jrxml')::bytea, 1) ON CONFLICT DO NOTHING;
+insert into template (name, file, users_id) values ('temp', pg_read_file('/Users/yuri/projects/ShareMenu/sharemenu.jrxml')::bytea, 1) ON CONFLICT DO NOTHING;
 
 insert into user_template(user_id, template_id) values ((select id from users where email = 'testuser1@test')
                                                        , (select id from template where name = 'temp')) ON CONFLICT DO NOTHING;

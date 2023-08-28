@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<fontFamilies>
+    <fontFamily name="Comic Sans MS Regular">
+        <normal><![CDATA[fonts/ComicSansMSRegular.ttf]]></normal>
+        <pdfEncoding><![CDATA[CP1251]]></pdfEncoding>
+        <pdfEmbedded><![CDATA[true]]></pdfEmbedded>
+        <exportFonts/>
+    </fontFamily>
+</fontFamilies>

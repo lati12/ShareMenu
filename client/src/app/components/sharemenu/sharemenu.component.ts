@@ -73,6 +73,7 @@ export class SharemenuComponent implements OnInit {
       console.log("done");
     }).catch(arr => {
       this.spinnerDialog = false;
+      this.notificationService.notification$.next({severity:'error', summary: 'Грешка при генериране на меню', life: 3000});
       console.log(arr);
       this.notificationService.notification$.next({severity:'error', summary: 'Неуспешно споделяне на меню', life: 3000});
     })

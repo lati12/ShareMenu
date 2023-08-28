@@ -12,7 +12,7 @@ export class ItemService {
 
   getAllUrl: string =environment.apiEndpoint + "/resource/item/get";
   saveUrl: string = environment.apiEndpoint +"/resource/item/insert";
-  deleteUrl: string = environment.apiEndpoint +"/resource/item/delete?id=";
+  deleteUrl: string = environment.apiEndpoint +"/resource/item/delgetallete?id=";
 
   constructor(private http: HttpClient) {
   }

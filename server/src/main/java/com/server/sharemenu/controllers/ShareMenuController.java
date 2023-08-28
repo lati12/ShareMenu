@@ -133,7 +133,7 @@ public class ShareMenuController {
      * The method serves to generate data
      */
     public ResponseEntity<?> generateFile(@RequestBody ShareMenu shareMenu, Principal principal) throws JRException, IOException {
-        menuReportService.processReport(shareMenu, principal);
+            menuReportService.processReport(shareMenu, principal);
         String fileKey = principal.getName().replace('@','_');
 
         Resource file = fileService.download(tempPdfFolder + fileKey + ".pdf");

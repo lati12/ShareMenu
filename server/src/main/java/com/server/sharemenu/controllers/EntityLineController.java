@@ -37,9 +37,9 @@ public class EntityLineController {
      * The method serves to produce a record in the database
      */
     @PreAuthorize("hasRole('ROLE_USER')")
-    public ResponseEntity<?> insertEntityLine(@RequestBody EntityLine restaurantEntityLine, Principal principal) {
+    public ResponseEntity<?> insertEntityLine(@RequestBody EntityLine restaurantEntityLine) {
 
-        Optional<User> user = userRepository.findByEmailAndEmailConfirmedIsTrue(principal.getName());
+        Optional<User> user = userRepository.findByEmailAndEmailConfirmedIsTrue("");
 
         if(user.isPresent()) {
             EntityLine newRestaurantEntityLine = entitylineRepository.save(restaurantEntityLine);
