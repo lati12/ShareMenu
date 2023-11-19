@@ -21,10 +21,6 @@
 
 <p-splitter [panelSizes]="[10,90]">
   <ng-template pTemplate="">
-    <div class="flex justify-content-between flex-wrap card-container purple-container">
-      <button pButton pRipple type="button"  (click)="showInfoDialog()" label="За нас" class="p-button-info p-button-text absolute bottom-0 left-2  text-blue-500 font-bold border-round  "
-              style="min-width: 120px; min-height: 50px; "></button>
-    </div>
     <p-menu [model]="items"></p-menu>
   </ng-template>
   <ng-template pTemplate="">

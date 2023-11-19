@@ -14,7 +14,6 @@ import {ProfileComponent} from "./components/profile/profile.component";
 import {Roles} from "./common/Roles";
 import {AuthGuard} from "./services/auth/auth-guard.service";
 import {ConfirmEmailComponent} from "./components/confirm-email/confirm-email.component";
-import {BrowserModule} from "@angular/platform-browser";
 import {UserTemplateComponent} from "./components/user-template/user-template.component";
 
 //Тук се случва руутига между компонентите
