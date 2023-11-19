@@ -48,6 +48,7 @@ export class UsersComponent implements OnInit {
       this.usersService.getAll().subscribe(data => {
         this.usersDialog = false;
         this.user = new Users();
+        console.log("Done with save");
       });
       debugger
     }).catch(ex =>{

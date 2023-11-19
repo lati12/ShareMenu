@@ -41,7 +41,7 @@ public class UsersController {
             throw new CustomException("The company is required");
 
 
-        User currentUser = usersRepository.findByEmail(users.getEmail());
+        User currentUser = usersRepository.findByEmail( users.getEmail());
         if(currentUser == null) {
             throw new CustomException("User not found with email: " + users.getEmail());
         }
@@ -101,4 +101,5 @@ public class UsersController {
 
         return ResponseEntity.ok("Record was deleted");
     }
+
 }
