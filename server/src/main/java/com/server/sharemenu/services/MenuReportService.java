@@ -19,6 +19,7 @@ import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 import javax.imageio.ImageIO;
+import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.*;
 import java.security.Principal;
@@ -63,6 +64,7 @@ public class MenuReportService {
         List<MenuLineViewJasper> menuLineViewJaspers = new ArrayList<>();
         String groupCategory = "";
 
+        menuLineViewJaspers.add(new MenuLineViewJasper(menuLineViewList.get(0).getItemCategoryName()));
         for (MenuLineView menuLineView : menuLineViewList) {
            /* if(!groupCategory.equals(menuLineView.getItemCategoryName()))
             {
@@ -88,7 +90,6 @@ public class MenuReportService {
 
         JasperDesign jasperDesign = JRXmlLoader.load(inputStreamTemplate);
         JasperReport jasperReport = JasperCompileManager.compileReport(jasperDesign);
-
         JRBeanCollectionDataSource dataSource = new
                 JRBeanCollectionDataSource(menuLineViews, false);
         Map<String , Object> parameters = new HashMap<>();
@@ -119,7 +120,6 @@ public class MenuReportService {
         exporter.setConfiguration(exporterConfig);
 
         exporter.exportReport();
-
         File file = new File(tempPngFolder + fileKey + ".png");
         OutputStream ouputStream = null;
         try {
@@ -127,10 +127,14 @@ public class MenuReportService {
             DefaultJasperReportsContext ctx = DefaultJasperReportsContext.getInstance();
             JasperPrintManager printManager = JasperPrintManager.getInstance(ctx);
 
-            BufferedImage rendered_image = null;
-            rendered_image = (BufferedImage) printManager.printPageToImage(jasperPrint, 0, 10f);
-            ImageIO.write(rendered_image, "png", ouputStream);
+            BufferedImage[] images = new BufferedImage[(jasperPrint.getPages().size())];
 
+            for(int i = 0; i < jasperPrint.getPages().size(); i++){
+                images[i] = (BufferedImage) printManager.printPageToImage(jasperPrint, i, 10f);
+            }
+
+            BufferedImage joinedImg = joinBufferedImage(images[0], images[1]);
+            ImageIO.write(joinedImg, "png", ouputStream);
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
@@ -143,7 +147,24 @@ public class MenuReportService {
 
         return jasperPrint;
     }
+    public static BufferedImage joinBufferedImage(BufferedImage img1,
+                                                  BufferedImage img2) {
+        int offset = 5;
+        int width = Math.max(img1.getWidth(), img2.getWidth()) + offset;
+        int height = img1.getHeight() + img2.getHeight() + offset;
 
+        BufferedImage newImage = new BufferedImage(width, height,
+                BufferedImage.TYPE_INT_ARGB);
+        Graphics2D g2 = newImage.createGraphics();
+        Color oldColor = g2.getColor();
+        g2.setPaint(Color.BLACK);
+        g2.fillRect(0, 0, width, height);
+        g2.setColor(oldColor);
+        g2.drawImage(img1, null, 0, 0);
+        g2.drawImage(img2, null, 0, img1.getHeight() + offset);
+        g2.dispose();
+        return newImage;
+    }
     public void processReport(ShareMenu shareMenu, Principal principal) throws  JRException{
         mapJasperReport(shareMenu, getHeader(shareMenu), getLines(shareMenu), principal);
     }
